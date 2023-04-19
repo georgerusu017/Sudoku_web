@@ -1,0 +1,39 @@
+body{
+    font-family: Source Sans Pro,sans-serif;
+    text-align: center;
+}
+#app{
+    width: 950px;
+    height: 570px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    background-color: orange;
+}
+#table{
+    width: 500px;
+    height: 500px;
+    background-color: aliceblue;
+    border-style: solid;
+    border-width: 2.5px;
+    border-color: black;
+    margin-left: 10px;
+}
+
+#control{
+    width: 400px;
+    height: 500px;
+    background-color: aliceblue;
+    border-style: solid;
+    border-width: 2.5px;
+    border-color: black;
+    margin-left: 20px;
+}
+#mistakes_timer{
+    width: 950px;
+    height: 30px;
+    background-color: aliceblue;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
