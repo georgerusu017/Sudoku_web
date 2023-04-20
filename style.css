@@ -2,38 +2,107 @@ body{
     font-family: Source Sans Pro,sans-serif;
     text-align: center;
 }
+
 #app{
-    width: 950px;
-    height: 570px;
+    width: 900px;
+    height: auto;
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
-    background-color: orange;
+    gap: 1em;
 }
+
 #table{
-    width: 500px;
-    height: 500px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     background-color: aliceblue;
+    margin-left: 8px;
     border-style: solid;
-    border-width: 2.5px;
-    border-color: black;
-    margin-left: 10px;
+    border-width: 0.5px;
 }
 
 #control{
-    width: 400px;
-    height: 500px;
-    background-color: aliceblue;
-    border-style: solid;
-    border-width: 2.5px;
-    border-color: black;
-    margin-left: 20px;
+    width: 390px;
+    height: 468px;
+    background-color: white;
 }
-#mistakes_timer{
-    width: 950px;
-    height: 30px;
-    background-color: aliceblue;
+
+#timer{
+    width: 860px;
+    margin: 0 20px 0 20px;
+    height: 20px;
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 10px;
+    color: #0072e3;
+}
+
+.bigSquare{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-style: solid;
+    border-width: 0.5px;
+}
+
+.square{
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-style: solid;
+    border-color: lightgrey;
+    border-width: 0.5px;
+}
+.square:active{
+    background-color: #77b6f5;
+}
+
+#newGame{
+    width: 380px;
+    height: 70px;
+    margin-top: 10px;
+    font-size: x-large;
+    border-width: 0px;
+    border-radius: 5px;
+    background-color: #0072e3;
+    color: white;
+}
+#newGame:hover{
+    background-color: #0050a0;
+    transition: 0.5s;
+}
+
+.number_buttons{
+    width: 120px;
+    height: 80px;
+    border-radius: 5px;
+    border-width: 0px;
+    margin: 1% 1% 1% 1%;
+    font-size: xx-large;
+    color: #0072e3;
+    background-color: rgb(240, 242, 248);
+    /* font-family: Source Sans Pro,sans-serif; */
+}
+.number_buttons:hover{
+    background-color: rgb(213, 215, 220);
+    transition: 0.2s;
+}
+
+.round_buttons{
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    border-width: 0px;
+    margin: 20px 25px 10px 25px;
+    background-color: rgb(240, 242, 248);
+    color: #0072e3;
+}
+.round_buttons:hover{
+    background-color: rgb(213, 215, 220);
+    transition: 0.2s;
+}
+
+.control_text{
+    width: 70px;
+    height: 20px;
+    margin: 10px 40px 10px 40px;
+    color: #0072e3;
 }
