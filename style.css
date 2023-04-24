@@ -39,7 +39,7 @@ body{
     color: #0072e3;
 }
 
-.bigSquare{
+.Square{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     border-style: solid;
@@ -54,7 +54,7 @@ body{
     border-color: lightgrey;
     border-width: 0.5px;
 }
-.square:active{
+.cell:active{
     background-color: #77b6f5;
 }
 
@@ -108,4 +108,11 @@ body{
     height: 20px;
     margin: 10px 40px 10px 40px;
     color: #0072e3;
+}
+
+.cell{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: x-large;
 }
