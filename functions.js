@@ -47,15 +47,17 @@ function populateTable(puzzleValues) {
     }
     for (i = 0; i < gridSize; i++) {
         const cellId = getCellId(i);
+        const cell = document.getElementById(cellId);
         const cellValue = puzzleValues[i] == "." ? "" : puzzleValues[i];
-        addText("value", cellId, cellValue);
+        const cellNode = document.createTextNode(cellValue);
+        cell.appendChild(cellNode)
     }
 }
 
 function createSudokuGrid() {
     function createSquareLine(squareId, i, k) {
         for (let j = 0; j < 3; j++) {
-            addDiv(getCellId((9 * k) + (3 * i) + j), squareId, "cell");
+            addDiv(getCellId((9 * k) + (3 * i) + j), squareId, `cell`);
         }
     }
 
@@ -83,4 +85,59 @@ function createLayout(where,...args) {
     args.forEach((arg) => {
         addDiv(arg, where)
     });
+}
+
+function createButton(where,className,...args){
+    args.forEach((arg) => {
+        addButton(arg, where, className)
+    });
+}
+
+function findLineNeighbors(num) {
+    let smallerNum = num;
+    let largerNum = num;
+    if (num % 9 == 0){
+        largerNum++;
+    }
+    else {
+        smallerNum--;
+    }
+
+    while (smallerNum % 9 !== 0) {
+      smallerNum--;
+    }
+
+    while (largerNum % 9 !== 0) {
+      largerNum++;
+    }
+    largerNum--;
+    
+    const neighbors = [];
+  
+    for (let i = smallerNum; i <= largerNum; i++) {
+      neighbors.push(i);
+    }
+
+    return neighbors;
+}
+
+function findColumnNeighbors(num) {
+    let smallerNum = num;
+    let largerNum = num;
+
+    while (smallerNum - 9 >= 0) {
+      smallerNum -= 9;
+    }
+
+    while (largerNum + 9 <= 80) {
+      largerNum += 9;
+    }
+    
+    const neighbors = [];
+  
+    for (let i = smallerNum; i <= largerNum; i += 9) {
+      neighbors.push(i);
+    }
+
+    return neighbors;
 }
