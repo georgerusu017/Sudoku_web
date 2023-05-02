@@ -35,10 +35,6 @@ function addImg(whereTo, source) {
     app.appendChild(newImg);
 }
 
-function getCellId(position) {
-    return `cell-${position}`;
-}
-
 function populateTable(puzzleValues) {
     // works only if the populated location is named "cell-#" where # is a number
     const gridSize = 81;
@@ -46,18 +42,20 @@ function populateTable(puzzleValues) {
         return `The array length must be ${gridSize}`;
     }
     for (i = 0; i < gridSize; i++) {
-        const cellId = getCellId(i);
-        const cell = document.getElementById(cellId);
-        const cellValue = puzzleValues[i] == "." ? "" : puzzleValues[i];
-        const cellNode = document.createTextNode(cellValue);
-        cell.appendChild(cellNode)
+        CELLS[i].value = puzzleValues[i] == "." ? "" : puzzleValues[i];
+        if (CELLS[i].value != "") {
+            CELLS[i].isEditable = false;
+        }
+        const cell = document.getElementById(CELLS[i].idText);
+        cell.appendChild((document.createTextNode(CELLS[i].value)))
     }
 }
 
 function createSudokuGrid() {
     function createSquareLine(squareId, i, k) {
         for (let j = 0; j < 3; j++) {
-            addDiv(getCellId((9 * k) + (3 * i) + j), squareId, `cell`);
+            const pointer = (9 * k) + (3 * i) + j;
+            addDiv(CELLS[pointer].idText, squareId, CELLS[pointer].initialClass);
         }
     }
 
@@ -94,6 +92,33 @@ function createButton(where,className,...args){
 }
 
 function findLineNeighbors(num) {
+    // let smallerNum = num;
+    // let largerNum = num;
+
+    // if (num % 9 == 0){
+    //     largeNum = num + 8;
+    // }
+    // else if (num % 9 == 8){
+    //     smallNum = num - 8;
+    // }
+    // else{
+    //     while (smallerNum % 9 !== 0) {
+    //         smallerNum--;
+    //     }
+      
+    //     while (largerNum % 9 !== 8) {
+    //         largerNum++;
+    //     }
+    // }
+
+    // const neighbors = [];
+  
+    // for (let i = smallerNum; i <= largerNum; i++) {
+    //   neighbors.push(i);
+    // }
+
+    // return neighbors;
+
     let smallerNum = num;
     let largerNum = num;
     if (num % 9 == 0){
@@ -107,11 +132,10 @@ function findLineNeighbors(num) {
       smallerNum--;
     }
 
-    while (largerNum % 9 !== 0) {
+    while (largerNum % 9 !== 8) {
       largerNum++;
     }
-    largerNum--;
-    
+
     const neighbors = [];
   
     for (let i = smallerNum; i <= largerNum; i++) {

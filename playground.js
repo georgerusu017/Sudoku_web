@@ -15,13 +15,6 @@ const CONTROL_IDS = {
     eraseLabel: "eraseLabel",
     notesLabel: "notesLabel",
 }
-const CELL = {
-    id: 0,
-    value: 0,
-    editable: true,
-    isHighlighted: false,
-    color: "blue"
-}
 
 // { value: 5, editable: false , color: lightblue, isHighlighted: true, }
 
