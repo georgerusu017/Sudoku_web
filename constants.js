@@ -14,7 +14,7 @@ const LAYOUT_ID = {
     controlButtons: "control-buttons",
     numbpad: "numbpad"
 }
-const CONTROL_IDS = {
+const CONTROL_ID = {
     undoButton: "undoButton",
     eraseButton: "eraseButton",
     notesButton: "notesButton",
@@ -24,4 +24,4 @@ const CONTROL_IDS = {
 }
 
 
-export { CELL_CSS, LAYOUT_ID, CONTROL_IDS } 
+export { CELL_CSS, LAYOUT_ID, CONTROL_ID } 

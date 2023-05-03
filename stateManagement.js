@@ -1,5 +1,3 @@
-// reset function in class to reset - DONE
-// selected, hilighted - DONE
 
 class StateManager {
   constructor() {

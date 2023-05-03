@@ -1,6 +1,6 @@
 // Work with modules
 import { addButton, addImg, addText, populateTable, createSudokuGrid, createLayout } from './functions.js';
-import { LAYOUT_ID, CONTROL_IDS } from './constants.js';
+import { LAYOUT_ID, CONTROL_ID } from './constants.js';
 
 // { value: 5, editable: false , color: lightblue, isHighlighted: true, }
 
@@ -12,16 +12,14 @@ addText("text", "timer", "Timer: 12:34:56")
 // trebuie o clasa pentru aceste div-ur
 createLayout(LAYOUT_ID.controlButtons,"undo-div","erase-div","notes-div")
 
-
-
 // tohether \/
-addButton(CONTROL_IDS.undoButton,"round_buttons","undo-div",'')
-addButton(CONTROL_IDS.eraseButton,"round_buttons","erase-div",'')
-addButton(CONTROL_IDS.notesButton,"round_buttons","notes-div",'')
+addButton(CONTROL_ID.undoButton,"round_buttons","undo-div",'')
+addButton(CONTROL_ID.eraseButton,"round_buttons","erase-div",'')
+addButton(CONTROL_ID.notesButton,"round_buttons","notes-div",'')
 
-addImg(CONTROL_IDS.undoButton, "./images/undo.png")
-addImg(CONTROL_IDS.eraseButton, "./images/eraser.png")
-addImg(CONTROL_IDS.notesButton, "./images/pencil.png")
+addImg(CONTROL_ID.undoButton, "./images/undo.png")
+addImg(CONTROL_ID.eraseButton, "./images/eraser.png")
+addImg(CONTROL_ID.notesButton, "./images/pencil.png")
 
 // Adding round buttons labels
 addText("control_text", "undo-div", "Undo")

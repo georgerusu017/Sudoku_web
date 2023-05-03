@@ -6,6 +6,8 @@ import { CELL_CSS } from './constants.js'
 
 let cellsToSelect = [];
 
+
+
 const cellSelecting = (event) => {
 
 
@@ -65,6 +67,8 @@ const cellSelecting = (event) => {
 
 }
 
+
+// add click event as function
 for (let i = 0; i<81; i++){
     cellsToSelect[i] = document.getElementById(CELLS[i].idText);
     cellsToSelect[i].addEventListener("click", cellSelecting);
