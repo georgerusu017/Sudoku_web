@@ -3,7 +3,6 @@ import { populateTable, createSudokuGrid, createLayout } from './functions.js';
 import { addButton, addImg, addText } from './domFunctions.js';
 import { LAYOUT_ID, CONTROL_ID } from './constants.js';
 
-// { value: 5, editable: false , color: lightblue, isHighlighted: true, }
 
 createLayout("app", LAYOUT_ID.timer, LAYOUT_ID.table, LAYOUT_ID.control)
 createLayout("control", LAYOUT_ID.controlButtons, "numbpad")

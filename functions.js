@@ -1,4 +1,3 @@
-// Functions needed in the app
 import { LAYOUT_ID, CELL_CSS } from "./constants.js";
 import { addDiv } from "./domFunctions.js";
 import state from './state.js';
@@ -16,7 +15,7 @@ function populateTable(puzzleValues) {
         if (state.cells[i].value != "") {
             state.cells[i].isEditable = false;
         }
-
+        
         // TODO: integrate logic in cell state management
 
         // const cell = document.getElementById(state.cells[i].idText);

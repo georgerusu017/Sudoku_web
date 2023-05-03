@@ -26,6 +26,7 @@ const cellSelecting = (event) => {
     // select cells from current square
     const parentDiv = event.target.parentNode;
     const childDivs = parentDiv.childNodes;
+    
     childDivs.forEach(function (childDiv) {
         if (childDiv === event.target) {
             childDiv.classList.add("highlightStrong")
@@ -44,6 +45,7 @@ const cellSelecting = (event) => {
         const cell = document.getElementById(CELLS[lineValues[i]].idText);
         cell.classList.add("highlight");
     }
+
 
     // sleect cells from column
     let columnValues = findColumnNeighbors(iValue);
