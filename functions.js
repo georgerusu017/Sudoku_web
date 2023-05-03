@@ -1,4 +1,6 @@
 // Functions needed in the app
+import { LAYOUT_ID, CELL_CSS } from "./constants.js";
+import { CELLS } from "./stateManagement.js";
 
 function addDiv(id, whereTo, className = null) {
     const newDiv = document.createElement("div");
@@ -41,7 +43,7 @@ function populateTable(puzzleValues) {
     if (puzzleValues.length !== gridSize) {
         return `The array length must be ${gridSize}`;
     }
-    for (i = 0; i < gridSize; i++) {
+    for (let i = 0; i < gridSize; i++) {
         CELLS[i].value = puzzleValues[i] == "." ? "" : puzzleValues[i];
         if (CELLS[i].value != "") {
             CELLS[i].isEditable = false;
@@ -52,27 +54,28 @@ function populateTable(puzzleValues) {
 }
 
 function createSudokuGrid() {
+
     function createSquareLine(squareId, i, k) {
         for (let j = 0; j < 3; j++) {
             const pointer = (9 * k) + (3 * i) + j;
-            addDiv(CELLS[pointer].idText, squareId, CELLS[pointer].initialClass);
+            addDiv(CELLS[pointer].idText, squareId, CELL_CSS.class);
         }
     }
 
     for (let i = 0; i < 9; i++) {
         const squareId = "Square-" + (i);
-        addDiv(squareId, LAYOUT_IDS.table, "Square")
+        addDiv(squareId, LAYOUT_ID.table, "Square")
 
         if (i < 3) {
-            for (k = 0; k <= 2; k++) {
+            for (let k = 0; k <= 2; k++) {
                 createSquareLine(squareId, i, k);
             }
         } else if (i < 6) {
-            for (k = 2; k <= 4; k++) {
+            for (let k = 2; k <= 4; k++) {
                 createSquareLine(squareId, i, k);
             }
         } else if (i < 9) {
-            for (k = 4; k <= 6; k++) {
+            for (let k = 4; k <= 6; k++) {
                 createSquareLine(squareId, i, k);
             }
         }
@@ -84,13 +87,9 @@ function createLayout(where,...args) {
         addDiv(arg, where)
     });
 }
+// 
 
-function createButton(where,className,...args){
-    args.forEach((arg) => {
-        addButton(arg, where, className)
-    });
-}
-
+// merg in hilight
 function findLineNeighbors(num) {
     // let smallerNum = num;
     // let largerNum = num;
@@ -164,4 +163,15 @@ function findColumnNeighbors(num) {
     }
 
     return neighbors;
+}
+
+export {
+    addButton, 
+    addImg, 
+    addText, 
+    populateTable, 
+    createSudokuGrid, 
+    createLayout,
+    findColumnNeighbors,
+    findLineNeighbors,
 }

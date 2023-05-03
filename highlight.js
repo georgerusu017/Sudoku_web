@@ -1,28 +1,33 @@
 /// HIGHLIGHT ///
 
+import { findColumnNeighbors, findLineNeighbors } from './functions.js';
+import { CELLS, STATE } from './stateManagement.js';
+import { CELL_CSS } from './constants.js'
+
 let cellsToSelect = [];
 
-// verb
 const cellSelecting = (event) => {
+
 
     let iValue = event.target.getAttribute("id");
     iValue = iValue.split("-").pop();
     iValue = parseInt(iValue);
 
     // clear selection
-   
+    
     for (let i = 0; i<81; i++){
 
-         // aici vine reset
-        
-        const cell = document.getElementById(CELLS[i].idText);
+        // aici vine reset
+        // CELLS_CLEAR.reset();
+        const cell = document.getElementById(STATE.cells[i].idText);
 
         // setAttribute devine remove
         // getters and setters in stateManagement
 
-        cell.setAttribute("class", CELLS[i].initialClass);
+        cell.setAttribute("class", CELL_CSS.class);
         CELLS[i].isSelected = false;
         CELLS[i].isHighlighted = false;
+
     }
 
     // select current cell

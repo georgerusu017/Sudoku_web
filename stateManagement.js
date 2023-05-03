@@ -1,26 +1,9 @@
-const CELLS = [];
-
-for (let i = 0; i < 81; i++) {
-    const cell = {
-      idText: `cell-${i}`,
-      id: i,
-      value: "0",
-      isEditable: true,
-      isHighlighted: false,
-      isSelected: false,
-      initialClass: 'cell',
-      //parent 
-      // Element
-  }
-  CELLS.push(cell);
-}
-
 // reset function in class to reset - DONE
 // selected, hilighted - DONE
 
 class StateManager {
   constructor() {
-
+    // transform into class
     this.cells = [];
 
     for (let i = 0; i < 81; i++) {
@@ -31,12 +14,11 @@ class StateManager {
         isEditable: true,
         isHighlighted: false,
         isSelected: false,
-        initialClass: "cell",
 
       };
       this.cells.push(cell);
     }
-
+    //
     this.listeners = new Set();
 
   }
@@ -49,12 +31,11 @@ class StateManager {
   getCells() {
     return this.cells;
   }
-
+  // getter si setter pentru isHighlitghed si isSelected
   reset() {
     for (const cell of this.cells) {
       cell.isHighlighted = false;
       cell.isSelected = false;
-      cell.initialClass = "cell";
     }
     this.notifyListeners();
   }
@@ -73,3 +54,14 @@ class StateManager {
     }
   }
 }
+
+
+const STATE = new StateManager();
+
+// bad
+const CELLS = STATE.getCells();
+
+// for reset purpose
+const CELLS_CLEAR = new StateManager(CELLS);
+
+export {CELLS, STATE, CELLS_CLEAR}

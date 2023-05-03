@@ -1,30 +1,16 @@
 // Work with modules
-
-const LAYOUT_IDS = {
-    timer: "timer",
-    table: "table",
-    control: "control",
-    controlButtons: "control-buttons",
-    numbpad: "numbpad"
-}
-const CONTROL_IDS = {
-    undoButton: "undoButton",
-    eraseButton: "eraseButton",
-    notesButton: "notesButton",
-    undoLabel: "undoLabel",
-    eraseLabel: "eraseLabel",
-    notesLabel: "notesLabel",
-}
+import { addButton, addImg, addText, populateTable, createSudokuGrid, createLayout } from './functions.js';
+import { LAYOUT_ID, CONTROL_IDS } from './constants.js';
 
 // { value: 5, editable: false , color: lightblue, isHighlighted: true, }
 
-createLayout("app",LAYOUT_IDS.timer,LAYOUT_IDS.table,LAYOUT_IDS.control)
-createLayout("control", LAYOUT_IDS.controlButtons, "numbpad")
+createLayout("app",LAYOUT_ID.timer,LAYOUT_ID.table,LAYOUT_ID.control)
+createLayout("control", LAYOUT_ID.controlButtons, "numbpad")
 
 addText("text", "timer", "Timer: 12:34:56")
 
 // trebuie o clasa pentru aceste div-ur
-createLayout(LAYOUT_IDS.controlButtons,"undo-div","erase-div","notes-div")
+createLayout(LAYOUT_ID.controlButtons,"undo-div","erase-div","notes-div")
 
 
 
