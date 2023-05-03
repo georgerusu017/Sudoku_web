@@ -43,7 +43,7 @@ class StateManager {
   }
 
   removeListener(listener) {
-    this.listeners.delete(listener); 
+    this.listeners.delete(listener);
   }
 
   notifyListeners() {
@@ -62,4 +62,4 @@ const CELLS = STATE.getCells();
 // for reset purpose
 const CELLS_CLEAR = new StateManager(CELLS);
 
-export {CELLS, STATE, CELLS_CLEAR}
+export { CELLS, STATE, CELLS_CLEAR }

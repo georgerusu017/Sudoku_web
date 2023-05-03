@@ -1,41 +1,7 @@
 // Functions needed in the app
 import { LAYOUT_ID, CELL_CSS } from "./constants.js";
-import { CELLS } from "./stateManagement.js";
-
-function addDiv(id, whereTo, className = null) {
-    const newDiv = document.createElement("div");
-    newDiv.setAttribute("id", id)
-    if (className !== null) newDiv.setAttribute("class", className)
-    const app = document.getElementById(whereTo);
-    app.appendChild(newDiv);
-}
-
-function addText(className, whereTo, text) {
-    const newDiv = document.createElement("label");
-    const newContent = document.createTextNode(text);
-    newDiv.appendChild(newContent);
-    newDiv.setAttribute("class", className)
-    const app = document.getElementById(whereTo);
-    app.appendChild(newDiv);
-}
-
-function addButton(id, className, whereTo, text) {
-    const newButton = document.createElement("button");
-    newButton.setAttribute("id", id);
-    newButton.setAttribute("class", className);
-    newButton.innerText = text;
-    const app = document.getElementById(whereTo);
-    app.appendChild(newButton);
-}
-
-function addImg(whereTo, source) {
-    const newImg = document.createElement("img");
-    newImg.setAttribute("src", source);
-    newImg.setAttribute("width", "30px");
-    newImg.setAttribute("height", "30px");
-    const app = document.getElementById(whereTo);
-    app.appendChild(newImg);
-}
+import { addDiv } from "./domFunctions.js";
+import state from './state.js';
 
 function populateTable(puzzleValues) {
     // works only if the populated location is named "cell-#" where # is a number
@@ -43,53 +9,60 @@ function populateTable(puzzleValues) {
     if (puzzleValues.length !== gridSize) {
         return `The array length must be ${gridSize}`;
     }
+
     for (let i = 0; i < gridSize; i++) {
-        CELLS[i].value = puzzleValues[i] == "." ? "" : puzzleValues[i];
-        if (CELLS[i].value != "") {
-            CELLS[i].isEditable = false;
+        state.cells[i].value = puzzleValues[i] == "." ? "" : puzzleValues[i];
+
+        if (state.cells[i].value != "") {
+            state.cells[i].isEditable = false;
         }
-        const cell = document.getElementById(CELLS[i].idText);
-        cell.appendChild((document.createTextNode(CELLS[i].value)))
+
+        // TODO: integrate logic in cell state management
+
+        // const cell = document.getElementById(state.cells[i].idText);
+        // cell.appendChild((document.createTextNode(state.cells[i].value)))
     }
 }
 
 function createSudokuGrid() {
 
-    function createSquareLine(squareId, i, k) {
+    function createSquareLine(squareId, i, k, square) {
         for (let j = 0; j < 3; j++) {
             const pointer = (9 * k) + (3 * i) + j;
-            addDiv(CELLS[pointer].idText, squareId, CELL_CSS.class);
+            const cell = addDiv(state.cells[pointer].idText, squareId, CELL_CSS.class);
+            state.cells[pointer].html = cell;
+            state.cells[pointer].squareHtml = square;
         }
     }
 
     for (let i = 0; i < 9; i++) {
         const squareId = "Square-" + (i);
-        addDiv(squareId, LAYOUT_ID.table, "Square")
+        const square = addDiv(squareId, LAYOUT_ID.table, "Square")
 
         if (i < 3) {
             for (let k = 0; k <= 2; k++) {
-                createSquareLine(squareId, i, k);
+                createSquareLine(squareId, i, k, square);
             }
         } else if (i < 6) {
             for (let k = 2; k <= 4; k++) {
-                createSquareLine(squareId, i, k);
+                createSquareLine(squareId, i, k, square);
             }
         } else if (i < 9) {
             for (let k = 4; k <= 6; k++) {
-                createSquareLine(squareId, i, k);
+                createSquareLine(squareId, i, k, square);
             }
         }
     }
+
+    console.log(state);
 }
 
-function createLayout(where,...args) {
+function createLayout(where, ...args) {
     args.forEach((arg) => {
         addDiv(arg, where)
     });
 }
-// 
 
-// merg in hilight
 function findLineNeighbors(num) {
     // let smallerNum = num;
     // let largerNum = num;
@@ -104,14 +77,14 @@ function findLineNeighbors(num) {
     //     while (smallerNum % 9 !== 0) {
     //         smallerNum--;
     //     }
-      
+
     //     while (largerNum % 9 !== 8) {
     //         largerNum++;
     //     }
     // }
 
     // const neighbors = [];
-  
+
     // for (let i = smallerNum; i <= largerNum; i++) {
     //   neighbors.push(i);
     // }
@@ -120,7 +93,7 @@ function findLineNeighbors(num) {
 
     let smallerNum = num;
     let largerNum = num;
-    if (num % 9 == 0){
+    if (num % 9 == 0) {
         largerNum++;
     }
     else {
@@ -128,17 +101,17 @@ function findLineNeighbors(num) {
     }
 
     while (smallerNum % 9 !== 0) {
-      smallerNum--;
+        smallerNum--;
     }
 
     while (largerNum % 9 !== 8) {
-      largerNum++;
+        largerNum++;
     }
 
     const neighbors = [];
-  
+
     for (let i = smallerNum; i <= largerNum; i++) {
-      neighbors.push(i);
+        neighbors.push(i);
     }
 
     return neighbors;
@@ -149,28 +122,25 @@ function findColumnNeighbors(num) {
     let largerNum = num;
 
     while (smallerNum - 9 >= 0) {
-      smallerNum -= 9;
+        smallerNum -= 9;
     }
 
     while (largerNum + 9 <= 80) {
-      largerNum += 9;
+        largerNum += 9;
     }
-    
+
     const neighbors = [];
-  
+
     for (let i = smallerNum; i <= largerNum; i += 9) {
-      neighbors.push(i);
+        neighbors.push(i);
     }
 
     return neighbors;
 }
 
 export {
-    addButton, 
-    addImg, 
-    addText, 
-    populateTable, 
-    createSudokuGrid, 
+    populateTable,
+    createSudokuGrid,
     createLayout,
     findColumnNeighbors,
     findLineNeighbors,

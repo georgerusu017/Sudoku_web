@@ -1,21 +1,22 @@
 // Work with modules
-import { addButton, addImg, addText, populateTable, createSudokuGrid, createLayout } from './functions.js';
+import { populateTable, createSudokuGrid, createLayout } from './functions.js';
+import { addButton, addImg, addText } from './domFunctions.js';
 import { LAYOUT_ID, CONTROL_ID } from './constants.js';
 
 // { value: 5, editable: false , color: lightblue, isHighlighted: true, }
 
-createLayout("app",LAYOUT_ID.timer,LAYOUT_ID.table,LAYOUT_ID.control)
+createLayout("app", LAYOUT_ID.timer, LAYOUT_ID.table, LAYOUT_ID.control)
 createLayout("control", LAYOUT_ID.controlButtons, "numbpad")
 
 addText("text", "timer", "Timer: 12:34:56")
 
 // trebuie o clasa pentru aceste div-ur
-createLayout(LAYOUT_ID.controlButtons,"undo-div","erase-div","notes-div")
+createLayout(LAYOUT_ID.controlButtons, "undo-div", "erase-div", "notes-div")
 
 // tohether \/
-addButton(CONTROL_ID.undoButton,"round_buttons","undo-div",'')
-addButton(CONTROL_ID.eraseButton,"round_buttons","erase-div",'')
-addButton(CONTROL_ID.notesButton,"round_buttons","notes-div",'')
+addButton(CONTROL_ID.undoButton, "round_buttons", "undo-div", '')
+addButton(CONTROL_ID.eraseButton, "round_buttons", "erase-div", '')
+addButton(CONTROL_ID.notesButton, "round_buttons", "notes-div", '')
 
 addImg(CONTROL_ID.undoButton, "./images/undo.png")
 addImg(CONTROL_ID.eraseButton, "./images/eraser.png")

@@ -5,8 +5,6 @@ const CELL_CSS = {
     hilightStrong: "hilightStrong"
 }
 
-
-// singular nu plural
 const LAYOUT_ID = {
     timer: "timer",
     table: "table",

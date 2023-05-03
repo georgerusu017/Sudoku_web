@@ -2,7 +2,7 @@
 
 import { findColumnNeighbors, findLineNeighbors } from './functions.js';
 import { CELLS, STATE } from './stateManagement.js';
-import { CELL_CSS } from './constants.js'
+import state from './state.js';
 
 let cellsToSelect = [];
 
@@ -16,35 +16,23 @@ const cellSelecting = (event) => {
     iValue = parseInt(iValue);
 
     // clear selection
-    
-    for (let i = 0; i<81; i++){
 
-        // aici vine reset
-        // CELLS_CLEAR.reset();
-        const cell = document.getElementById(STATE.cells[i].idText);
-
-        // setAttribute devine remove
-        // getters and setters in stateManagement
-
-        cell.setAttribute("class", CELL_CSS.class);
-        CELLS[i].isSelected = false;
-        CELLS[i].isHighlighted = false;
-
-    }
+    state.reset();
 
     // select current cell
     // event.target.setAttribute("class", "cell highlightStrong")
 
+    
     // select cells from current square
     const parentDiv = event.target.parentNode;
     const childDivs = parentDiv.childNodes;
-    childDivs.forEach(function(childDiv) {
+    childDivs.forEach(function (childDiv) {
         if (childDiv === event.target) {
             childDiv.classList.add("highlightStrong")
             CELLS[iValue].isSelected = true;
-        } 
+        }
         else {
-        childDiv.classList.add("highlight")
+            childDiv.classList.add("highlight")
         }
     });
 
@@ -52,7 +40,7 @@ const cellSelecting = (event) => {
 
     let lineValues = findLineNeighbors(iValue);
     lineValues = lineValues.filter(item => item != iValue);
-    for (let i = 0; i<8; i++){
+    for (let i = 0; i < 8; i++) {
         const cell = document.getElementById(CELLS[lineValues[i]].idText);
         cell.classList.add("highlight");
     }
@@ -60,7 +48,7 @@ const cellSelecting = (event) => {
     // sleect cells from column
     let columnValues = findColumnNeighbors(iValue);
     columnValues = columnValues.filter(item => item != iValue);
-    for (let i = 0; i<8; i++){
+    for (let i = 0; i < 8; i++) {
         const cell = document.getElementById(CELLS[columnValues[i]].idText);
         cell.classList.add("highlight");
     }
@@ -69,7 +57,7 @@ const cellSelecting = (event) => {
 
 
 // add click event as function
-for (let i = 0; i<81; i++){
+for (let i = 0; i < 81; i++) {
     cellsToSelect[i] = document.getElementById(CELLS[i].idText);
     cellsToSelect[i].addEventListener("click", cellSelecting);
 }
