@@ -1,5 +1,6 @@
 /// HIGHLIGHT ///
 
+/// MOMENTAN DEPINDE DE stateManagement.js !!! ///
 import { findColumnNeighbors, findLineNeighbors } from './functions.js';
 import { CELLS, STATE } from './stateManagement.js';
 import state from './state.js';
