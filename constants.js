@@ -21,5 +21,7 @@ const CONTROL_ID = {
     notesLabel: "notesLabel",
 }
 
+const SUDOKU_UNSOLVED = sudoku.generate("medium");
+const SUDOKU_SOLVED = sudoku.solve(SUDOKU_UNSOLVED);
 
-export { CELL_CSS, LAYOUT_ID, CONTROL_ID } 
+export { CELL_CSS, LAYOUT_ID, CONTROL_ID, SUDOKU_SOLVED, SUDOKU_UNSOLVED } 

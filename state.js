@@ -95,7 +95,7 @@ class Cell {
 }
 
 
-class StateManagerTest {
+class StateManager {
 
     /**
      * read about JSDOC
@@ -122,4 +122,4 @@ class StateManagerTest {
     }
 }
 
-export default new StateManagerTest();
+export default new StateManager();

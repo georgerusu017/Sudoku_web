@@ -804,4 +804,3 @@
 
 // Pass whatever the root object is, like 'window' in browsers
 })(this);
-

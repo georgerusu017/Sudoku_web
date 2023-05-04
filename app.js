@@ -1,7 +1,8 @@
 // Work with modules
 import { populateTable, createSudokuGrid, createLayout } from './functions.js';
 import { addButton, addImg, addText } from './domFunctions.js';
-import { LAYOUT_ID, CONTROL_ID } from './constants.js';
+import { LAYOUT_ID, CONTROL_ID, SUDOKU_UNSOLVED } from './constants.js';
+import { addListeners } from './highlight.js';
 
 
 createLayout("app", LAYOUT_ID.timer, LAYOUT_ID.table, LAYOUT_ID.control)
@@ -35,10 +36,5 @@ for (let i = 1; i <= 9; i++) {
 addButton("newGame", "newGame", "numbpad", "New Game")
 
 createSudokuGrid();
-
-let sudokuUnsolved = sudoku.generate("medium");
-let sudokuUnsolvedGrid = sudoku.board_string_to_grid(sudokuUnsolved);
-const sudokuSolved = sudoku.solve(sudokuUnsolved);
-const sudokuSolvedGrid = sudoku.board_string_to_grid(sudokuSolved);
-
-populateTable(sudokuUnsolved)
+populateTable(SUDOKU_UNSOLVED);
+addListeners();
