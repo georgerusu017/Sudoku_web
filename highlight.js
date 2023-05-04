@@ -1,13 +1,7 @@
 /// HIGHLIGHT ///
 
-/// MOMENTAN DEPINDE DE stateManagement.js !!! ///
 import { findColumnNeighbors, findLineNeighbors } from './functions.js';
-import { CELLS, STATE } from './stateManagement.js';
 import state from './state.js';
-
-let cellsToSelect = [];
-
-
 
 const cellSelecting = (event) => {
 
@@ -15,52 +9,62 @@ const cellSelecting = (event) => {
     let iValue = event.target.getAttribute("id");
     iValue = iValue.split("-").pop();
     iValue = parseInt(iValue);
-
     // clear selection
 
     state.reset();
 
-    // select current cell
-    // event.target.setAttribute("class", "cell highlightStrong")
 
+    // FUNCTIONEAZA {
+
+    // const parentDiv = event.target.parentNode;
+    // const childDivs = parentDiv.childNodes;
     
-    // select cells from current square
-    const parentDiv = event.target.parentNode;
-    const childDivs = parentDiv.childNodes;
-    
-    childDivs.forEach(function (childDiv) {
-        if (childDiv === event.target) {
-            childDiv.classList.add("highlightStrong")
-            CELLS[iValue].isSelected = true;
+    // childDivs.forEach(function (childDiv) {
+    //     if (childDiv === event.target) {
+    //         childDiv.classList.add("highlightStrong")
+    //         state.cells[iValue].isSelected = true;
+    //     }
+    //     else {
+    //         childDiv.classList.add("highlight")
+    //     }
+    // });
+
+    // }
+
+
+    const square = state.cells[iValue].squareHtml
+    square.forEach(cell => {
+        if (cell == event.target){
+            cell.isSelected = true;
         }
         else {
-            childDiv.classList.add("highlight")
+            cell.isHighlighted = true;
         }
-    });
+        console.log("cell =", cell)
+    })  
+    // log-uri diferite
+
+    console.log("state = ", state.cells[iValue])
+
+
 
     // select cells from line
-
     let lineValues = findLineNeighbors(iValue);
     lineValues = lineValues.filter(item => item != iValue);
     for (let i = 0; i < 8; i++) {
-        const cell = document.getElementById(CELLS[lineValues[i]].idText);
-        cell.classList.add("highlight");
+        const pointer = lineValues[i];
+        state.cells[pointer].isHighlighted = true;
     }
-
 
     // sleect cells from column
     let columnValues = findColumnNeighbors(iValue);
     columnValues = columnValues.filter(item => item != iValue);
     for (let i = 0; i < 8; i++) {
-        const cell = document.getElementById(CELLS[columnValues[i]].idText);
-        cell.classList.add("highlight");
+        const pointer = columnValues[i];
+        state.cells[pointer].isHighlighted = true;
     }
-
 }
 
-
-// add click event as function
-for (let i = 0; i < 81; i++) {
-    cellsToSelect[i] = document.getElementById(CELLS[i].idText);
-    cellsToSelect[i].addEventListener("click", cellSelecting);
-}
+state.cells.forEach(cell => {
+    cell.html.addEventListener("click", cellSelecting);
+})

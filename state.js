@@ -75,9 +75,18 @@ class Cell {
 
         this.#isSelected = value;
     }
+    
+    get html(){
+        return document.getElementById(this.idText)
+    }
 
     set html(value) {
         this.#html = value;
+    }
+
+    get squareHtml(){
+        const div = document.getElementById(this.idText);
+        return div.parentNode.childNodes;
     }
 
     set squareHtml(value) {
