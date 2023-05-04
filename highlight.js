@@ -34,16 +34,13 @@ const cellClick = (event) => {
     }
 }
 
-function cellKeyPress() {
-    console.log("key pressed");
-}
-
 export function cellHilight() {
     state.cells.forEach(cell => {
         cell.html.addEventListener("click", cellClick);
+        
         cell.html.addEventListener("keydown", function (event) {
             if (event.key === "ArrowDown") {
-                cellKeyPress();
+                console.log("key pressed");
             }
         });
     })
