@@ -2,7 +2,7 @@
 import { findColumnNeighbors, findLineNeighbors } from './functions.js';
 import state from './state.js';
 
-const cellSelecting = (event) => {
+const cellClick = (event) => {
 
     state.reset();
 
@@ -14,7 +14,7 @@ const cellSelecting = (event) => {
     square.forEach(cell => {
         const id = cell.id.split("-").pop()
         state.cells[id].isHighlighted = true;
-    })  
+    })
     state.cells[iValue].isSelected = true;
 
     // select cells from line
@@ -34,8 +34,17 @@ const cellSelecting = (event) => {
     }
 }
 
-export function cellControl (){
+function cellKeyPress() {
+    console.log("key pressed");
+}
+
+export function cellHilight() {
     state.cells.forEach(cell => {
-        cell.html.addEventListener("click", cellSelecting);
+        cell.html.addEventListener("click", cellClick);
+        cell.html.addEventListener("keydown", function (event) {
+            if (event.key === "ArrowDown") {
+                cellKeyPress();
+            }
+        });
     })
 }

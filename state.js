@@ -114,6 +114,8 @@ class StateManager {
         return this.#cells;
     }
 
+    
+
     reset() {
         this.#cells.forEach(cell => {
             cell.isHighlighted = false;
