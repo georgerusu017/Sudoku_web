@@ -6,6 +6,7 @@ const CELL_CSS = {
 }
 
 const LAYOUT_ID = {
+    game: "game",
     timer: "timer",
     table: "table",
     control: "control",

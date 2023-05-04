@@ -34,7 +34,7 @@ const cellSelecting = (event) => {
     }
 }
 
-export function addListeners (){
+export function cellControl (){
     state.cells.forEach(cell => {
         cell.html.addEventListener("click", cellSelecting);
     })

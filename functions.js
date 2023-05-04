@@ -1,9 +1,8 @@
-import { LAYOUT_ID, CELL_CSS } from "./constants.js";
-import { addDiv } from "./domFunctions.js";
+import { LAYOUT_ID, CELL_CSS, CONTROL_ID } from "./constants.js";
+import { addDiv, addText, addButton, addImg } from "./domFunctions.js";
 import state from './state.js';
 
 function populateTable(puzzleValues) {
-    // works only if the populated location is named "cell-#" where # is a number
     const gridSize = 81;
     if (puzzleValues.length !== gridSize) {
         return `The array length must be ${gridSize}`;
@@ -15,11 +14,7 @@ function populateTable(puzzleValues) {
         if (state.cells[i].value != "") {
             state.cells[i].isEditable = false;
         }
-        
         // TODO: integrate logic in cell state management
-
-        // const cell = document.getElementById(state.cells[i].idText);
-        // cell.appendChild((document.createTextNode(state.cells[i].value)))
     }
 }
 
@@ -52,8 +47,6 @@ function createSudokuGrid() {
             }
         }
     }
-
-    console.log(state);
 }
 
 function createLayout(where, ...args) {
@@ -137,10 +130,44 @@ function findColumnNeighbors(num) {
     return neighbors;
 }
 
+function createRoundButtons() {
+    addButton(CONTROL_ID.undoButton, "round_buttons", "undo-div", '')
+    addButton(CONTROL_ID.eraseButton, "round_buttons", "erase-div", '')
+    addButton(CONTROL_ID.notesButton, "round_buttons", "notes-div", '')
+
+    addImg(CONTROL_ID.undoButton, "./images/undo.png")
+    addImg(CONTROL_ID.eraseButton, "./images/eraser.png")
+    addImg(CONTROL_ID.notesButton, "./images/pencil.png")
+
+    // Adding round buttons labels
+    addText("control_text", "undo-div", "Undo")
+    addText("control_text", "erase-div", "Erase")
+    addText("control_text", "notes-div", "Notes")
+}
+
+function createNumberButtons(){
+    for (let i = 1; i <= 9; i++) {
+        addButton("number-button-" + i, "number_buttons", "numbpad", i)
+    }
+}
+
+function createControlBoard() {
+    createLayout("app", LAYOUT_ID.timer)
+    createLayout("app",LAYOUT_ID.game)
+    createLayout("game", LAYOUT_ID.table, LAYOUT_ID.control)
+    createLayout("control", LAYOUT_ID.controlButtons, "numbpad")
+    createLayout(LAYOUT_ID.controlButtons, "undo-div", "erase-div", "notes-div")
+    createRoundButtons();
+    createNumberButtons();
+    addButton("newGame", "newGame", "numbpad", "New Game")
+    addText("timer", LAYOUT_ID.timer, "Timer: 12:34:56")
+}
+
 export {
     populateTable,
     createSudokuGrid,
     createLayout,
     findColumnNeighbors,
     findLineNeighbors,
+    createControlBoard,
 }
