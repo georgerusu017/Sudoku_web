@@ -1,3 +1,4 @@
+import { findColumnNeighbors, findLineNeighbors } from "./functions.js";
 
 class Cell {
     #id;
@@ -102,6 +103,7 @@ class StateManager {
      * @type {Cell[]}
      */
     #cells = [];
+    #target;
 
     constructor() {
         for (let i = 0; i < 81; i++) {
@@ -110,11 +112,39 @@ class StateManager {
         }
     }
 
+
     get cells() {
         return this.#cells;
     }
 
-    
+    set target(value) {
+        this.#target = value;
+    }
+
+    highlight(){
+        const pointer = parseInt(this.#target);
+        const childs = this.#cells[pointer].squareHtml;
+        const lineValues = findLineNeighbors(pointer).filter(item => item != pointer);
+        const columnValues = findColumnNeighbors(pointer).filter(item => item != pointer);
+        const test = findColumnNeighbors(pointer)
+
+        let childsIds = new Array;
+        childs.forEach(cell => {
+            cell = cell.id.split("-").pop();
+            childsIds.push(cell)
+        })
+        childsIds = childsIds.filter(item => item != pointer);
+        childsIds.forEach(id =>{
+            this.#cells[id].isHighlighted = true;
+        })
+        lineValues.forEach(id => {
+            this.#cells[id].isHighlighted = true;
+        })
+        columnValues.forEach(id => {
+            this.#cells[id].isHighlighted = true;
+        })
+    }
+
 
     reset() {
         this.#cells.forEach(cell => {

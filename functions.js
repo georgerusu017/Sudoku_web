@@ -130,19 +130,18 @@ function findColumnNeighbors(num) {
     return neighbors;
 }
 
+function createButtonWithLabelAndImg(id,className,whereTo,imgFrom,labelClass,labelText){
+    addButton(id, className, whereTo, '')
+    addImg(id, imgFrom)
+    addText(labelClass, whereTo, labelText)
+}
+
 function createRoundButtons() {
-    addButton(CONTROL_ID.undoButton, "round_buttons", "undo-div", '')
-    addButton(CONTROL_ID.eraseButton, "round_buttons", "erase-div", '')
-    addButton(CONTROL_ID.notesButton, "round_buttons", "notes-div", '')
 
-    addImg(CONTROL_ID.undoButton, "./images/undo.png")
-    addImg(CONTROL_ID.eraseButton, "./images/eraser.png")
-    addImg(CONTROL_ID.notesButton, "./images/pencil.png")
+    createButtonWithLabelAndImg(CONTROL_ID.undoButton, "round_buttons", "undo-div", "./images/undo.png", "control_text", "Undo")
+    createButtonWithLabelAndImg(CONTROL_ID.eraseButton, "round_buttons", "erase-div", "./images/eraser.png", "control_text", "Erase")
+    createButtonWithLabelAndImg(CONTROL_ID.notesButton, "round_buttons", "notes-div", "./images/pencil.png", "control_text", "Notes")
 
-    // Adding round buttons labels
-    addText("control_text", "undo-div", "Undo")
-    addText("control_text", "erase-div", "Erase")
-    addText("control_text", "notes-div", "Notes")
 }
 
 function createNumberButtons(){
