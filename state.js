@@ -76,8 +76,8 @@ class Cell {
 
         this.#isSelected = value;
     }
-    
-    get html(){
+
+    get html() {
         return document.getElementById(this.idText)
     }
 
@@ -85,7 +85,7 @@ class Cell {
         this.#html = value;
     }
 
-    get squareHtml(){
+    get squareHtml() {
         const div = document.getElementById(this.idText);
         return div.parentNode.childNodes;
     }
@@ -121,12 +121,11 @@ class StateManager {
         this.#target = value;
     }
 
-    highlight(){
+    highlight() {
         const pointer = parseInt(this.#target);
         const childs = this.#cells[pointer].squareHtml;
-        const lineValues = findLineNeighbors(pointer).filter(item => item != pointer);
-        const columnValues = findColumnNeighbors(pointer).filter(item => item != pointer);
-        const test = findColumnNeighbors(pointer)
+        const lineValues = findLineNeighbors(pointer);
+        const columnValues = findColumnNeighbors(pointer);
 
         let childsIds = new Array;
         childs.forEach(cell => {
@@ -134,7 +133,7 @@ class StateManager {
             childsIds.push(cell)
         })
         childsIds = childsIds.filter(item => item != pointer);
-        childsIds.forEach(id =>{
+        childsIds.forEach(id => {
             this.#cells[id].isHighlighted = true;
         })
         lineValues.forEach(id => {

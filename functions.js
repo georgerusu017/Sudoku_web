@@ -106,6 +106,7 @@ function findLineNeighbors(num) {
         neighbors.push(i);
     }
 
+    neighbors.filter(item => item != num)
     return neighbors;
 }
 
@@ -127,6 +128,7 @@ function findColumnNeighbors(num) {
         neighbors.push(i);
     }
 
+    neighbors.filter(item => item != num)
     return neighbors;
 }
 
