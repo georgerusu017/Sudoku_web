@@ -7,7 +7,6 @@ class Cell {
     #isHighlighted;
     #isSelected;
     #html;
-    #squareHtml;
 
     constructor(id) {
         this.#id = id;
@@ -85,18 +84,19 @@ class Cell {
         this.#html = value;
     }
 
-    get squareHtml() {
+    get squareCells() {
         const div = document.getElementById(this.idText);
-        return div.parentNode.childNodes;
-    }
-
-    set squareHtml(value) {
-        this.#squareHtml = value;
+        return [...div.parentNode.childNodes];
     }
 }
 
 
 class StateManager {
+
+    // foloseste squareCells corect
+    // scoatem target
+    // trebuie inlocuit hilight prin control 
+
 
     /**
      * read about JSDOC
@@ -112,6 +112,14 @@ class StateManager {
         }
     }
 
+    getSelectedCellIndex() {
+        let pointer = 0;
+        for (let i = 0; i < 81; i++) {
+            if (this.#cells[i].isSelected == true)
+                pointer = i;
+        }
+        return pointer;
+    }
 
     get cells() {
         return this.#cells;
@@ -121,19 +129,25 @@ class StateManager {
         this.#target = value;
     }
 
-    highlight() {
-        const pointer = parseInt(this.#target);
-        const childs = this.#cells[pointer].squareHtml;
-        const lineValues = findLineNeighbors(pointer);
-        const columnValues = findColumnNeighbors(pointer);
+    setSelectedCell(cellId){
+        this.reset();
+        const cellIndexToSelect = this.#cells.findIndex((cell) => cell.idText === cellId);
+        this.#cells[cellIndexToSelect].isSelected = true;
+        this.highlight(cellIndexToSelect);
+    }
 
-        let childsIds = new Array;
-        childs.forEach(cell => {
-            cell = cell.id.split("-").pop();
-            childsIds.push(cell)
+    highlight(selectedCellIndex) {
+        const children = this.#cells[selectedCellIndex].squareCells;
+        const lineValues = findLineNeighbors(selectedCellIndex);
+        const columnValues = findColumnNeighbors(selectedCellIndex);
+
+        let childrenIds = children.map((cellHtml) => {
+            const cellId = cellHtml.id.split("-").pop();
+            return cellId;
         })
-        childsIds = childsIds.filter(item => item != pointer);
-        childsIds.forEach(id => {
+
+        childrenIds = childrenIds.filter(item => item != selectedCellIndex);
+        childrenIds.forEach(id => {
             this.#cells[id].isHighlighted = true;
         })
         lineValues.forEach(id => {
