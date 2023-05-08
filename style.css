@@ -68,6 +68,15 @@ body{
 .highlightStrong{
     background-color: rgb(194, 221, 248);
 }
+.highlightInvalid{
+    background-color: rgb(241, 208, 214);
+}
+.isEditable{
+    color: rgb(48, 112, 219);
+}
+.invalidValue{
+    color: rgb(213, 101, 111);
+}
 
 #newGame{
     width: 380px;

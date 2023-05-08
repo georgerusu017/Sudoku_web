@@ -50,6 +50,7 @@ class Cell {
      * @param {boolean}
      */
     set isHighlighted(value) {
+
         if (value) {
             this.#html.classList.add("highlight")
         } else {
@@ -129,7 +130,7 @@ class StateManager {
         this.#target = value;
     }
 
-    setSelectedCell(cellId){
+    setSelectedCell(cellId) {
         this.reset();
         const cellIndexToSelect = this.#cells.findIndex((cell) => cell.idText === cellId);
         this.#cells[cellIndexToSelect].isSelected = true;
@@ -140,6 +141,7 @@ class StateManager {
         const children = this.#cells[selectedCellIndex].squareCells;
         const lineValues = findLineNeighbors(selectedCellIndex);
         const columnValues = findColumnNeighbors(selectedCellIndex);
+        let invalid = false;
 
         let childrenIds = children.map((cellHtml) => {
             const cellId = cellHtml.id.split("-").pop();
@@ -151,6 +153,16 @@ class StateManager {
             this.#cells[id].isHighlighted = true;
         })
         lineValues.forEach(id => {
+            // if (this.#cells[id].value == this.#cells[selectedCellIndex].value && this.#cells[id].value != ""){
+            //     console.log(this.#cells[id].value)
+            //     console.log(this.#cells[selectedCellIndex].value)
+            //     console.log(this.#cells[id].value == this.#cells[selectedCellIndex].value)
+            //     invalid = true;
+            //     this.#cells[id].html.classList.add("highlightInvalid")
+            // }
+            // else {
+            //     this.#cells[id].html.classList.remove("highlightInvalid")
+            // }
             this.#cells[id].isHighlighted = true;
         })
         columnValues.forEach(id => {
@@ -163,6 +175,20 @@ class StateManager {
         this.#cells.forEach(cell => {
             cell.isHighlighted = false;
             cell.isSelected = false;
+            if (cell.isEditable == true){
+                cell.html.classList.add("isEditable")
+            }
+            else {
+                cell.html.classList.remove("isEditable")
+            }
+        })
+    }
+
+    boardWipe() {
+        this.#cells.forEach(cell => {
+            cell.isHighlighted = false;
+            cell.isSelected = false;
+            cell.isEditable = true;
         })
     }
 }

@@ -4,6 +4,8 @@ import state from './state.js';
 
 function populateTable(puzzleValues) {
     const gridSize = 81;
+    state.boardWipe();
+
     if (puzzleValues.length !== gridSize) {
         return `The array length must be ${gridSize}`;
     }
@@ -14,7 +16,6 @@ function populateTable(puzzleValues) {
         if (state.cells[i].value != "") {
             state.cells[i].isEditable = false;
         }
-        // TODO: integrate logic in cell state management
     }
 }
 
@@ -25,7 +26,6 @@ function createSudokuGrid() {
             const pointer = (9 * k) + (3 * i) + j;
             const cell = addDiv(state.cells[pointer].idText, squareId, CELL_CSS.class);
             state.cells[pointer].html = cell;
-            state.cells[pointer].squareHtml = square;
         }
     }
 
@@ -56,35 +56,10 @@ function createLayout(where, ...args) {
 }
 
 function findLineNeighbors(num) {
-    // let smallerNum = num;
-    // let largerNum = num;
-
-    // if (num % 9 == 0){
-    //     largeNum = num + 8;
-    // }
-    // else if (num % 9 == 8){
-    //     smallNum = num - 8;
-    // }
-    // else{
-    //     while (smallerNum % 9 !== 0) {
-    //         smallerNum--;
-    //     }
-
-    //     while (largerNum % 9 !== 8) {
-    //         largerNum++;
-    //     }
-    // }
-
-    // const neighbors = [];
-
-    // for (let i = smallerNum; i <= largerNum; i++) {
-    //   neighbors.push(i);
-    // }
-
-    // return neighbors;
 
     let smallerNum = num;
     let largerNum = num;
+    let test = []
     if (num % 9 == 0) {
         largerNum++;
     }
@@ -106,13 +81,15 @@ function findLineNeighbors(num) {
         neighbors.push(i);
     }
 
-    neighbors.filter(item => item != num)
-    return neighbors;
+    test = neighbors.filter(item => item != num)
+
+    return test;
 }
 
 function findColumnNeighbors(num) {
     let smallerNum = num;
     let largerNum = num;
+    let test = [];
 
     while (smallerNum - 9 >= 0) {
         smallerNum -= 9;
@@ -128,8 +105,9 @@ function findColumnNeighbors(num) {
         neighbors.push(i);
     }
 
-    neighbors.filter(item => item != num)
-    return neighbors;
+    test = neighbors.filter(item => item != num)
+
+    return test;
 }
 
 function createButtonWithLabelAndImg(id,className,whereTo,imgFrom,labelClass,labelText){

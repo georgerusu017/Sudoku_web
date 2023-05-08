@@ -20,9 +20,12 @@ const CONTROL_ID = {
     undoLabel: "undoLabel",
     eraseLabel: "eraseLabel",
     notesLabel: "notesLabel",
+    newGameButton: 'newGame',
+    numberButtons: []
 }
 
-const SUDOKU_UNSOLVED = sudoku.generate("medium");
-const SUDOKU_SOLVED = sudoku.solve(SUDOKU_UNSOLVED);
+for (let i = 1; i < 10; i++) {
+    CONTROL_ID.numberButtons.push(`number-button-${i}`)
+}
 
-export { CELL_CSS, LAYOUT_ID, CONTROL_ID, SUDOKU_SOLVED, SUDOKU_UNSOLVED } 
+export { CELL_CSS, LAYOUT_ID, CONTROL_ID } 

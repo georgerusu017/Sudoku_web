@@ -1,12 +1,14 @@
 // Work with modules
-import { populateTable, createSudokuGrid, createControlBoard } from './functions.js';
-import { SUDOKU_UNSOLVED } from './constants.js';
-import { cellClickPress, cellKeyPress, selectStartingCell } from './highlight.js';
-import state from './state.js';
+import { createSudokuGrid, createControlBoard } from './functions.js';
+import { addButtonsListeners, addCellClickListeners, addKeyboardListeners, startGame } from './control.js';
 
 createControlBoard();
 createSudokuGrid();
-populateTable(SUDOKU_UNSOLVED);
-cellClickPress();
-cellKeyPress();
-selectStartingCell();
+
+
+startGame();
+
+
+addCellClickListeners();
+addKeyboardListeners();
+addButtonsListeners();
