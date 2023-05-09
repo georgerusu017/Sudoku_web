@@ -5,9 +5,7 @@ import { addButtonsListeners, addCellClickListeners, addKeyboardListeners, start
 createControlBoard();
 createSudokuGrid();
 
-
 startGame();
-
 
 addCellClickListeners();
 addKeyboardListeners();

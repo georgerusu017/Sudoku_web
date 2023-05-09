@@ -11,11 +11,13 @@ function populateTable(puzzleValues) {
     }
 
     for (let i = 0; i < gridSize; i++) {
+        // un singur if cu doua decizii
         state.cells[i].value = puzzleValues[i] == "." ? "" : puzzleValues[i];
 
         if (state.cells[i].value != "") {
             state.cells[i].isEditable = false;
         }
+        // pana aici
     }
 }
 
@@ -59,7 +61,7 @@ function findLineNeighbors(num) {
 
     let smallerNum = num;
     let largerNum = num;
-    let test = []
+    let output = [];
     if (num % 9 == 0) {
         largerNum++;
     }
@@ -81,15 +83,15 @@ function findLineNeighbors(num) {
         neighbors.push(i);
     }
 
-    test = neighbors.filter(item => item != num)
+    output = neighbors.filter(item => item != num)
 
-    return test;
+    return output;
 }
 
 function findColumnNeighbors(num) {
     let smallerNum = num;
     let largerNum = num;
-    let test = [];
+    let output = [];
 
     while (smallerNum - 9 >= 0) {
         smallerNum -= 9;
@@ -105,9 +107,9 @@ function findColumnNeighbors(num) {
         neighbors.push(i);
     }
 
-    test = neighbors.filter(item => item != num)
+    output = neighbors.filter(item => item != num)
 
-    return test;
+    return output;
 }
 
 function createButtonWithLabelAndImg(id,className,whereTo,imgFrom,labelClass,labelText){

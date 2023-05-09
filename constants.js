@@ -1,9 +1,9 @@
 
-const CELL_CSS = {
+const CELL_CSS = Object.freeze ({
     class: "cell",
     hilglight: "highlight",
     hilightStrong: "hilightStrong"
-}
+})
 
 const LAYOUT_ID = {
     game: "game",
@@ -21,7 +21,11 @@ const CONTROL_ID = {
     eraseLabel: "eraseLabel",
     notesLabel: "notesLabel",
     newGameButton: 'newGame',
+    //
     numberButtons: []
+    // [ ...Array(N).keys() ]
+    // Array(N).fill().map((_, i) => i+1);
+    // Array(10).fill().map((_, i) => i+1);
 }
 
 for (let i = 1; i < 10; i++) {

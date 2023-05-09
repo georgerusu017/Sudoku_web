@@ -6,6 +6,7 @@ class Cell {
     #isEditable;
     #isHighlighted;
     #isSelected;
+    #invalidCount;
     #html;
 
     constructor(id) {
@@ -15,6 +16,7 @@ class Cell {
         this.#isHighlighted = false;
         this.#isSelected = false;
         this.#html = null;
+        this.#invalidCount = 0;
     }
 
     get idText() {
@@ -40,6 +42,14 @@ class Cell {
 
     set isEditable(value) {
         this.#isEditable = value;
+    }
+
+    get invalidCount() {
+        return this.#invalidCount;
+    }
+
+    set invalidCount(value) {
+        this.#invalidCount = value;
     }
 
     get isHighlighted() {
@@ -93,18 +103,11 @@ class Cell {
 
 
 class StateManager {
-
-    // foloseste squareCells corect
-    // scoatem target
-    // trebuie inlocuit hilight prin control 
-
-
     /**
      * read about JSDOC
      * @type {Cell[]}
      */
     #cells = [];
-    #target;
 
     constructor() {
         for (let i = 0; i < 81; i++) {
@@ -115,19 +118,18 @@ class StateManager {
 
     getSelectedCellIndex() {
         let pointer = 0;
+
+        // find index in loc de for
         for (let i = 0; i < 81; i++) {
-            if (this.#cells[i].isSelected == true)
+            if (this.#cells[i].isSelected)
                 pointer = i;
         }
         return pointer;
     }
+        // find index
 
     get cells() {
         return this.#cells;
-    }
-
-    set target(value) {
-        this.#target = value;
     }
 
     setSelectedCell(cellId) {
@@ -139,33 +141,30 @@ class StateManager {
 
     highlight(selectedCellIndex) {
         const children = this.#cells[selectedCellIndex].squareCells;
-        const lineValues = findLineNeighbors(selectedCellIndex);
-        const columnValues = findColumnNeighbors(selectedCellIndex);
-        let invalid = false;
+        const lineCellIndexes = findLineNeighbors(selectedCellIndex);
+        const columnCellIndexes = findColumnNeighbors(selectedCellIndex);
 
-        let childrenIds = children.map((cellHtml) => {
+        let childrenIndexes = children.map((cellHtml) => {
             const cellId = cellHtml.id.split("-").pop();
             return cellId;
         })
 
-        childrenIds = childrenIds.filter(item => item != selectedCellIndex);
-        childrenIds.forEach(id => {
-            this.#cells[id].isHighlighted = true;
+        childrenIndexes = childrenIndexes.filter(index => index != selectedCellIndex);
+
+        childrenIndexes.forEach(index => {
+            // 
+            this.#cells[index].isHighlighted = true;
+
         })
-        lineValues.forEach(id => {
-            if (this.#cells[id].value == this.#cells[selectedCellIndex].value
-                && this.#cells[id].value != ""
-                && this.#cells[selectedCellIndex].isEditable == true) {
-                console.log(this.#cells[id].value)
-                console.log(this.#cells[selectedCellIndex].value)
-                console.log(this.#cells[id].value == this.#cells[selectedCellIndex].value)
-                invalid = true;
-                this.#cells[id].html.classList.add("highlightInvalid")
-            }
-            this.#cells[id].isHighlighted = true;
+        lineCellIndexes.forEach(index => {
+            // Se repeta
+
+            this.#cells[index].isHighlighted = true;
         })
-        columnValues.forEach(id => {
-            this.#cells[id].isHighlighted = true;
+        columnCellIndexes.forEach(index => {
+            // Se repeta
+
+            this.#cells[index].isHighlighted = true;
         })
     }
 
@@ -174,12 +173,13 @@ class StateManager {
         this.#cells.forEach(cell => {
             cell.isHighlighted = false;
             cell.isSelected = false;
-            if (cell.isEditable == true) {
-                cell.html.classList.add("isEditable")
-            }
-            else {
-                cell.html.classList.remove("isEditable")
-            }
+            // verifica daca mai facea ceva si da-i foc
+            // if (cell.isEditable) {
+            //     cell.html.classList.add("isEditable")
+            // }
+            // else {
+            //     cell.html.classList.remove("isEditable")
+            // }
         })
     }
 

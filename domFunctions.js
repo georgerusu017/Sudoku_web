@@ -4,7 +4,6 @@ export function addDiv(id, whereTo, className = null) {
     if (className !== null) newDiv.setAttribute("class", className)
     const app = document.getElementById(whereTo);
     app.appendChild(newDiv);
-
     return newDiv;
 }
 
