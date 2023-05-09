@@ -153,16 +153,15 @@ class StateManager {
             this.#cells[id].isHighlighted = true;
         })
         lineValues.forEach(id => {
-            // if (this.#cells[id].value == this.#cells[selectedCellIndex].value && this.#cells[id].value != ""){
-            //     console.log(this.#cells[id].value)
-            //     console.log(this.#cells[selectedCellIndex].value)
-            //     console.log(this.#cells[id].value == this.#cells[selectedCellIndex].value)
-            //     invalid = true;
-            //     this.#cells[id].html.classList.add("highlightInvalid")
-            // }
-            // else {
-            //     this.#cells[id].html.classList.remove("highlightInvalid")
-            // }
+            if (this.#cells[id].value == this.#cells[selectedCellIndex].value
+                && this.#cells[id].value != ""
+                && this.#cells[selectedCellIndex].isEditable == true) {
+                console.log(this.#cells[id].value)
+                console.log(this.#cells[selectedCellIndex].value)
+                console.log(this.#cells[id].value == this.#cells[selectedCellIndex].value)
+                invalid = true;
+                this.#cells[id].html.classList.add("highlightInvalid")
+            }
             this.#cells[id].isHighlighted = true;
         })
         columnValues.forEach(id => {
@@ -175,7 +174,7 @@ class StateManager {
         this.#cells.forEach(cell => {
             cell.isHighlighted = false;
             cell.isSelected = false;
-            if (cell.isEditable == true){
+            if (cell.isEditable == true) {
                 cell.html.classList.add("isEditable")
             }
             else {

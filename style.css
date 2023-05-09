@@ -70,6 +70,7 @@ body{
 }
 .highlightInvalid{
     background-color: rgb(241, 208, 214);
+    color: rgb(213, 101, 111);
 }
 .isEditable{
     color: rgb(48, 112, 219);
