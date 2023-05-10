@@ -5,14 +5,14 @@ const CELL_CSS = Object.freeze ({
     hilightStrong: "hilightStrong"
 })
 
-const LAYOUT_ID = {
+const LAYOUT_ID = Object.freeze({
     game: "game",
     timer: "timer",
     table: "table",
     control: "control",
     controlButtons: "control-buttons",
     numbpad: "numbpad"
-}
+})
 const CONTROL_ID = {
     undoButton: "undoButton",
     eraseButton: "eraseButton",

@@ -65,9 +65,6 @@ body{
 .highlight{
     background-color: rgb(228, 235, 242);
 }
-.highlightStrong{
-    background-color: rgb(194, 221, 248);
-}
 .highlightInvalid{
     background-color: rgb(241, 208, 214);
 }
@@ -77,7 +74,9 @@ body{
 .invalidValue{
     color: rgb(213, 101, 111);
 }
-
+.highlightStrong{
+    background-color: rgb(194, 221, 248);
+}
 #newGame{
     width: 380px;
     height: 70px;

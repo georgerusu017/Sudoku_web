@@ -1,6 +1,6 @@
 
 import { CONTROL_ID } from './constants.js';
-import { findLineNeighbors, populateTable } from './functions.js';
+import { findLineNeighbors, findColumnNeighbors, populateTable } from './functions.js';
 import state from './state.js';
 
 const cellClick = (event) => {
@@ -13,16 +13,85 @@ export function addCellClickListeners() {
     })
 }
 
+function incrementInvalid(selectedCell, comparator, index) {
+    if (state.cells[index].value == comparator) {
+        state.cells[index].invalidCount += 1;
+        selectedCell.invalidCount += 1;
+    }
+
+}
+
+function incrementGroup(line, column, children, selectedCell, comparator){
+
+    line.forEach(index => {
+        incrementInvalid(selectedCell, comparator, index)
+    })
+
+    column.forEach(index => {
+        incrementInvalid(selectedCell, comparator, index)
+    })
+
+    children.forEach(index => {
+        incrementInvalid(selectedCell, comparator, index)
+    })
+
+}
+
+function decrementInvalid(selectedCell, comparator, index) {
+    if (state.cells[index].value == comparator) {
+        state.cells[index].invalidCount -= 1;
+        selectedCell.invalidCount -= 1;
+    }
+}
+
+function decrementGroup(line, column, children, selectedCell, comparator){
+
+    line.forEach(index => {
+        decrementInvalid(selectedCell, comparator, index)
+    })
+
+    column.forEach(index => {
+        decrementInvalid(selectedCell, comparator, index)
+    })
+
+    children.forEach(index => {
+        decrementInvalid(selectedCell, comparator, index)
+    })
+}
+
 function handleNumberKeyPress(event, selectedCellIndex) {
-    
+
     const myRegex = /[1-9]/
+
     const selectedCell = state.cells[selectedCellIndex];
+    const lineCellIndexes = findLineNeighbors(selectedCellIndex)
+    const columnCellIndexes = findColumnNeighbors(selectedCellIndex);
+    const children = state.cells[selectedCellIndex].squareCells;
+    let childrenIndexes = children.map((cellHtml) => {
+        const cellId = cellHtml.id.split("-").pop();
+        return cellId;
+    })
+    childrenIndexes = childrenIndexes.filter(index => index != selectedCellIndex);
 
     if (myRegex.test(event.key) && selectedCell.isEditable == true) {
-        if (selectedCell.value != event.key) {
+        if (selectedCell.value == "") {
+
+            incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, event.key)
             selectedCell.value = event.key;
-        } else {
-            selectedCell.value = null;
+        
+        }
+        else if (selectedCell.value == event.key) {
+
+            decrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, event.key)
+            selectedCell.value = "";
+
+        }
+        else if (selectedCell.value != event.key && selectedCell.value != "") {
+
+            decrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
+            selectedCell.value = event.key;
+            incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, event.key)
+
         }
     }
 }
@@ -95,7 +164,7 @@ export function addButtonsListeners() {
 
     numberButtons.forEach((element) => {
         element.addEventListener('click', () => {
-            
+
             const selectedCellIndex = state.getSelectedCellIndex()
             const selectedCell = state.cells[selectedCellIndex];
             const value = numberButtons.indexOf(element) + 1;
@@ -120,7 +189,7 @@ function selectStartingCell() {
 }
 
 export function startGame() {
-    const SUDOKU_UNSOLVED = sudoku.generate("medium");
+    const SUDOKU_UNSOLVED = sudoku.generate("insane");
     const SUDOKU_SOLVED = sudoku.solve(SUDOKU_UNSOLVED);
     populateTable(SUDOKU_UNSOLVED);
     selectStartingCell();

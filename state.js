@@ -107,12 +107,12 @@ class StateManager {
      * read about JSDOC
      * @type {Cell[]}
      */
-    #cells = [];
+    cells = [];
 
     constructor() {
         for (let i = 0; i < 81; i++) {
             const cell = new Cell(i);
-            this.#cells.push(cell);
+            this.cells.push(cell);
         }
     }
 
@@ -121,7 +121,7 @@ class StateManager {
 
         // find index in loc de for
         for (let i = 0; i < 81; i++) {
-            if (this.#cells[i].isSelected)
+            if (this.cells[i].isSelected)
                 pointer = i;
         }
         return pointer;
@@ -129,21 +129,36 @@ class StateManager {
         // find index
 
     get cells() {
-        return this.#cells;
+        return this.cells;
     }
 
     setSelectedCell(cellId) {
         this.reset();
-        const cellIndexToSelect = this.#cells.findIndex((cell) => cell.idText === cellId);
-        this.#cells[cellIndexToSelect].isSelected = true;
+        const cellIndexToSelect = this.cells.findIndex((cell) => cell.idText === cellId);
+        this.cells[cellIndexToSelect].isSelected = true;
         this.highlight(cellIndexToSelect);
     }
 
+    // checkingHighlight(cells, indexTest){
+    //     cells[indexTest].isHighlighted = true;
+    //         if (cells[indexTest].invalidCount > 0){
+    //             cells[indexTest].html.classList.add("highlightInvalid")
+    //             if (cells[indexTest].isEditable)  {
+    //                 cells[indexTest].html.classList.add("invalidValue")
+    //             }
+    //         }
+    //         else {
+    //             cells[indexTest].html.classList.remove("highlightInvalid")
+    //             if (cells[indexTest].isEditable)  {
+    //                 cells[indexTest].html.classList.remove("invalidValue")
+    //             }
+    //         }
+    // }
+    
     highlight(selectedCellIndex) {
-        const children = this.#cells[selectedCellIndex].squareCells;
+        const children = this.cells[selectedCellIndex].squareCells;
         const lineCellIndexes = findLineNeighbors(selectedCellIndex);
         const columnCellIndexes = findColumnNeighbors(selectedCellIndex);
-
         let childrenIndexes = children.map((cellHtml) => {
             const cellId = cellHtml.id.split("-").pop();
             return cellId;
@@ -152,25 +167,61 @@ class StateManager {
         childrenIndexes = childrenIndexes.filter(index => index != selectedCellIndex);
 
         childrenIndexes.forEach(index => {
-            // 
-            this.#cells[index].isHighlighted = true;
+            // Se repeta
+            this.cells[index].isHighlighted = true;
+            if (this.cells[index].invalidCount > 0){
+                this.cells[index].html.classList.add("highlightInvalid")
+                if (this.cells[index].isEditable)  {
+                    this.cells[index].html.classList.add("invalidValue")
+                }
+            }
+            else {
+                this.cells[index].html.classList.remove("highlightInvalid")
+                if (this.cells[index].isEditable)  {
+                    this.cells[index].html.classList.remove("invalidValue")
+                }
+            }
+            // checkingHighlight(this.cells, index)
 
         })
         lineCellIndexes.forEach(index => {
             // Se repeta
 
-            this.#cells[index].isHighlighted = true;
+            this.cells[index].isHighlighted = true;
+            if (this.cells[index].invalidCount > 0){
+                this.cells[index].html.classList.add("highlightInvalid")
+                if (this.cells[index].isEditable)  {
+                    this.cells[index].html.classList.add("invalidValue")
+                }
+            }
+            else {
+                this.cells[index].html.classList.remove("highlightInvalid")
+                if (this.cells[index].isEditable)  {
+                    this.cells[index].html.classList.remove("invalidValue")
+                }
+            }
         })
         columnCellIndexes.forEach(index => {
             // Se repeta
 
-            this.#cells[index].isHighlighted = true;
+            this.cells[index].isHighlighted = true;
+            if (this.cells[index].invalidCount > 0){
+                this.cells[index].html.classList.add("highlightInvalid")
+                if (this.cells[index].isEditable)  {
+                    this.cells[index].html.classList.add("invalidValue")
+                }
+            }
+            else {
+                this.cells[index].html.classList.remove("highlightInvalid")
+                if (this.cells[index].isEditable)  {
+                    this.cells[index].html.classList.remove("invalidValue")
+                }
+            }
         })
     }
 
-
     reset() {
-        this.#cells.forEach(cell => {
+        this.cells.forEach(cell => {
             cell.isHighlighted = false;
             cell.isSelected = false;
             // verifica daca mai facea ceva si da-i foc
@@ -184,7 +235,7 @@ class StateManager {
     }
 
     boardWipe() {
-        this.#cells.forEach(cell => {
+        this.cells.forEach(cell => {
             cell.isHighlighted = false;
             cell.isSelected = false;
             cell.isEditable = true;
