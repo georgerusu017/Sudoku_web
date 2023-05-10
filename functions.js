@@ -144,6 +144,22 @@ function createControlBoard() {
     addText("timer", LAYOUT_ID.timer, "Timer: 12:34:56")
 }
 
+function checkingHighlight(cells, indexTest){
+    cells[indexTest].isHighlighted = true;
+        if (cells[indexTest].invalidCount > 0){
+            cells[indexTest].html.classList.add("highlightInvalid")
+            if (cells[indexTest].isEditable)  {
+                cells[indexTest].html.classList.add("invalidValue")
+            }
+        }
+        else {
+            cells[indexTest].html.classList.remove("highlightInvalid")
+            if (cells[indexTest].isEditable)  {
+                cells[indexTest].html.classList.remove("invalidValue")
+            }
+        }
+}
+
 export {
     populateTable,
     createSudokuGrid,
@@ -151,4 +167,5 @@ export {
     findColumnNeighbors,
     findLineNeighbors,
     createControlBoard,
+    checkingHighlight
 }

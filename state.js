@@ -1,4 +1,4 @@
-import { findColumnNeighbors, findLineNeighbors } from "./functions.js";
+import { findColumnNeighbors, findLineNeighbors, checkingHighlight } from "./functions.js";
 
 class Cell {
     #id;
@@ -138,22 +138,6 @@ class StateManager {
         this.cells[cellIndexToSelect].isSelected = true;
         this.highlight(cellIndexToSelect);
     }
-
-    // checkingHighlight(cells, indexTest){
-    //     cells[indexTest].isHighlighted = true;
-    //         if (cells[indexTest].invalidCount > 0){
-    //             cells[indexTest].html.classList.add("highlightInvalid")
-    //             if (cells[indexTest].isEditable)  {
-    //                 cells[indexTest].html.classList.add("invalidValue")
-    //             }
-    //         }
-    //         else {
-    //             cells[indexTest].html.classList.remove("highlightInvalid")
-    //             if (cells[indexTest].isEditable)  {
-    //                 cells[indexTest].html.classList.remove("invalidValue")
-    //             }
-    //         }
-    // }
     
     highlight(selectedCellIndex) {
         const children = this.cells[selectedCellIndex].squareCells;
@@ -167,56 +151,13 @@ class StateManager {
         childrenIndexes = childrenIndexes.filter(index => index != selectedCellIndex);
 
         childrenIndexes.forEach(index => {
-            // Se repeta
-            this.cells[index].isHighlighted = true;
-            if (this.cells[index].invalidCount > 0){
-                this.cells[index].html.classList.add("highlightInvalid")
-                if (this.cells[index].isEditable)  {
-                    this.cells[index].html.classList.add("invalidValue")
-                }
-            }
-            else {
-                this.cells[index].html.classList.remove("highlightInvalid")
-                if (this.cells[index].isEditable)  {
-                    this.cells[index].html.classList.remove("invalidValue")
-                }
-            }
-            // checkingHighlight(this.cells, index)
-
+            checkingHighlight(this.cells, index)
         })
         lineCellIndexes.forEach(index => {
-            // Se repeta
-
-            this.cells[index].isHighlighted = true;
-            if (this.cells[index].invalidCount > 0){
-                this.cells[index].html.classList.add("highlightInvalid")
-                if (this.cells[index].isEditable)  {
-                    this.cells[index].html.classList.add("invalidValue")
-                }
-            }
-            else {
-                this.cells[index].html.classList.remove("highlightInvalid")
-                if (this.cells[index].isEditable)  {
-                    this.cells[index].html.classList.remove("invalidValue")
-                }
-            }
+            checkingHighlight(this.cells, index)
         })
         columnCellIndexes.forEach(index => {
-            // Se repeta
-
-            this.cells[index].isHighlighted = true;
-            if (this.cells[index].invalidCount > 0){
-                this.cells[index].html.classList.add("highlightInvalid")
-                if (this.cells[index].isEditable)  {
-                    this.cells[index].html.classList.add("invalidValue")
-                }
-            }
-            else {
-                this.cells[index].html.classList.remove("highlightInvalid")
-                if (this.cells[index].isEditable)  {
-                    this.cells[index].html.classList.remove("invalidValue")
-                }
-            }
+            checkingHighlight(this.cells, index)
         })
     }
 
@@ -224,13 +165,6 @@ class StateManager {
         this.cells.forEach(cell => {
             cell.isHighlighted = false;
             cell.isSelected = false;
-            // verifica daca mai facea ceva si da-i foc
-            // if (cell.isEditable) {
-            //     cell.html.classList.add("isEditable")
-            // }
-            // else {
-            //     cell.html.classList.remove("isEditable")
-            // }
         })
     }
 
@@ -239,6 +173,11 @@ class StateManager {
             cell.isHighlighted = false;
             cell.isSelected = false;
             cell.isEditable = true;
+            cell.invalidCount = 0;
+            // fix this
+            cell.html.classList.remove("highlightInvalid")
+            cell.html.classList.remove("invalidValue")
+            //
         })
     }
 }

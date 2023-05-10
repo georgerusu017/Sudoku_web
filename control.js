@@ -13,56 +13,31 @@ export function addCellClickListeners() {
     })
 }
 
-function incrementInvalid(selectedCell, comparator, index) {
-    if (state.cells[index].value == comparator) {
-        state.cells[index].invalidCount += 1;
-        selectedCell.invalidCount += 1;
-    }
+
+function incrementGroup(line, column, square, selectedCell, value) {
+
+    const indexes = new Set([...line, ...column, ...square]);
+    const indexedToChange = [...indexes].filter(index => state.cells[index].value === value);
+
+    indexedToChange.forEach(index => state.cells[index].invalidCount++);
+    selectedCell.invalidCount += indexedToChange.length;
 
 }
 
-function incrementGroup(line, column, children, selectedCell, comparator){
+function decrementGroup(line, column, square, selectedCell, value) {
 
-    line.forEach(index => {
-        incrementInvalid(selectedCell, comparator, index)
-    })
+    const indexes = new Set([...line, ...column, ...square]);
+    const indexedToChange = [...indexes].filter(index => state.cells[index].value === value);
 
-    column.forEach(index => {
-        incrementInvalid(selectedCell, comparator, index)
-    })
+    indexedToChange.forEach(index => state.cells[index].invalidCount--);
+    selectedCell.invalidCount -= indexedToChange.length;
 
-    children.forEach(index => {
-        incrementInvalid(selectedCell, comparator, index)
-    })
-
-}
-
-function decrementInvalid(selectedCell, comparator, index) {
-    if (state.cells[index].value == comparator) {
-        state.cells[index].invalidCount -= 1;
-        selectedCell.invalidCount -= 1;
-    }
-}
-
-function decrementGroup(line, column, children, selectedCell, comparator){
-
-    line.forEach(index => {
-        decrementInvalid(selectedCell, comparator, index)
-    })
-
-    column.forEach(index => {
-        decrementInvalid(selectedCell, comparator, index)
-    })
-
-    children.forEach(index => {
-        decrementInvalid(selectedCell, comparator, index)
-    })
 }
 
 function handleNumberKeyPress(event, selectedCellIndex) {
 
     const myRegex = /[1-9]/
-
+    // se repeta si este deja in state in highlight
     const selectedCell = state.cells[selectedCellIndex];
     const lineCellIndexes = findLineNeighbors(selectedCellIndex)
     const columnCellIndexes = findColumnNeighbors(selectedCellIndex);
@@ -72,13 +47,14 @@ function handleNumberKeyPress(event, selectedCellIndex) {
         return cellId;
     })
     childrenIndexes = childrenIndexes.filter(index => index != selectedCellIndex);
+    //
 
     if (myRegex.test(event.key) && selectedCell.isEditable == true) {
         if (selectedCell.value == "") {
 
-            incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, event.key)
             selectedCell.value = event.key;
-        
+            incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
+
         }
         else if (selectedCell.value == event.key) {
 
@@ -86,14 +62,15 @@ function handleNumberKeyPress(event, selectedCellIndex) {
             selectedCell.value = "";
 
         }
-        else if (selectedCell.value != event.key && selectedCell.value != "") {
+        else if (selectedCell.value != event.key) {
 
             decrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
             selectedCell.value = event.key;
-            incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, event.key)
+            incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
 
         }
     }
+
 }
 
 function handleArrowKeyPress(event, selectedCellIndex) {
@@ -169,16 +146,45 @@ export function addButtonsListeners() {
             const selectedCell = state.cells[selectedCellIndex];
             const value = numberButtons.indexOf(element) + 1;
 
+            // se repeta, de facut prin STATE
+            const lineCellIndexes = findLineNeighbors(selectedCellIndex)
+            const columnCellIndexes = findColumnNeighbors(selectedCellIndex);
+            const children = state.cells[selectedCellIndex].squareCells;
+            let childrenIndexes = children.map((cellHtml) => {
+                const cellId = cellHtml.id.split("-").pop();
+                return cellId;
+            })
+
             if (selectedCell.isEditable) {
 
-                if (selectedCell.value != value) {
+                // if (selectedCell.value != value) {
+                //     selectedCell.value = value;
+                // }
+                // else {
+                //     selectedCell.value = null;
+                // }
+                if (selectedCell.value == "") {
+
+                    incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, value)
                     selectedCell.value = value;
+
                 }
-                else {
-                    selectedCell.value = null;
+                else if (selectedCell.value == value) {
+
+                    decrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, value)
+                    selectedCell.value = "";
+
+                }
+                else if (selectedCell.value != value) {
+
+                    decrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
+                    selectedCell.value = value;
+                    incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, value)
+
                 }
 
             }
+            // 
             state.setSelectedCell(`cell-${selectedCellIndex}`);
         });
     })
