@@ -71,6 +71,8 @@ function handleNumberKeyPress(event, selectedCellIndex) {
         }
     }
 
+    state.setSelectedCell(`cell-${selectedCellIndex}`);
+
 }
 
 function handleArrowKeyPress(event, selectedCellIndex) {
@@ -165,21 +167,20 @@ export function addButtonsListeners() {
                 // }
                 if (selectedCell.value == "") {
 
-                    incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, value)
                     selectedCell.value = value;
+                    incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
 
                 }
                 else if (selectedCell.value == value) {
 
                     decrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, value)
                     selectedCell.value = "";
-
                 }
                 else if (selectedCell.value != value) {
 
                     decrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
                     selectedCell.value = value;
-                    incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, value)
+                    incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
 
                 }
 
