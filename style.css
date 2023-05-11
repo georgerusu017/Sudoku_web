@@ -65,6 +65,9 @@ body{
 .highlight{
     background-color: rgb(228, 235, 242);
 }
+.highlightTwin{
+    background-color: rgb(174, 201, 228);
+}
 .highlightInvalid{
     background-color: rgb(241, 208, 214);
 }

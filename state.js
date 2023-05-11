@@ -5,15 +5,18 @@ class Cell {
     #value;
     #isEditable;
     #isHighlighted;
+    #isHighlightedTwin;
     #isSelected;
     #invalidCount;
     #html;
+    
 
     constructor(id) {
         this.#id = id;
         this.#value = "0";
         this.#isEditable = true;
         this.#isHighlighted = false;
+        this.#isHighlightedTwin = false;
         this.#isSelected = false;
         this.#html = null;
         this.#invalidCount = 0;
@@ -56,10 +59,10 @@ class Cell {
         return this.#isHighlighted;
     }
 
-    /**
+     /**
      * @param {boolean}
      */
-    set isHighlighted(value) {
+     set isHighlighted(value) {
 
         if (value) {
             this.#html.classList.add("highlight")
@@ -78,6 +81,7 @@ class Cell {
      * @param {boolean}
      */
     set isSelected(value) {
+
         if (value) {
             this.#html.classList.add("highlightStrong")
         } else {
@@ -86,6 +90,25 @@ class Cell {
 
         this.#isSelected = value;
     }
+
+    get isHighlightedSibling() {
+        return this.#isHighlightedTwin;
+    }
+    /**
+     * @param {boolean}
+     */
+    set isHighlightedSibling(value) {
+
+        if (value) {
+            this.#html.classList.add("highlightTwin")
+        } else {
+            this.#html.classList.remove("highlightTwin")
+        }
+
+        this.#isHighlightedTwin = value;
+    }
+
+   
 
     get html() {
         return document.getElementById(this.idText)
@@ -136,6 +159,11 @@ class StateManager {
         this.reset();
         const cellIndexToSelect = this.cells.findIndex((cell) => cell.idText === cellId);
         this.cells[cellIndexToSelect].isSelected = true;
+        this.cells.forEach(cell => {
+            if (cell.value == this.cells[cellIndexToSelect].value && cell.value != ""){
+                cell.isHighlightedSibling = true;
+            }
+        })
         this.highlight(cellIndexToSelect);
     }
     
@@ -156,11 +184,13 @@ class StateManager {
         })
         checkingHighlight(this.cells, selectedCellIndex)
 
+
     }
 
     reset() {
         this.cells.forEach(cell => {
             cell.isHighlighted = false;
+            cell.isHighlightedSibling = false;
             cell.isSelected = false;
         })
     }
@@ -168,6 +198,7 @@ class StateManager {
     boardWipe() {
         this.cells.forEach(cell => {
             cell.isHighlighted = false;
+            cell.isHighlightedSibling = false;
             cell.isSelected = false;
             cell.isEditable = true;
             cell.invalidCount = 0;
