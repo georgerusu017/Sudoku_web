@@ -149,16 +149,13 @@ class StateManager {
         })
 
         childrenIndexes = childrenIndexes.filter(index => index != selectedCellIndex);
+        const indexes = new Set([...lineCellIndexes, ...columnCellIndexes, ...childrenIndexes]);
 
-        childrenIndexes.forEach(index => {
+        indexes.forEach(index => {
             checkingHighlight(this.cells, index)
         })
-        lineCellIndexes.forEach(index => {
-            checkingHighlight(this.cells, index)
-        })
-        columnCellIndexes.forEach(index => {
-            checkingHighlight(this.cells, index)
-        })
+        checkingHighlight(this.cells, selectedCellIndex)
+
     }
 
     reset() {

@@ -11,13 +11,16 @@ function populateTable(puzzleValues) {
     }
 
     for (let i = 0; i < gridSize; i++) {
-        // un singur if cu doua decizii
-        state.cells[i].value = puzzleValues[i] == "." ? "" : puzzleValues[i];
 
-        if (state.cells[i].value != "") {
+        if (puzzleValues[i] == "."){
+            state.cells[i].value = "";
+            state.cells[i].html.classList.add("isEditable")
+        }
+        else {
+            state.cells[i].value = puzzleValues[i];
             state.cells[i].isEditable = false;
         }
-        // pana aici
+
     }
 }
 
