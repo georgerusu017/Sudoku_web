@@ -36,7 +36,7 @@ function decrementGroup(line, column, square, selectedCell, value) {
 
 function handleNumberKeyPress(event, selectedCellIndex) {
 
-    const myRegex = /[1-9]/
+    const myRegex = /^[1-9]$/
     // se repeta si este deja in state in highlight
     const selectedCell = state.cells[selectedCellIndex];
     const lineCellIndexes = findLineNeighbors(selectedCellIndex)
@@ -50,6 +50,9 @@ function handleNumberKeyPress(event, selectedCellIndex) {
     //
 
     if (myRegex.test(event.key) && selectedCell.isEditable == true) {
+
+        console.log("selectedCell.invalidCount inainte = ",selectedCell.invalidCount)
+
         if (selectedCell.value == "") {
 
             selectedCell.value = event.key;
@@ -69,6 +72,9 @@ function handleNumberKeyPress(event, selectedCellIndex) {
             incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
 
         }
+
+        console.log("selectedCell.invalidCount dupa = ",selectedCell.invalidCount)
+
     }
 
     state.setSelectedCell(`cell-${selectedCellIndex}`);
@@ -146,7 +152,7 @@ export function addButtonsListeners() {
 
             const selectedCellIndex = state.getSelectedCellIndex()
             const selectedCell = state.cells[selectedCellIndex];
-            const value = numberButtons.indexOf(element) + 1;
+            const value = parseInt(numberButtons.indexOf(element) + 1);
 
             // se repeta, de facut prin STATE
             const lineCellIndexes = findLineNeighbors(selectedCellIndex)
@@ -158,6 +164,8 @@ export function addButtonsListeners() {
             })
 
             if (selectedCell.isEditable) {
+
+                console.log("selectedCell inainte = ",selectedCell)
 
                 // if (selectedCell.value != value) {
                 //     selectedCell.value = value;
@@ -183,6 +191,8 @@ export function addButtonsListeners() {
                     incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
 
                 }
+
+                console.log("selectedCell dupa = ",selectedCell)
 
             }
             // 
