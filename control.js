@@ -39,6 +39,7 @@ function handleNumberKeyPress(event, selectedCellIndex) {
     const myRegex = /^[1-9]$/
     // se repeta si este deja in state in highlight
     const selectedCell = state.cells[selectedCellIndex];
+
     const lineCellIndexes = findLineNeighbors(selectedCellIndex)
     const columnCellIndexes = findColumnNeighbors(selectedCellIndex);
     const children = state.cells[selectedCellIndex].squareCells;
@@ -51,7 +52,7 @@ function handleNumberKeyPress(event, selectedCellIndex) {
 
     if (myRegex.test(event.key) && selectedCell.isEditable == true) {
 
-        console.log("selectedCell.invalidCount inainte = ",selectedCell.invalidCount)
+        // console.log("selectedCell.invalidCount inainte = ",selectedCell.invalidCount)
 
         if (selectedCell.value == "") {
 
@@ -73,8 +74,13 @@ function handleNumberKeyPress(event, selectedCellIndex) {
 
         }
 
-        console.log("selectedCell.invalidCount dupa = ",selectedCell.invalidCount)
+        // console.log("selectedCell.invalidCount dupa = ",selectedCell.invalidCount)
 
+    }
+
+    if (event.key == "Delete" && selectedCell.isEditable && selectedCell.value != "") {
+        decrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
+        selectedCell.value = '';
     }
 
     state.setSelectedCell(`cell-${selectedCellIndex}`);
@@ -134,6 +140,7 @@ export function addKeyboardListeners() {
 
 export function addButtonsListeners() {
     const newGameButton = document.querySelector(`#${CONTROL_ID.newGameButton}`)
+    const eraseButton = document.querySelector(`#${CONTROL_ID.eraseButton}`)
 
     // map in loc de forEach
     const numberButtons = [];
@@ -145,6 +152,28 @@ export function addButtonsListeners() {
 
     newGameButton.addEventListener('click', () => {
         startGame();
+    });
+
+    eraseButton.addEventListener('click', () => {
+        const selectedCellIndex = state.getSelectedCellIndex()
+        const selectedCell = state.cells[selectedCellIndex];
+        const value = state.cells[selectedCellIndex].value;
+
+        const lineCellIndexes = findLineNeighbors(selectedCellIndex)
+        const columnCellIndexes = findColumnNeighbors(selectedCellIndex);
+        const children = state.cells[selectedCellIndex].squareCells;
+        let childrenIndexes = children.map((cellHtml) => {
+            const cellId = cellHtml.id.split("-").pop();
+            return cellId;
+        })
+
+        if (selectedCell.isEditable && selectedCell.value != "") {
+
+            decrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
+            selectedCell.value = '';
+
+        }
+        state.setSelectedCell(`cell-${selectedCellIndex}`);
     });
 
     numberButtons.forEach((element) => {
@@ -165,14 +194,8 @@ export function addButtonsListeners() {
 
             if (selectedCell.isEditable) {
 
-                console.log("selectedCell inainte = ",selectedCell)
+                // console.log("selectedCell inainte = ",selectedCell)
 
-                // if (selectedCell.value != value) {
-                //     selectedCell.value = value;
-                // }
-                // else {
-                //     selectedCell.value = null;
-                // }
                 if (selectedCell.value == "") {
 
                     selectedCell.value = value;
@@ -192,7 +215,7 @@ export function addButtonsListeners() {
 
                 }
 
-                console.log("selectedCell dupa = ",selectedCell)
+                // console.log("selectedCell dupa = ",selectedCell)
 
             }
             // 
