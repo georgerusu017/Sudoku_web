@@ -18,7 +18,6 @@ function incrementGroup(line, column, square, selectedCell, value) {
 
     const indexes = new Set([...line, ...column, ...square]);
     const indexedToChange = [...indexes].filter(index => state.cells[index].value === value);
-
     indexedToChange.forEach(index => state.cells[index].invalidCount++);
     selectedCell.invalidCount += indexedToChange.length;
 
@@ -28,13 +27,12 @@ function decrementGroup(line, column, square, selectedCell, value) {
 
     const indexes = new Set([...line, ...column, ...square]);
     const indexedToChange = [...indexes].filter(index => state.cells[index].value === value);
-
     indexedToChange.forEach(index => state.cells[index].invalidCount--);
     selectedCell.invalidCount -= indexedToChange.length;
 
 }
 
-function handleNumberKeyPress(event, selectedCellIndex) {
+function handleValueChangingKeyPress(event, selectedCellIndex) {
 
     const myRegex = /^[1-9]$/
     // se repeta si este deja in state in highlight
@@ -44,15 +42,13 @@ function handleNumberKeyPress(event, selectedCellIndex) {
     const columnCellIndexes = findColumnNeighbors(selectedCellIndex);
     const children = state.cells[selectedCellIndex].squareCells;
     let childrenIndexes = children.map((cellHtml) => {
-        const cellId = cellHtml.id.split("-").pop();
+        const cellId = parseInt(cellHtml.id.split("-").pop());
         return cellId;
     })
     childrenIndexes = childrenIndexes.filter(index => index != selectedCellIndex);
     //
 
     if (myRegex.test(event.key) && selectedCell.isEditable == true) {
-
-        // console.log("selectedCell.invalidCount inainte = ",selectedCell.invalidCount)
 
         if (selectedCell.value == "") {
 
@@ -74,11 +70,10 @@ function handleNumberKeyPress(event, selectedCellIndex) {
 
         }
 
-        // console.log("selectedCell.invalidCount dupa = ",selectedCell.invalidCount)
-
     }
 
     if (event.key == "Delete" && selectedCell.isEditable && selectedCell.value != "") {
+
         decrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
         selectedCell.value = '';
     }
@@ -133,7 +128,7 @@ function handleArrowKeyPress(event, selectedCellIndex) {
 export function addKeyboardListeners() {
     document.addEventListener("keydown", (event) => {
         const selectedCellIndex = state.getSelectedCellIndex()
-        handleNumberKeyPress(event, selectedCellIndex);
+        handleValueChangingKeyPress(event, selectedCellIndex);
         handleArrowKeyPress(event, selectedCellIndex);
     });
 }
@@ -157,15 +152,15 @@ export function addButtonsListeners() {
     eraseButton.addEventListener('click', () => {
         const selectedCellIndex = state.getSelectedCellIndex()
         const selectedCell = state.cells[selectedCellIndex];
-        const value = state.cells[selectedCellIndex].value;
 
         const lineCellIndexes = findLineNeighbors(selectedCellIndex)
         const columnCellIndexes = findColumnNeighbors(selectedCellIndex);
         const children = state.cells[selectedCellIndex].squareCells;
         let childrenIndexes = children.map((cellHtml) => {
-            const cellId = cellHtml.id.split("-").pop();
+            const cellId = parseInt(cellHtml.id.split("-").pop());
             return cellId;
         })
+        childrenIndexes = childrenIndexes.filter(index => index != selectedCellIndex);
 
         if (selectedCell.isEditable && selectedCell.value != "") {
 
@@ -173,28 +168,28 @@ export function addButtonsListeners() {
             selectedCell.value = '';
 
         }
+        console.log("state selected = ", selectedCell.invalidCount)
         state.setSelectedCell(`cell-${selectedCellIndex}`);
     });
 
     numberButtons.forEach((element) => {
         element.addEventListener('click', () => {
 
-            const selectedCellIndex = state.getSelectedCellIndex()
+            const selectedCellIndex = parseInt(state.getSelectedCellIndex())
             const selectedCell = state.cells[selectedCellIndex];
-            const value = parseInt(numberButtons.indexOf(element) + 1);
+            const value = String(numberButtons.indexOf(element) + 1);
 
             // se repeta, de facut prin STATE
             const lineCellIndexes = findLineNeighbors(selectedCellIndex)
             const columnCellIndexes = findColumnNeighbors(selectedCellIndex);
             const children = state.cells[selectedCellIndex].squareCells;
             let childrenIndexes = children.map((cellHtml) => {
-                const cellId = cellHtml.id.split("-").pop();
+                const cellId = parseInt(cellHtml.id.split("-").pop());
                 return cellId;
             })
+            childrenIndexes = childrenIndexes.filter(index => index != selectedCellIndex);
 
             if (selectedCell.isEditable) {
-
-                // console.log("selectedCell inainte = ",selectedCell)
 
                 if (selectedCell.value == "") {
 
@@ -214,11 +209,7 @@ export function addButtonsListeners() {
                     incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
 
                 }
-
-                // console.log("selectedCell dupa = ",selectedCell)
-
             }
-            // 
             state.setSelectedCell(`cell-${selectedCellIndex}`);
         });
     })

@@ -1,8 +1,8 @@
 
 const CELL_CSS = Object.freeze ({
     class: "cell",
-    hilglight: "highlight",
-    hilightStrong: "hilightStrong"
+    highlight: "highlight",
+    highlightStrong: "highlightStrong"
 })
 
 const LAYOUT_ID = Object.freeze({

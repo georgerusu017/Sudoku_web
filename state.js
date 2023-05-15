@@ -9,7 +9,7 @@ class Cell {
     #isSelected;
     #invalidCount;
     #html;
-    
+
 
     constructor(id) {
         this.#id = id;
@@ -59,10 +59,10 @@ class Cell {
         return this.#isHighlighted;
     }
 
-     /**
-     * @param {boolean}
-     */
-     set isHighlighted(value) {
+    /**
+    * @param {boolean}
+    */
+    set isHighlighted(value) {
 
         if (value) {
             this.#html.classList.add("highlight")
@@ -108,7 +108,7 @@ class Cell {
         this.#isHighlightedTwin = value;
     }
 
-   
+
 
     get html() {
         return document.getElementById(this.idText)
@@ -140,16 +140,21 @@ class StateManager {
     }
 
     getSelectedCellIndex() {
-        let pointer = 0;
+        // let pointer = 0;
 
-        // find index in loc de for
-        for (let i = 0; i < 81; i++) {
-            if (this.cells[i].isSelected)
-                pointer = i;
-        }
-        return pointer;
-    }
+        // // find index in loc de for
+        // for (let i = 0; i < 81; i++) {
+        //     if (this.cells[i].isSelected)
+        //         pointer = i;
+        // }
+        // return pointer;
         // find index
+
+        const SELECTED_CELL_POINTER = (element) => element.isSelected == true;
+        return  this.cells.findIndex(SELECTED_CELL_POINTER)
+
+    }
+
 
     get cells() {
         return this.cells;
@@ -160,13 +165,13 @@ class StateManager {
         const cellIndexToSelect = this.cells.findIndex((cell) => cell.idText === cellId);
         this.cells[cellIndexToSelect].isSelected = true;
         this.cells.forEach(cell => {
-            if (cell.value == this.cells[cellIndexToSelect].value && cell.value != ""){
+            if (cell.value == this.cells[cellIndexToSelect].value && cell.value != "") {
                 cell.isHighlightedSibling = true;
             }
         })
         this.highlight(cellIndexToSelect);
     }
-    
+
     highlight(selectedCellIndex) {
         const children = this.cells[selectedCellIndex].squareCells;
         const lineCellIndexes = findLineNeighbors(selectedCellIndex);
