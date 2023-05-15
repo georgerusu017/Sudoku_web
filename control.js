@@ -168,7 +168,6 @@ export function addButtonsListeners() {
             selectedCell.value = '';
 
         }
-        console.log("state selected = ", selectedCell.invalidCount)
         state.setSelectedCell(`cell-${selectedCellIndex}`);
     });
 
