@@ -1,5 +1,5 @@
 
-const CELL_CSS = Object.freeze ({
+const CELL_CSS = Object.freeze({
     class: "cell",
     highlight: "highlight",
     highlightStrong: "highlightStrong"
@@ -11,7 +11,7 @@ const LAYOUT_ID = Object.freeze({
     table: "table",
     control: "control",
     controlButtons: "control-buttons",
-    numbpad: "numbpad"
+    numpad: "numbpad"
 })
 const CONTROL_ID = {
     undoButton: "undoButton",
@@ -32,4 +32,11 @@ for (let i = 1; i < 10; i++) {
     CONTROL_ID.numberButtons.push(`number-button-${i}`)
 }
 
-export { CELL_CSS, LAYOUT_ID, CONTROL_ID } 
+const ARROW_KEY = Object.freeze({
+    up: "ArrowUp",
+    down: "ArrowDown",
+    left: "ArrowLeft",
+    right: "ArrowRight",
+})
+
+export { CELL_CSS, LAYOUT_ID, CONTROL_ID, ARROW_KEY } 

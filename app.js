@@ -1,12 +1,9 @@
 // Work with modules
-import { createSudokuGrid, createControlBoard } from './functions.js';
-import { addButtonsListeners, addCellClickListeners, addKeyboardListeners, startGame } from './control.js';
+import { createLayout } from './services/layout.service.js';
+import { addEventListeners } from './services/eventHandler.service.js'
+import state from './state/State.js'
 
-createControlBoard();
-createSudokuGrid();
+createLayout();
+addEventListeners();
 
-startGame();
-
-addCellClickListeners();
-addKeyboardListeners();
-addButtonsListeners();
+state.startNewGame();

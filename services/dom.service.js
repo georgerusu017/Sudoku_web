@@ -33,3 +33,9 @@ export function addImg(whereTo, source) {
     const app = document.getElementById(whereTo);
     app.appendChild(newImg);
 }
+
+export function createButtonWithLabelAndImg(id, className, whereTo, imgFrom, labelClass, labelText) {
+    addButton(id, className, whereTo, '')
+    addImg(id, imgFrom)
+    addText(labelClass, whereTo, labelText)
+}
