@@ -30,6 +30,7 @@ function createSudokuGrid() {
             }
         }
     }
+
 }
 
 function createLayoutElements(parentElement, ...childElements) {
