@@ -65,13 +65,17 @@ class StateManager {
 
         const indexes = new Set([...lineCellIndexes, ...columnCellIndexes, ...childrenIndexes]);
 
+        // console.log("vecini = ", this.cells[selectedCellIndex].cellsNeighbors);
+        // console.log("vecini patrat = ", indexes)
+        // console.log("selected Id = ", this.cells[selectedCellIndex].id)
+
         indexes.forEach(index => {
             this.cells[index].isHighlighted = true;
         })
 
         this.cells[selectedCellIndex].isHighlighted = true;
     }
-
+    // AICI, PUNE IN CELL.JS, sa fie calculati toti vecinii
     // maybe move to CEll.js and precalculate neighbors in constructor, make methods private
     findLineNeighbors(num) {
 
@@ -127,6 +131,7 @@ class StateManager {
 
         return output;
     }
+    //
 
     #reset() {
         this.cells.forEach(cell => {
