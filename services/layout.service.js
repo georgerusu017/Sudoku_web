@@ -44,6 +44,7 @@ function createRoundButtons() {
     createButtonWithLabelAndImg(CONTROL_ID.undoButton, "round_buttons", "undo-div", "./images/undo.png", "control_text", "Undo")
     createButtonWithLabelAndImg(CONTROL_ID.eraseButton, "round_buttons", "erase-div", "./images/eraser.png", "control_text", "Erase")
     createButtonWithLabelAndImg(CONTROL_ID.notesButton, "round_buttons", "notes-div", "./images/pencil.png", "control_text", "Notes")
+    state.notesHtml = document.getElementById("notesButton");
 
 }
 

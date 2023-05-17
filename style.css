@@ -59,9 +59,6 @@ body {
   border-color: lightgrey;
   border-width: 0.5px;
 }
-/* .cell:active{
-    background-color: #77b6f5;
-} */
 .highlight {
   background-color: rgb(228, 235, 242);
 }
@@ -124,7 +121,10 @@ body {
   background-color: rgb(213, 215, 220);
   transition: 0.2s;
 }
-
+.round_buttons_selected{
+  border-width: 3px;
+  border-color: #0072e3;
+}
 .control_text {
   color: #0072e3;
 }

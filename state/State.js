@@ -5,6 +5,8 @@ class StateManager {
      * @type {Cell[]}
      */
     cells = [];
+    notesButtonSelected = false;
+    notesHtml;
 
     constructor() {
         for (let i = 0; i < 81; i++) {
@@ -15,6 +17,33 @@ class StateManager {
 
     get cells() {
         return this.cells;
+    }
+
+    get notesButtonSelected () {
+        return this.notesButtonSelected;
+    }
+
+    /**
+     * @param {boolean} value
+     */
+    set notesButtonSelected (value) {
+        if (value) {
+            this.notesHtml.classList.add("round_buttons_selected")
+        } else {
+            this.notesHtml.classList.remove("round_buttons_selected")
+        }
+        this.notesButtonSelected = value;
+    }
+
+    get notesHtml() {
+        return this.notesHtml
+    }
+
+    /**
+     * @param {any} value
+     */
+    set notesHtml(value) {
+        this.notesHtml = value;
     }
 
     startNewGame() {

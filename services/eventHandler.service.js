@@ -59,6 +59,8 @@ function handleDelete(selectedCellIndex) {
 
 function handleArrowNavigation(event, selectedCellIndex) {
     let cellToSelectIndex = selectedCellIndex;
+
+    // find a way to fix this, without findLineNeighbors
     const neighbors = state.findLineNeighbors(cellToSelectIndex);
 
     if (event.key === ARROW_KEY.left) {
@@ -132,6 +134,20 @@ function addButtonsListeners() {
     document.querySelector(`#${CONTROL_ID.eraseButton}`).addEventListener('click', () => {
         const selectedCellIndex = state.getSelectedCellIndex();
         handleDelete(selectedCellIndex);
+    });
+
+    document.querySelector(`#${CONTROL_ID.notesButton}`).addEventListener('click', () => {
+        console.log("state check = ", state.notesButtonSelected)
+        console.log("state html = ", state.notesHtml)
+        if (state.notesButtonSelected) {
+            state.notesButtonSelected = false;
+            state.notesHtml.classList.remove("round_buttons_selected")
+        }
+        else {
+            state.notesButtonSelected = true;
+            state.notesHtml.classList.add("round_buttons_selected")
+        }
+        console.log("state check = ", state.notesButtonSelected)
     });
 }
 
