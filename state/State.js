@@ -59,15 +59,7 @@ class StateManager {
     }
 
     highlight(selectedCellIndex) {
-        const childrenIndexes = this.cells[selectedCellIndex].squareIndexes;
-        const lineCellIndexes = this.findLineNeighbors(selectedCellIndex);
-        const columnCellIndexes = this.findColumnNeighbors(selectedCellIndex);
-
-        const indexes = new Set([...lineCellIndexes, ...columnCellIndexes, ...childrenIndexes]);
-
-        // console.log("vecini = ", this.cells[selectedCellIndex].cellsNeighbors);
-        // console.log("vecini patrat = ", indexes)
-        // console.log("selected Id = ", this.cells[selectedCellIndex].id)
+        const indexes = this.cells[selectedCellIndex].cellsNeighbors
 
         indexes.forEach(index => {
             this.cells[index].isHighlighted = true;
@@ -75,63 +67,6 @@ class StateManager {
 
         this.cells[selectedCellIndex].isHighlighted = true;
     }
-    // AICI, PUNE IN CELL.JS, sa fie calculati toti vecinii
-    // maybe move to CEll.js and precalculate neighbors in constructor, make methods private
-    findLineNeighbors(num) {
-
-        let smallerNum = num;
-        let largerNum = num;
-        let output = [];
-        if (num % 9 == 0) {
-            largerNum++;
-        }
-        else {
-            smallerNum--;
-        }
-
-        while (smallerNum % 9 !== 0) {
-            smallerNum--;
-        }
-
-        while (largerNum % 9 !== 8) {
-            largerNum++;
-        }
-
-        const neighbors = [];
-
-        for (let i = smallerNum; i <= largerNum; i++) {
-            neighbors.push(i);
-        }
-
-        output = neighbors.filter(item => item != num)
-
-        return output;
-    }
-
-    findColumnNeighbors(num) {
-        let smallerNum = num;
-        let largerNum = num;
-        let output = [];
-
-        while (smallerNum - 9 >= 0) {
-            smallerNum -= 9;
-        }
-
-        while (largerNum + 9 <= 80) {
-            largerNum += 9;
-        }
-
-        const neighbors = [];
-
-        for (let i = smallerNum; i <= largerNum; i += 9) {
-            neighbors.push(i);
-        }
-
-        output = neighbors.filter(item => item != num)
-
-        return output;
-    }
-    //
 
     #reset() {
         this.cells.forEach(cell => {
