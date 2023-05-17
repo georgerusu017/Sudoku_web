@@ -2,15 +2,15 @@
 import { CONTROL_ID, ARROW_KEY } from '../constants.js';
 import state from '../state/State.js';
 
-function incrementGroup(line, column, square, selectedCell, value) {
-    const indexes = new Set([...line, ...column, ...square]);
+function incrementGroup(selectedCellIndex, selectedCell, value) {
+    const indexes = state.cells[selectedCellIndex].cellsNeighbors;
     const indexedToChange = [...indexes].filter(index => state.cells[index].value === value);
     indexedToChange.forEach(index => state.cells[index].invalidCount++);
     selectedCell.invalidCount += indexedToChange.length;
 }
 
-function decrementGroup(line, column, square, selectedCell, value) {
-    const indexes = new Set([...line, ...column, ...square]);
+function decrementGroup(selectedCellIndex, selectedCell, value) {
+    const indexes = state.cells[selectedCellIndex].cellsNeighbors;
     const indexedToChange = [...indexes].filter(index => state.cells[index].value === value);
     indexedToChange.forEach(index => state.cells[index].invalidCount--);
     selectedCell.invalidCount -= indexedToChange.length;
@@ -26,25 +26,21 @@ function handleValueChange(value, selectedCellIndex) {
 
     if (!selectedCell.isEditable) { return; }
 
-    const lineCellIndexes = state.findLineNeighbors(selectedCellIndex);
-    const columnCellIndexes = state.findColumnNeighbors(selectedCellIndex);
-    const childrenIndexes = state.cells[selectedCellIndex].squareIndexes;
-
     if (selectedCell.value == "") {
 
         selectedCell.value = value;
-        incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
+        incrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
     }
     else if (selectedCell.value == value) {
 
-        decrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, value)
+        decrementGroup(selectedCellIndex, selectedCell, value)
         selectedCell.value = "";
     }
     else if (selectedCell.value != value) {
 
-        decrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
+        decrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
         selectedCell.value = value;
-        incrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
+        incrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
     }
 
     state.setSelectedCell(selectedCell.idText);
@@ -55,11 +51,7 @@ function handleDelete(selectedCellIndex) {
 
     if (!selectedCell.isEditable || selectedCell.value == "") { return; }
 
-    const lineCellIndexes = state.findLineNeighbors(selectedCellIndex);
-    const columnCellIndexes = state.findColumnNeighbors(selectedCellIndex);
-    const childrenIndexes = state.cells[selectedCellIndex].squareIndexes;
-
-    decrementGroup(lineCellIndexes, columnCellIndexes, childrenIndexes, selectedCell, selectedCell.value)
+    decrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
     selectedCell.value = '';
 
     state.setSelectedCell(selectedCell.idText);

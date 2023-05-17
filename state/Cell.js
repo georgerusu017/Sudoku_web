@@ -1,16 +1,3 @@
-// import { SQUARES_IDS } from "../constants";
-
-const SQUARES_IDS = [
-    [0,1,2,9,10,11,18,19,20],
-    [3,4,5,12,13,14,21,22,23],
-    [6,7,8,15,16,17,24,25,26],
-    [27,28,29,36,37,38,45,46,47],
-    [30,31,32,39,40,41,48,49,50],
-    [33,34,35,42,43,44,51,52,53],
-    [54,55,56,63,64,65,72,73,74],
-    [57,58,59,66,67,68,75,76,77],
-    [60,61,62,69,70,71,78,79,80]
-  ];
 
 export class Cell {
     #id;
@@ -21,7 +8,7 @@ export class Cell {
     #isSelected;
     #invalidCount;
     #html;
-    #cellsNeighbors = [];
+    #cellsNeighbors;
 
     constructor(id) {
         this.#id = id;
@@ -32,11 +19,7 @@ export class Cell {
         this.#isSelected = false;
         this.#html = null;
         this.#invalidCount = 0;
-        this.#cellsNeighbors =
-            new Set([...this.findLineNeighbors(this.#id),
-            ...this.findColumnNeighbors(this.#id),
-            ...this.findSquareNeighbors(this.#id)
-            ]);
+        this.#cellsNeighbors = null;
     }
 
     get idText() {
@@ -52,12 +35,15 @@ export class Cell {
     }
 
     get cellsNeighbors() {
-        // if cellNeighbors == null{
-                // calculeaza
-        // }
-
-        // else return what i already return
-        return this.#cellsNeighbors;
+        if (this.#cellsNeighbors == null) {
+            this.#cellsNeighbors = new Set([
+                ...this.findLineNeighbors(this.#id),
+                ...this.findColumnNeighbors(this.#id),
+                ...this.squareIndexes
+            ])
+            return this.#cellsNeighbors;
+        }
+        else return this.#cellsNeighbors;
     }
 
     set value(value) {
@@ -222,37 +208,6 @@ export class Cell {
 
         return output;
     }
-
-    findSquareNeighbors(id) {
-        for (let j = 0; j <9; j++){
-            if (SQUARES_IDS[j].includes(id)){
-                return SQUARES_IDS[j].filter(item => item != id)
-            }
-        }
-    }
-
-    //     createSquareValues(i, k) {
-    //         for (let j = 0; j < 3; j++) {
-    //             const pointer = (9 * k) + (3 * i) + j;
-    //         }
-    //     }
-
-    //     for (let i = 0; i < 9; i++) {
-
-    //         if (i < 3) {
-    //             for (let k = 0; k <= 2; k++) {
-    //                 createSquareLine(squareId, i, k);
-    //             }
-    //         } else if (i < 6) {
-    //             for (let k = 2; k <= 4; k++) {
-    //                 createSquareLine(squareId, i, k);
-    //             }
-    //         } else if (i < 9) {
-    //             for (let k = 4; k <= 6; k++) {
-    //                 createSquareLine(squareId, i, k);
-    //             }
-    //         }
-    //     }
 
     reset() {
         this.isSelected = false;
