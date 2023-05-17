@@ -3,15 +3,15 @@ import { CONTROL_ID, ARROW_KEY } from '../constants.js';
 import state from '../state/State.js';
 
 function incrementGroup(selectedCellIndex, selectedCell, value) {
-    const indexes = state.cells[selectedCellIndex].cellsNeighbors;
-    const indexedToChange = [...indexes].filter(index => state.cells[index].value === value);
+    const indexedToChange = state.cells[selectedCellIndex].cellsNeighbors
+        .filter(index => state.cells[index].value === value);
     indexedToChange.forEach(index => state.cells[index].invalidCount++);
     selectedCell.invalidCount += indexedToChange.length;
 }
 
 function decrementGroup(selectedCellIndex, selectedCell, value) {
-    const indexes = state.cells[selectedCellIndex].cellsNeighbors;
-    const indexedToChange = [...indexes].filter(index => state.cells[index].value === value);
+    const indexedToChange = state.cells[selectedCellIndex].cellsNeighbors
+        .filter(index => state.cells[index].value === value);
     indexedToChange.forEach(index => state.cells[index].invalidCount--);
     selectedCell.invalidCount -= indexedToChange.length;
 }

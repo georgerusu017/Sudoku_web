@@ -36,11 +36,11 @@ export class Cell {
 
     get cellsNeighbors() {
         if (this.#cellsNeighbors == null) {
-            this.#cellsNeighbors = new Set([
-                ...this.findLineNeighbors(this.#id),
-                ...this.findColumnNeighbors(this.#id),
-                ...this.squareIndexes
-            ])
+            this.#cellsNeighbors = [...new Set([
+                ...this.#findLineNeighbors(),
+                ...this.#findColumnNeighbors(),
+                ...this.#findSquareNeighbors()
+            ])]
             return this.#cellsNeighbors;
         }
         else return this.#cellsNeighbors;
@@ -146,7 +146,7 @@ export class Cell {
         return [...div.parentNode.childNodes];
     }
 
-    get squareIndexes() {
+    #findSquareNeighbors() {
         const div = document.getElementById(this.idText);
 
         return [...div.parentNode.childNodes]
@@ -154,12 +154,12 @@ export class Cell {
             .map((cellHtml) => parseInt(cellHtml.id.split("-").pop()))
     }
 
-    findLineNeighbors(num) {
+    #findLineNeighbors() {
 
-        let smallerNum = num;
-        let largerNum = num;
+        let smallerNum = this.#id;
+        let largerNum = this.#id;
         let output = [];
-        if (num % 9 == 0) {
+        if (this.#id % 9 == 0) {
             largerNum++;
         }
         else {
@@ -180,14 +180,14 @@ export class Cell {
             neighbors.push(i);
         }
 
-        output = neighbors.filter(item => item != num)
+        output = neighbors.filter(item => item != this.#id)
 
         return output;
     }
 
-    findColumnNeighbors(num) {
-        let smallerNum = num;
-        let largerNum = num;
+    #findColumnNeighbors() {
+        let smallerNum = this.#id;
+        let largerNum = this.#id;
         let output = [];
 
         while (smallerNum - 9 >= 0) {
@@ -204,7 +204,7 @@ export class Cell {
             neighbors.push(i);
         }
 
-        output = neighbors.filter(item => item != num)
+        output = neighbors.filter(item => item != this.#id)
 
         return output;
     }

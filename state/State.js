@@ -59,11 +59,10 @@ class StateManager {
     }
 
     highlight(selectedCellIndex) {
-        const indexes = this.cells[selectedCellIndex].cellsNeighbors
-
-        indexes.forEach(index => {
-            this.cells[index].isHighlighted = true;
-        })
+        this.cells[selectedCellIndex].cellsNeighbors
+            .forEach(index => {
+                this.cells[index].isHighlighted = true;
+            })
 
         this.cells[selectedCellIndex].isHighlighted = true;
     }
