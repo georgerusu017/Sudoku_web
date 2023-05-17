@@ -137,17 +137,12 @@ function addButtonsListeners() {
     });
 
     document.querySelector(`#${CONTROL_ID.notesButton}`).addEventListener('click', () => {
-        console.log("state check = ", state.notesButtonSelected)
-        console.log("state html = ", state.notesHtml)
         if (state.notesButtonSelected) {
             state.notesButtonSelected = false;
-            state.notesHtml.classList.remove("round_buttons_selected")
         }
         else {
             state.notesButtonSelected = true;
-            state.notesHtml.classList.add("round_buttons_selected")
         }
-        console.log("state check = ", state.notesButtonSelected)
     });
 }
 
