@@ -59,24 +59,31 @@ body {
   border-color: lightgrey;
   border-width: 0.5px;
 }
+
 .highlight {
   background-color: rgb(228, 235, 242);
 }
+
 .highlightTwin {
   background-color: rgb(174, 201, 228);
 }
+
 .highlightInvalid {
   background-color: rgb(241, 208, 214);
 }
+
 .isEditable {
   color: rgb(48, 112, 219);
 }
+
 .highlightInvalid.isEditable {
   color: rgb(213, 101, 111);
 }
+
 .highlightStrong {
   background-color: rgb(194, 221, 248);
 }
+
 #newGame {
   width: 380px;
   height: 70px;
@@ -87,6 +94,7 @@ body {
   background-color: #0072e3;
   color: white;
 }
+
 #newGame:hover {
   background-color: #0050a0;
   transition: 0.5s;
@@ -103,6 +111,7 @@ body {
   background-color: rgb(240, 242, 248);
   /* font-family: Source Sans Pro,sans-serif; */
 }
+
 .number_buttons:hover {
   background-color: rgb(213, 215, 220);
   transition: 0.2s;
@@ -112,19 +121,45 @@ body {
   width: 70px;
   height: 70px;
   border-radius: 100%;
-  border-width: 0px;
+  border-width: 3px;
+  border-color: #ffffff00;
   margin: 20px 25px 10px 25px;
   background-color: rgb(240, 242, 248);
   color: #0072e3;
 }
+
 .round_buttons:hover {
   background-color: rgb(213, 215, 220);
   transition: 0.2s;
 }
-.round_buttons_selected{
-  border-width: 3px;
+
+.round_buttons_selected {
   border-color: #0072e3;
 }
+
+#notesButton {
+  position: relative;
+}
+
+#notesToggle {
+  height: 20px;
+  width: 30px;
+  border-radius: 40%;
+  border-width: 0px;
+  background-color: rgb(160, 162, 168);
+  color: rgb(213, 215, 220);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: -10px;
+  right: -5px;
+}
+
+#notesToggle.notes_toggle_selected {
+  background-color: #0072e3;
+}
+
 .control_text {
   color: #0072e3;
 }
@@ -147,16 +182,19 @@ body {
   flex-direction: column;
   align-content: center;
 }
+
 #erase-div {
   display: flex;
   flex-direction: column;
   align-content: center;
 }
+
 #notes-div {
   display: flex;
   flex-direction: column;
   align-content: center;
 }
+
 #numbpad {
   display: flex;
   flex-wrap: wrap;

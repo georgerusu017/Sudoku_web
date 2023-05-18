@@ -1,6 +1,7 @@
 
 import { CONTROL_ID, ARROW_KEY } from '../constants.js';
 import state from '../state/State.js';
+import { Cell } from "../state/Cell.js";
 
 function incrementGroup(selectedCellIndex, selectedCell, value) {
     const indexedToChange = state.cells[selectedCellIndex].cellsNeighbors
@@ -60,8 +61,7 @@ function handleDelete(selectedCellIndex) {
 function handleArrowNavigation(event, selectedCellIndex) {
     let cellToSelectIndex = selectedCellIndex;
 
-    // find a way to fix this, without findLineNeighbors
-    const neighbors = state.findLineNeighbors(cellToSelectIndex);
+    const neighbors = Cell.findLineNeighbors(cellToSelectIndex);
 
     if (event.key === ARROW_KEY.left) {
         if (cellToSelectIndex - 1 < neighbors[0]) {

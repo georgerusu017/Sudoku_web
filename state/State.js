@@ -6,7 +6,8 @@ class StateManager {
      */
     cells = [];
     #notesButtonSelected = false;
-    notesHtml;
+    #notesHtml;
+    #notesToggleHtml;
 
     constructor() {
         for (let i = 0; i < 81; i++) {
@@ -29,14 +30,32 @@ class StateManager {
     set notesButtonSelected(value) {
         if (value) {
             this.notesHtml.classList.add("round_buttons_selected")
+            this.notesToggleHtml.innerHTML = "ON"
+            this.notesToggleHtml.classList.add("notes_toggle_selected")
+
         } else {
             this.notesHtml.classList.remove("round_buttons_selected")
+            this.notesToggleHtml.innerHTML = "OFF"
+            this.notesToggleHtml.classList.remove("notes_toggle_selected")
         }
         this.#notesButtonSelected = value;
     }
 
     get notesHtml() {
-        return this.notesHtml
+        return this.#notesHtml
+    }
+
+    set notesHtml(value) {
+        this.#notesHtml = value;
+    }
+
+    get notesToggleHtml() {
+        return this.#notesToggleHtml
+    }
+
+    set notesToggleHtml(value) {
+        this.#notesToggleHtml = value;
+        this.notesToggleHtml.innerHTML = "OFF"
     }
 
     startNewGame() {
@@ -99,6 +118,7 @@ class StateManager {
         this.cells.forEach(cell => {
             cell.wipe();
         })
+        this.notesButtonSelected = false;
     }
 }
 

@@ -37,7 +37,7 @@ export class Cell {
     get cellsNeighbors() {
         if (this.#cellsNeighbors == null) {
             this.#cellsNeighbors = [...new Set([
-                ...this.#findLineNeighbors(),
+                ...Cell.findLineNeighbors(this.#id),
                 ...this.#findColumnNeighbors(),
                 ...this.#findSquareNeighbors()
             ])]
@@ -154,12 +154,12 @@ export class Cell {
             .map((cellHtml) => parseInt(cellHtml.id.split("-").pop()))
     }
 
-    #findLineNeighbors() {
+    static findLineNeighbors(id) {
 
-        let smallerNum = this.#id;
-        let largerNum = this.#id;
+        let smallerNum = id;
+        let largerNum = id;
         let output = [];
-        if (this.#id % 9 == 0) {
+        if (id % 9 == 0) {
             largerNum++;
         }
         else {
@@ -180,10 +180,12 @@ export class Cell {
             neighbors.push(i);
         }
 
-        output = neighbors.filter(item => item != this.#id)
+        output = neighbors.filter(item => item != id)
 
         return output;
     }
+
+
 
     #findColumnNeighbors() {
         let smallerNum = this.#id;
@@ -224,3 +226,4 @@ export class Cell {
         this.value = "";
     }
 }
+
