@@ -9,10 +9,11 @@ export class Cell {
     #invalidCount;
     #html;
     #cellsNeighbors;
+    #notesBoxes = [];
 
     constructor(id) {
         this.#id = id;
-        this.#value = "0";
+        this.#value = "";
         this.#isEditable = true;
         this.#isHighlighted = false;
         this.#isHighlightedSibling = false;
@@ -34,6 +35,11 @@ export class Cell {
         return this.#value;
     }
 
+    set value(value) {
+        this.#value = value;
+        this.#html.innerHTML = value;
+    }
+
     get cellsNeighbors() {
         if (this.#cellsNeighbors == null) {
             this.#cellsNeighbors = [...new Set([
@@ -46,9 +52,17 @@ export class Cell {
         else return this.#cellsNeighbors;
     }
 
-    set value(value) {
-        this.#value = value;
-        this.#html.innerHTML = value;
+    get notesBoxes() {
+        return this.#notesBoxes;
+    }
+
+    // nu face cutiile
+    set notesBoxes(value) {
+        if (value){
+            this.#createNotesBoxes();
+        } else {
+            this.#deleteNotesBoxes();
+        }
     }
 
     get isEditable() {
@@ -146,6 +160,20 @@ export class Cell {
         return [...div.parentNode.childNodes];
     }
 
+    #createNotesBoxes() {
+        for (let i = 1; i <= 9; i++) {
+            const NOTEBOX = document.createElement('div');
+            NOTEBOX.setAttribute("id", `${this.idText}-note${i}`);
+            this.#html.appendChild(NOTEBOX)
+        }
+    }
+
+    #deleteNotesBoxes() {
+        while (this.#html.firstChild) {
+            this.#html.removeChild(this.#html.firstChild);
+          }
+    }
+
     #findSquareNeighbors() {
         const div = document.getElementById(this.idText);
 
@@ -184,8 +212,6 @@ export class Cell {
 
         return output;
     }
-
-
 
     #findColumnNeighbors() {
         let smallerNum = this.#id;
@@ -226,4 +252,3 @@ export class Cell {
         this.value = "";
     }
 }
-

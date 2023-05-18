@@ -39,15 +39,18 @@ function createLayoutElements(parentElement, ...childElements) {
     });
 }
 
-function createRoundButtons() {
-
-    createButtonWithLabelAndImg(CONTROL_ID.undoButton, "round_buttons", "undo-div", "./images/undo.png", "control_text", "Undo")
-    createButtonWithLabelAndImg(CONTROL_ID.eraseButton, "round_buttons", "erase-div", "./images/eraser.png", "control_text", "Erase")
-    // foarte specific, toate 4 intr-o functie
+function createNotesButton(){
     createButtonWithLabelAndImg(CONTROL_ID.notesButton, "round_buttons", "notes-div", "./images/pencil.png", "control_text", "Notes")
     createLayoutElements(CONTROL_ID.notesButton,"notesToggle");
     state.notesHtml = document.getElementById("notesButton");
     state.notesToggleHtml = document.getElementById("notesToggle");
+}
+
+function createRoundButtons() {
+
+    createButtonWithLabelAndImg(CONTROL_ID.undoButton, "round_buttons", "undo-div", "./images/undo.png", "control_text", "Undo")
+    createButtonWithLabelAndImg(CONTROL_ID.eraseButton, "round_buttons", "erase-div", "./images/eraser.png", "control_text", "Erase")
+    createNotesButton();
 
 }
 

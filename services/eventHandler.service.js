@@ -27,21 +27,35 @@ function handleValueChange(value, selectedCellIndex) {
 
     if (!selectedCell.isEditable) { return; }
 
-    if (selectedCell.value == "") {
+    if (!state.notesButtonSelected) {
 
-        selectedCell.value = value;
-        incrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
+        selectedCell.notesBoxes = true;
+
+        if (selectedCell.value == "") {
+
+            selectedCell.value = value;
+            incrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
+        }
+        else if (selectedCell.value == value) {
+
+            decrementGroup(selectedCellIndex, selectedCell, value)
+            selectedCell.value = "";
+        }
+        else if (selectedCell.value != value) {
+
+            decrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
+            selectedCell.value = value;
+            incrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
+        }
     }
-    else if (selectedCell.value == value) {
 
-        decrementGroup(selectedCellIndex, selectedCell, value)
-        selectedCell.value = "";
-    }
-    else if (selectedCell.value != value) {
+    else {
+        if (selectedCell.value != "") {
+            decrementGroup(selectedCellIndex, selectedCell, value)
+            selectedCell.value = "";
+        }
 
-        decrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
-        selectedCell.value = value;
-        incrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
+        selectedCell.notesBoxes = false;
     }
 
     state.setSelectedCell(selectedCell.idText);
