@@ -29,7 +29,7 @@ function handleValueChange(value, selectedCellIndex) {
 
     if (!state.notesButtonSelected) {
 
-        selectedCell.notesBoxes = true;
+        selectedCell.notesBoxes = false;
 
         if (selectedCell.value == "") {
 
@@ -55,7 +55,7 @@ function handleValueChange(value, selectedCellIndex) {
             selectedCell.value = "";
         }
 
-        selectedCell.notesBoxes = false;
+        selectedCell.notesBoxes = true;
     }
 
     state.setSelectedCell(selectedCell.idText);
