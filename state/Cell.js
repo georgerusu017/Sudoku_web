@@ -59,7 +59,6 @@ export class Cell {
     // nu face cutiile
     set notesBoxes(value) {
         if (value){
-            console.log("notes set merge")
             this.#createNotesBoxes();
         } else {
             this.#deleteNotesBoxes();
