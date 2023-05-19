@@ -29,7 +29,7 @@ function handleValueChange(value, selectedCellIndex) {
 
     if (!state.notesButtonSelected) {
 
-        selectedCell.notesBoxes = false;
+        selectedCell.deleteNotesBoxes();
 
         if (selectedCell.value == "") {
 
@@ -51,11 +51,17 @@ function handleValueChange(value, selectedCellIndex) {
 
     else {
         if (selectedCell.value != "") {
-            decrementGroup(selectedCellIndex, selectedCell, value)
+            decrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
+            // prin Cell actualizari
             selectedCell.value = "";
         }
 
-        selectedCell.notesBoxes = true;
+        if(selectedCell.notesBoxes.length == 0){
+            selectedCell.createNotesBoxes();
+        }
+
+        selectedCell.notesBoxes = value;
+
     }
 
     state.setSelectedCell(selectedCell.idText);

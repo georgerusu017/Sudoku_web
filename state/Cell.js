@@ -1,5 +1,37 @@
 
 export class Cell {
+
+    static findLineNeighbors(id) {
+
+        let smallerNum = id;
+        let largerNum = id;
+        let output = [];
+        if (id % 9 == 0) {
+            largerNum++;
+        }
+        else {
+            smallerNum--;
+        }
+
+        while (smallerNum % 9 !== 0) {
+            smallerNum--;
+        }
+
+        while (largerNum % 9 !== 8) {
+            largerNum++;
+        }
+
+        const neighbors = [];
+
+        for (let i = smallerNum; i <= largerNum; i++) {
+            neighbors.push(i);
+        }
+
+        output = neighbors.filter(item => item != id)
+
+        return output;
+    }
+
     #id;
     #value;
     #isEditable;
@@ -9,7 +41,10 @@ export class Cell {
     #invalidCount;
     #html;
     #cellsNeighbors;
+    // notesHtml
     #notesBoxes;
+    // array
+    #notesValues;
 
     constructor(id) {
         this.#id = id;
@@ -21,6 +56,7 @@ export class Cell {
         this.#html = null;
         this.#invalidCount = 0;
         this.#cellsNeighbors = null;
+        this.#notesBoxes = [];
     }
 
     get idText() {
@@ -47,22 +83,24 @@ export class Cell {
                 ...this.#findColumnNeighbors(),
                 ...this.#findSquareNeighbors()
             ])]
-            return this.#cellsNeighbors;
         }
-        else return this.#cellsNeighbors;
+        return this.#cellsNeighbors;
     }
 
     get notesBoxes() {
         return this.#notesBoxes;
     }
 
-    // nu face cutiile
     set notesBoxes(value) {
-        if (value){
-            this.#createNotesBoxes();
-        } else {
-            this.#deleteNotesBoxes();
-        }
+        this.#notesBoxes.forEach(box => {
+            if (box.id.slice(-1) == value && box.innerHTML == ``) {
+                console.log(box)
+                box.innerHTML = value
+            }
+            else if (box.id.slice(-1) == value && box.innerHTML == value) {
+                box.innerHTML = ''
+            }
+        })
     }
 
     get isEditable() {
@@ -160,18 +198,18 @@ export class Cell {
         return [...div.parentNode.childNodes];
     }
 
-    #createNotesBoxes() {
+    createNotesBoxes() {
         for (let i = 1; i <= 9; i++) {
-            const NOTEBOX = document.createElement('div');
-            NOTEBOX.setAttribute("id", `${this.idText}-note${i}`);
-            this.#html.appendChild(NOTEBOX)
+            const NOTE_BOX = document.createElement('div');
+            NOTE_BOX.setAttribute("id", `${this.idText}-note${i}`)
+            NOTE_BOX.setAttribute("class", `note-cells`);
+            this.#notesBoxes.push(NOTE_BOX);
+            this.#html.appendChild(NOTE_BOX);
         }
     }
 
-    #deleteNotesBoxes() {
-        while (this.#html.firstChild) {
-            this.#html.removeChild(this.#html.firstChild);
-          }
+    deleteNotesBoxes() {
+        this.#notesBoxes.length = 0;
     }
 
     #findSquareNeighbors() {
@@ -180,37 +218,6 @@ export class Cell {
         return [...div.parentNode.childNodes]
             .filter(cellHtml => cellHtml.id != this.idText)
             .map((cellHtml) => parseInt(cellHtml.id.split("-").pop()))
-    }
-
-    static findLineNeighbors(id) {
-
-        let smallerNum = id;
-        let largerNum = id;
-        let output = [];
-        if (id % 9 == 0) {
-            largerNum++;
-        }
-        else {
-            smallerNum--;
-        }
-
-        while (smallerNum % 9 !== 0) {
-            smallerNum--;
-        }
-
-        while (largerNum % 9 !== 8) {
-            largerNum++;
-        }
-
-        const neighbors = [];
-
-        for (let i = smallerNum; i <= largerNum; i++) {
-            neighbors.push(i);
-        }
-
-        output = neighbors.filter(item => item != id)
-
-        return output;
     }
 
     #findColumnNeighbors() {

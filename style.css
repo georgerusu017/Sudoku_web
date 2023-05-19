@@ -58,6 +58,17 @@ body {
   border-style: solid;
   border-color: lightgrey;
   border-width: 0.5px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  font-size: x-large;
+}
+.note-cells {
+  font-size: small;
+  flex-basis: 33.33%;
+  box-sizing: border-box;
+  min-height: 5px; /* gaseste ceva solutie */
 }
 
 .highlight {
@@ -162,13 +173,6 @@ body {
 
 .control_text {
   color: #0072e3;
-}
-
-.cell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: x-large;
 }
 
 #control-buttons {

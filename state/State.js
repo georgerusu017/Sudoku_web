@@ -5,6 +5,7 @@ class StateManager {
      * @type {Cell[]}
      */
     cells = [];
+    // isNotesEnabled
     #notesButtonSelected = false;
     #notesHtml;
     #notesToggleHtml;
