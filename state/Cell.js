@@ -41,10 +41,8 @@ export class Cell {
     #invalidCount;
     #html;
     #cellsNeighbors;
-    // notesHtml
-    #notesBoxes;
-    // array
-    #notesValues;
+    #notesHtml;
+    #notesValuesToggle;
 
     constructor(id) {
         this.#id = id;
@@ -56,7 +54,18 @@ export class Cell {
         this.#html = null;
         this.#invalidCount = 0;
         this.#cellsNeighbors = null;
-        this.#notesBoxes = [];
+        this.#notesHtml = [];
+        // acesta este acum obiect
+        this.#notesValuesToggle = {
+
+        };
+    }
+
+    hasValue(){
+       if (Object.keys(test).length > 0){
+        return true
+       }
+       else return false
     }
 
     get idText() {
@@ -87,20 +96,25 @@ export class Cell {
         return this.#cellsNeighbors;
     }
 
-    get notesBoxes() {
-        return this.#notesBoxes;
+    get notesHtml() {
+        if (this.#notesValuesToggle.length > 0 && this.#notesHtml.length == 0) {
+            this.#createNotesHtml()
+        }
+        if (this.#notesHtml.length > 0) {
+            for (let i = 0; i < 9; i++) {
+                if (this.#notesValuesToggle[i] == i + 1) this.#notesHtml[i].innerHTML = this.#notesValuesToggle[i]
+                else this.#notesHtml[i].innerHTML = ''
+            }
+        }
+        if (this.#notesValuesToggle.length == 0) {
+            this.#deleteNotesHtml()
+        }
+
+        return this.#notesHtml;
     }
 
-    set notesBoxes(value) {
-        this.#notesBoxes.forEach(box => {
-            if (box.id.slice(-1) == value && box.innerHTML == ``) {
-                console.log(box)
-                box.innerHTML = value
-            }
-            else if (box.id.slice(-1) == value && box.innerHTML == value) {
-                box.innerHTML = ''
-            }
-        })
+    set notesHtml(value) { 
+        this.#notesHtml = value;
     }
 
     get isEditable() {
@@ -198,18 +212,18 @@ export class Cell {
         return [...div.parentNode.childNodes];
     }
 
-    createNotesBoxes() {
+    #createNotesHtml() {
         for (let i = 1; i <= 9; i++) {
             const NOTE_BOX = document.createElement('div');
             NOTE_BOX.setAttribute("id", `${this.idText}-note${i}`)
             NOTE_BOX.setAttribute("class", `note-cells`);
-            this.#notesBoxes.push(NOTE_BOX);
+            this.#notesHtml.push(NOTE_BOX);
             this.#html.appendChild(NOTE_BOX);
         }
     }
 
-    deleteNotesBoxes() {
-        this.#notesBoxes.length = 0;
+    #deleteNotesHtml() {
+        this.#notesHtml.length = 0;
     }
 
     #findSquareNeighbors() {
