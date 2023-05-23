@@ -68,7 +68,7 @@ body {
   font-size: small;
   flex-basis: 33.33%;
   box-sizing: border-box;
-  min-height: 5px; /* gaseste ceva solutie */
+  min-height: 33.33%;
 }
 
 .highlight {
