@@ -124,6 +124,7 @@ function addKeyboardListeners() {
         } else if ([ARROW_KEY.up, ARROW_KEY.down, ARROW_KEY.left, ARROW_KEY.right].includes(event.key)) {
             handleArrowNavigation(event, selectedCellIndex);
         } else if (event.key == "Delete" && selectedCell.isEditable && selectedCell.value != "") {
+            // ??? //
             handleDelete(selectedCellIndex);
         }
     });

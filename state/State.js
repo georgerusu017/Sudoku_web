@@ -87,17 +87,17 @@ class StateManager {
         this.#reset();
         
         let cellIndexToSelect = null;
-
         /// verificare
-        if (this.cells.notesHtml != null) {
+        if (document.getElementById(cellId).id.includes("note")) {
             let parentDiv = document.getElementById(cellId).parentNode;
-            cellIndexToSelect = parentDiv.id;
+            cellId = parentDiv.id;
+            cellIndexToSelect = this.cells.findIndex((cell) => cell.idText === cellId);
         }
         else {
             cellIndexToSelect = this.cells.findIndex((cell) => cell.idText === cellId);
         }
         /// verificare
-        
+
         this.cells[cellIndexToSelect].isSelected = true;
 
         if (this.cells[cellIndexToSelect].value != "") {
