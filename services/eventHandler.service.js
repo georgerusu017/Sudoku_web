@@ -123,8 +123,7 @@ function addKeyboardListeners() {
             handleValueChange(event.key, selectedCellIndex);
         } else if ([ARROW_KEY.up, ARROW_KEY.down, ARROW_KEY.left, ARROW_KEY.right].includes(event.key)) {
             handleArrowNavigation(event, selectedCellIndex);
-        } else if (event.key == "Delete" && selectedCell.isEditable && selectedCell.value != "") {
-            // ??? //
+        } else if (event.key == "Delete" && selectedCell.isEditable) {
             handleDelete(selectedCellIndex);
         }
     });
