@@ -85,8 +85,19 @@ class StateManager {
 
     setSelectedCell(cellId) {
         this.#reset();
-        const cellIndexToSelect = this.cells.findIndex((cell) => cell.idText === cellId);
+        
+        let cellIndexToSelect = null;
 
+        /// verificare
+        if (this.cells.notesHtml != null) {
+            let parentDiv = document.getElementById(cellId).parentNode;
+            cellIndexToSelect = parentDiv.id;
+        }
+        else {
+            cellIndexToSelect = this.cells.findIndex((cell) => cell.idText === cellId);
+        }
+        /// verificare
+        
         this.cells[cellIndexToSelect].isSelected = true;
 
         if (this.cells[cellIndexToSelect].value != "") {
