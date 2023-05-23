@@ -79,7 +79,7 @@ export class Cell {
     }
 
     deleteNotes() {
-        this.#notesHtml.length = 0;
+        this.#notesHtml.length = [];
         this.#notesValuesToggle = {};
     }
 
