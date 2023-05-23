@@ -55,17 +55,40 @@ export class Cell {
         this.#invalidCount = 0;
         this.#cellsNeighbors = null;
         this.#notesHtml = [];
-        // acesta este acum obiect
         this.#notesValuesToggle = {
-
         };
     }
 
-    hasValue(){
-       if (Object.keys(test).length > 0){
-        return true
-       }
-       else return false
+    notesValueUpdate(value) {
+        if (this.#notesHtml.length == 0) { this.#createNotesHtml() }
+
+        if (Object.keys(this.#notesValuesToggle).length == 0) {
+            for (let i = 1; i <= 9; i++) {
+                this.#notesValuesToggle[i] = false;
+            }
+        }
+
+        if (!this.#notesValuesToggle[value]) {
+            this.#notesValuesToggle[value] = true;
+            this.#notesHtml[value - 1].innerHTML = value;
+        }
+        else {
+            this.#notesValuesToggle[value] = false;
+            this.#notesHtml[value - 1].innerHTML = null;
+        }
+    }
+
+    deleteNotes() {
+        this.#notesHtml.length = 0;
+        this.#notesValuesToggle = {};
+    }
+
+    get notesHtml() {
+        return this.#notesHtml;
+    }
+
+    get notesValuesToggle() {
+        return this.#notesValuesToggle;
     }
 
     get idText() {
@@ -94,27 +117,6 @@ export class Cell {
             ])]
         }
         return this.#cellsNeighbors;
-    }
-
-    get notesHtml() {
-        if (this.#notesValuesToggle.length > 0 && this.#notesHtml.length == 0) {
-            this.#createNotesHtml()
-        }
-        if (this.#notesHtml.length > 0) {
-            for (let i = 0; i < 9; i++) {
-                if (this.#notesValuesToggle[i] == i + 1) this.#notesHtml[i].innerHTML = this.#notesValuesToggle[i]
-                else this.#notesHtml[i].innerHTML = ''
-            }
-        }
-        if (this.#notesValuesToggle.length == 0) {
-            this.#deleteNotesHtml()
-        }
-
-        return this.#notesHtml;
-    }
-
-    set notesHtml(value) { 
-        this.#notesHtml = value;
     }
 
     get isEditable() {
@@ -220,10 +222,6 @@ export class Cell {
             this.#notesHtml.push(NOTE_BOX);
             this.#html.appendChild(NOTE_BOX);
         }
-    }
-
-    #deleteNotesHtml() {
-        this.#notesHtml.length = 0;
     }
 
     #findSquareNeighbors() {

@@ -29,6 +29,8 @@ function handleValueChange(value, selectedCellIndex) {
 
     if (!state.notesButtonSelected) {
 
+        if (selectedCell.notesHtml.length > 0) { selectedCell.deleteNotes() }
+
         if (selectedCell.value == "") {
 
             selectedCell.value = value;
@@ -39,7 +41,7 @@ function handleValueChange(value, selectedCellIndex) {
             decrementGroup(selectedCellIndex, selectedCell, value)
             selectedCell.value = "";
         }
-        
+
         else if (selectedCell.value != value) {
 
             decrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
@@ -54,16 +56,7 @@ function handleValueChange(value, selectedCellIndex) {
             selectedCell.value = "";
         }
 
-        if (selectedCell.notesValuesToggle.value != true) {
-            selectedCell.notesValuesToggle.value = true
-        }
-        else if (selectedCell.notesValuesToggle.value == true) {
-            delete selectedCell.notesValuesToggle.value
-        }
-
-        // selectedCell.notesHtml;
-
-        // console.log("notes html length = ", selectedCell.notesHtml.length)
+        selectedCell.notesValueUpdate(value)
 
     }
     state.setSelectedCell(selectedCell.idText);
@@ -72,10 +65,10 @@ function handleValueChange(value, selectedCellIndex) {
 function handleDelete(selectedCellIndex) {
     const selectedCell = state.cells[selectedCellIndex];
 
-    // // ?
-    // if (selectedCell.notesValues.length > 0) { 
-    //     selectedCell.notesValues.length = 0;}
-    // // ?
+    if (selectedCell.notesHtml.length > 0) {
+        selectedCell.deleteNotes();
+        selectedCell.value = null;
+    }
 
     if (!selectedCell.isEditable || selectedCell.value == "") { return; }
 
