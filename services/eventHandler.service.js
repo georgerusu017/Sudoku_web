@@ -59,7 +59,7 @@ function handleValueChange(value, selectedCellIndex) {
         selectedCell.notesValueUpdate(value)
 
     }
-    state.setSelectedCell(selectedCell.idText);
+    state.setSelectedCell(selectedCell);
 }
 
 function handleDelete(selectedCellIndex) {
@@ -75,7 +75,7 @@ function handleDelete(selectedCellIndex) {
     decrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
     selectedCell.value = '';
 
-    state.setSelectedCell(selectedCell.idText);
+    state.setSelectedCell(selectedCell);
 }
 
 function handleArrowNavigation(event, selectedCellIndex) {
@@ -111,7 +111,7 @@ function handleArrowNavigation(event, selectedCellIndex) {
         }
     }
 
-    state.setSelectedCell(state.cells[cellToSelectIndex].idText);
+    state.setSelectedCell(state.cells[cellToSelectIndex]);
 }
 
 function addKeyboardListeners() {
@@ -131,8 +131,8 @@ function addKeyboardListeners() {
 
 function addCellClickListeners() {
     state.cells.forEach(cell => {
-        cell.html.addEventListener("click", (event) => {
-            state.setSelectedCell(event.target.id);
+        cell.html.addEventListener("click", () => {
+            state.setSelectedCell(cell);
         });
     })
 }

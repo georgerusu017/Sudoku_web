@@ -9,6 +9,7 @@ class StateManager {
     #notesButtonSelected = false;
     #notesHtml;
     #notesToggleHtml;
+    #history = [];
 
     constructor() {
         for (let i = 0; i < 81; i++) {
@@ -76,48 +77,36 @@ class StateManager {
             }
         }
 
-        this.setSelectedCell(this.cells[0].idText);
+        this.setSelectedCell(this.cells[0]);
     }
 
     getSelectedCellIndex() {
         return this.cells.findIndex((element) => element.isSelected)
     }
 
-    setSelectedCell(cellId) {
+    setSelectedCell(cell) {
         this.#reset();
-        
-        let cellIndexToSelect = null;
-        /// verificare
-        if (document.getElementById(cellId).id.includes("note")) {
-            let parentDiv = document.getElementById(cellId).parentNode;
-            cellId = parentDiv.id;
-            cellIndexToSelect = this.cells.findIndex((cell) => cell.idText === cellId);
-        }
-        else {
-            cellIndexToSelect = this.cells.findIndex((cell) => cell.idText === cellId);
-        }
-        /// verificare
 
-        this.cells[cellIndexToSelect].isSelected = true;
+        cell.isSelected = true;
 
-        if (this.cells[cellIndexToSelect].value != "") {
-            this.cells.forEach(cell => {
-                if (cell.value == this.cells[cellIndexToSelect].value) {
-                    cell.isHighlightedSibling = true;
-                }
-            })
-        }
-
-        this.highlight(cellIndexToSelect);
+        this.#highlight(cell);
     }
-   
-    highlight(selectedCellIndex) {
-        this.cells[selectedCellIndex].cellsNeighbors
+
+    #highlight(cell) {
+        cell.cellsNeighbors
             .forEach(index => {
                 this.cells[index].isHighlighted = true;
             })
 
-        this.cells[selectedCellIndex].isHighlighted = true;
+        if (cell.value != "") {
+            this.cells.forEach(element => {
+                if (element.value == cell.value) {
+                    element.isHighlightedSibling = true;
+                }
+            })
+        }
+
+        cell.isHighlighted = true;
     }
 
     #reset() {
