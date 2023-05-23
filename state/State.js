@@ -110,7 +110,7 @@ class StateManager {
 
         this.highlight(cellIndexToSelect);
     }
-
+   
     highlight(selectedCellIndex) {
         this.cells[selectedCellIndex].cellsNeighbors
             .forEach(index => {
