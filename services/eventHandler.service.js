@@ -61,8 +61,7 @@ function handleValueChange(value, selectedCellIndex) {
     }
     state.setSelectedCell(selectedCell);
 
-    state.addToHistory(selectedCellIndex, selectedCell);
-    console.log("selectedCell = ", selectedCell)
+    state.addToHistory(selectedCell);
     console.log("history = ", state.history)
 }
 
@@ -162,7 +161,7 @@ function addButtonsListeners() {
     document.querySelector(`#${CONTROL_ID.undoButton}`).addEventListener('click', () => {
         state.undo()
         console.log("undo done")
-        console.log("cell 0 = ", state.cells[0])
+        console.log("cell 0 = ", state.cells)
         console.log("history = ", state.history.length)
         // if (state.history.length > 1) {
         //     state.history.pop()
