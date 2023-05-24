@@ -21,9 +21,9 @@ class StateManager {
     addToHistory(type, selectedCell, value = null){
         this.#history.push([type, selectedCell, value])
     }
-    removeFromHistory(){
-        this.#history.pop()
-    }
+    // removeFromHistory(){
+    //     this.#history.pop()
+    // }
 
     get history(){
         return this.#history;
@@ -89,6 +89,7 @@ class StateManager {
         }
 
         this.setSelectedCell(this.cells[0]);
+        this.addToHistory("valueDelete", this.cells[0])
     }
 
     getSelectedCellIndex() {

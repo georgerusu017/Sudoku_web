@@ -23,10 +23,11 @@ function decrementGroup(selectedCellIndex, selectedCell, value) {
  */
 function handleValueChange(value, selectedCellIndex) {
 
-    const selectedCell = state.cells[selectedCellIndex];
-
-    state.addToHistory("valueChange", selectedCell, value);
+    //conditie boolean buton undo apasat.
+    state.addToHistory("valueChange", selectedCellIndex, value);
     console.log("history = ", state.history)
+
+    const selectedCell = state.cells[selectedCellIndex];
 
     if (!selectedCell.isEditable) { return; }
 
@@ -66,10 +67,12 @@ function handleValueChange(value, selectedCellIndex) {
 }
 
 function handleDelete(selectedCellIndex) {
-    const selectedCell = state.cells[selectedCellIndex];
 
-    state.addToHistory("valueDelete", selectedCell);
+    //conditie boolean buton undo apasat.
+    state.addToHistory("valueDelete", electedCellIndex);
     console.log("history = ", state.history)
+
+    const selectedCell = state.cells[selectedCellIndex];
 
     if (selectedCell.notesHtml.length > 0) {
         selectedCell.deleteNotes();
@@ -155,6 +158,21 @@ function addButtonsListeners() {
 
     document.querySelector(`#${CONTROL_ID.newGameButton}`).addEventListener('click', () => {
         state.startNewGame();
+    });
+
+    document.querySelector(`#${CONTROL_ID.undoButton}`).addEventListener('click', () => {
+        if (state.history.length > 1) {
+            state.history.pop()
+            const instructions = state.history[state.history.length - 1]
+            console.log("instructions = ", instructions)
+            console.log("history = ", state.history)
+            if (instructions[0] == "valueChange") {
+                // first we need to delete the actual value
+                handleValueChange(instructions[2],instructions[1])
+                console.log("valoare = ",instructions[2])
+                console.log("cell index = ", instructions[1])
+            }
+        }
     });
 
     document.querySelector(`#${CONTROL_ID.eraseButton}`).addEventListener('click', () => {
