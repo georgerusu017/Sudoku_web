@@ -18,6 +18,17 @@ class StateManager {
         }
     }
 
+    addToHistory(type, selectedCell, value = null){
+        this.#history.push([type, selectedCell, value])
+    }
+    removeFromHistory(){
+        this.#history.pop()
+    }
+
+    get history(){
+        return this.#history;
+    }
+
     get cells() {
         return this.cells;
     }

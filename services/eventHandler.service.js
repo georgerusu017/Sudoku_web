@@ -25,6 +25,9 @@ function handleValueChange(value, selectedCellIndex) {
 
     const selectedCell = state.cells[selectedCellIndex];
 
+    state.addToHistory("valueChange", selectedCell, value);
+    console.log("history = ", state.history)
+
     if (!selectedCell.isEditable) { return; }
 
     if (!state.notesButtonSelected) {
@@ -64,6 +67,9 @@ function handleValueChange(value, selectedCellIndex) {
 
 function handleDelete(selectedCellIndex) {
     const selectedCell = state.cells[selectedCellIndex];
+
+    state.addToHistory("valueDelete", selectedCell);
+    console.log("history = ", state.history)
 
     if (selectedCell.notesHtml.length > 0) {
         selectedCell.deleteNotes();
