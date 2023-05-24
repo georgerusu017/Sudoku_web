@@ -23,10 +23,6 @@ function decrementGroup(selectedCellIndex, selectedCell, value) {
  */
 function handleValueChange(value, selectedCellIndex) {
 
-    //conditie boolean buton undo apasat.
-    state.addToHistory("valueChange", selectedCellIndex, value);
-    console.log("history = ", state.history)
-
     const selectedCell = state.cells[selectedCellIndex];
 
     if (!selectedCell.isEditable) { return; }
@@ -64,13 +60,13 @@ function handleValueChange(value, selectedCellIndex) {
 
     }
     state.setSelectedCell(selectedCell);
+
+    state.addToHistory(selectedCellIndex, selectedCell);
+    console.log("selectedCell = ", selectedCell)
+    console.log("history = ", state.history)
 }
 
 function handleDelete(selectedCellIndex) {
-
-    //conditie boolean buton undo apasat.
-    state.addToHistory("valueDelete", electedCellIndex);
-    console.log("history = ", state.history)
 
     const selectedCell = state.cells[selectedCellIndex];
 
@@ -85,6 +81,9 @@ function handleDelete(selectedCellIndex) {
     selectedCell.value = '';
 
     state.setSelectedCell(selectedCell);
+
+    state.addToHistory(selectedCellIndex, selectedCell);
+    console.log("history = ", state.history)
 }
 
 function handleArrowNavigation(event, selectedCellIndex) {
@@ -161,18 +160,22 @@ function addButtonsListeners() {
     });
 
     document.querySelector(`#${CONTROL_ID.undoButton}`).addEventListener('click', () => {
-        if (state.history.length > 1) {
-            state.history.pop()
-            const instructions = state.history[state.history.length - 1]
-            console.log("instructions = ", instructions)
-            console.log("history = ", state.history)
-            if (instructions[0] == "valueChange") {
-                // first we need to delete the actual value
-                handleValueChange(instructions[2],instructions[1])
-                console.log("valoare = ",instructions[2])
-                console.log("cell index = ", instructions[1])
-            }
-        }
+        state.undo()
+        console.log("undo done")
+        console.log("cell 0 = ", state.cells[0])
+        console.log("history = ", state.history.length)
+        // if (state.history.length > 1) {
+        //     state.history.pop()
+        //     const instructions = state.history[state.history.length - 1]
+        //     console.log("instructions = ", instructions)
+        //     console.log("history = ", state.history)
+        //     if (instructions[0] == "valueChange") {
+        //         // first we need to delete the actual value
+        //         handleValueChange(instructions[2],instructions[1])
+        //         console.log("valoare = ",instructions[2])
+        //         console.log("cell index = ", instructions[1])
+        //     }
+        // }
     });
 
     document.querySelector(`#${CONTROL_ID.eraseButton}`).addEventListener('click', () => {

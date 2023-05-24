@@ -18,14 +18,22 @@ class StateManager {
         }
     }
 
-    addToHistory(type, selectedCell, value = null){
-        this.#history.push([type, selectedCell, value])
+    addToHistory(selectedCellIndex, selectedCell) {
+        this.#history.push([selectedCellIndex, JSON.parse(JSON.stringify(selectedCell))])
     }
-    // removeFromHistory(){
-    //     this.#history.pop()
-    // }
 
-    get history(){
+    undo() {
+        if (this.#history.length > 1) {
+            this.#history.pop();
+            const ITEM = this.#history[this.#history.length - 1]
+            const INDEX = ITEM[0];
+            const CELL = ITEM[1];
+            console.log("cells[index] = ", this.cells[INDEX])
+            this.cells[INDEX] = JSON.parse(JSON.stringify(CELL)) ;
+        }
+    }
+
+    get history() {
         return this.#history;
     }
 
@@ -89,7 +97,7 @@ class StateManager {
         }
 
         this.setSelectedCell(this.cells[0]);
-        this.addToHistory("valueDelete", this.cells[0])
+        this.addToHistory(0, this.cells[0])
     }
 
     getSelectedCellIndex() {
