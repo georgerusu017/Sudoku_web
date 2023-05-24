@@ -18,8 +18,15 @@ class StateManager {
         }
     }
 
-    addToHistory(selectedCellIndex, selectedCell) {
-        this.#history.push([selectedCellIndex, JSON.parse(JSON.stringify(selectedCell))])
+    addToHistory(selectedCell) {
+        const index =  selectedCell.id;
+        const cellCopy = Object.assign(selectedCell)
+        console.log("cellCopy = ", cellCopy)
+        console.log("selectedCell = ", selectedCell)
+        this.#history.push({
+            index: index,
+            cell: {value: selectedCell.value}
+        })   
     }
 
     undo() {
@@ -29,7 +36,7 @@ class StateManager {
             const INDEX = ITEM[0];
             const CELL = ITEM[1];
             console.log("cells[index] = ", this.cells[INDEX])
-            this.cells[INDEX] = JSON.parse(JSON.stringify(CELL)) ;
+
         }
     }
 
