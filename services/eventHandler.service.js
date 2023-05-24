@@ -61,7 +61,7 @@ function handleValueChange(value, selectedCellIndex) {
     }
     state.setSelectedCell(selectedCell);
 
-    state.addToHistory(selectedCell);
+    state.addToHistory(selectedCellIndex);
     console.log("history = ", state.history)
 }
 
@@ -81,7 +81,7 @@ function handleDelete(selectedCellIndex) {
 
     state.setSelectedCell(selectedCell);
 
-    state.addToHistory(selectedCellIndex, selectedCell);
+    state.addToHistory(selectedCellIndex);
     console.log("history = ", state.history)
 }
 
