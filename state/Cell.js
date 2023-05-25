@@ -41,8 +41,7 @@ export class Cell {
     #invalidCount;
     #html;
     #cellsNeighbors;
-    #notesHtml;
-    #notesValuesToggle;
+    #notesValues;
 
     constructor(id) {
         this.#id = id;
@@ -54,50 +53,33 @@ export class Cell {
         this.#html = null;
         this.#invalidCount = 0;
         this.#cellsNeighbors = null;
-        this.#notesHtml = [];
-        // yagni
-        this.#notesValuesToggle = {
-        };
+        this.#notesValues = [];
     }
 
     // value din array
-    notesValueUpdate(value) {
-        if (this.#notesHtml.length == 0) { this.#createNotesHtml() }
+    updateNotesValues(value) {
+        this.#createNotesHtml()
+        this.#notesValues.push(value)
 
-        if (Object.keys(this.#notesValuesToggle).length == 0) {
-            for (let i = 1; i <= 9; i++) {
-                this.#notesValuesToggle[i] = false;
+        this.#notesValues.forEach(value => {
+            if (this.#html.children[value - 1].innerHTML == value) {
+                this.#html.children[value - 1].innerHTML = null
+            } else {
+                this.#html.children[value - 1].innerHTML = value
             }
-        }
 
-        if (!this.#notesValuesToggle[value]) {
-            this.#notesValuesToggle[value] = true;
-            this.#notesHtml[value - 1].innerHTML = value;
-        }
-        else {
-            this.#notesValuesToggle[value] = false;
-            this.#notesHtml[value - 1].innerHTML = null;
-        }
+        })
     }
 
-    // merge imbunatatit cu if si value = null
+    // ceva aici trebuie facut
     deleteNotes() {
-
-        this.#notesHtml.length = 0;
-
-        this.#notesValuesToggle = {};
+            this.#notesValues.length = 0;
+            // ???
+            // this.#value = null;
     }
 
     toJSON() {
-        return {value: this.#value};
-    }
-
-    get notesHtml() {
-        return this.#notesHtml;
-    }
-
-    get notesValuesToggle() {
-        return this.#notesValuesToggle;
+        return { value: this.#value };
     }
 
     get idText() {
@@ -224,11 +206,11 @@ export class Cell {
     }
 
     #createNotesHtml() {
+        this.#html.innerHTML = null;
         for (let i = 1; i <= 9; i++) {
             const NOTE_BOX = document.createElement('div');
             NOTE_BOX.setAttribute("id", `${this.idText}-note${i}`)
             NOTE_BOX.setAttribute("class", `note-cells`);
-            this.#notesHtml.push(NOTE_BOX);
             this.#html.appendChild(NOTE_BOX);
         }
     }
