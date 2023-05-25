@@ -34,8 +34,8 @@ class StateManager {
 
         this.cells[CELL.id].value = CELL.value
         // this.cells[CELL.cell.id].notesHtml = CELL.cell.notesHtml
-
     }
+    
     undo() {
         if (this.#history.length > 1) {
             this.#history.pop();
