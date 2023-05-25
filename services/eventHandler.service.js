@@ -62,7 +62,7 @@ function handleValueChange(value, selectedCellIndex) {
     }
     state.setSelectedCell(selectedCell);
 
-    state.addToHistory(selectedCell);
+    state.addToHistory(selectedCellIndex);
     console.log("history = ", state.history)
 }
 
