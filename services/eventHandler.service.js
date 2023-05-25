@@ -27,7 +27,7 @@ function handleValueChange(value, selectedCellIndex) {
 
     if (!selectedCell.isEditable) { return; }
 
-    if (!state.notesButtonSelected) {
+    if (!state.isNotesEnabled) {
 
         if (selectedCell.notesHtml.length > 0) { selectedCell.deleteNotes() }
 
@@ -56,6 +56,7 @@ function handleValueChange(value, selectedCellIndex) {
             selectedCell.value = "";
         }
 
+        // value in array
         selectedCell.notesValueUpdate(value)
 
     }
@@ -81,7 +82,7 @@ function handleDelete(selectedCellIndex) {
 
     state.setSelectedCell(selectedCell);
 
-    state.addToHistory(selectedCellIndex, selectedCell);
+    state.addToHistory(selectedCell);
     console.log("history = ", state.history)
 }
 
@@ -159,22 +160,29 @@ function addButtonsListeners() {
     });
 
     document.querySelector(`#${CONTROL_ID.undoButton}`).addEventListener('click', () => {
-        state.undo()
-        console.log("undo done")
-        console.log("cell 0 = ", state.cells)
-        console.log("history = ", state.history.length)
-        // if (state.history.length > 1) {
-        //     state.history.pop()
-        //     const instructions = state.history[state.history.length - 1]
-        //     console.log("instructions = ", instructions)
-        //     console.log("history = ", state.history)
-        //     if (instructions[0] == "valueChange") {
-        //         // first we need to delete the actual value
-        //         handleValueChange(instructions[2],instructions[1])
-        //         console.log("valoare = ",instructions[2])
-        //         console.log("cell index = ", instructions[1])
-        //     }
-        // }
+
+        if (state.history.length > 1) {
+            const selectedCell = state.cells[state.history[state.history.length - 1].id];
+
+            // first we delete what's inside
+            if (selectedCell.notesHtml.length > 0) {
+                selectedCell.deleteNotes();
+                selectedCell.value = null;
+            }
+
+            if (!selectedCell.value == "") {
+                decrementGroup(state.history[state.history.length - 1].id, selectedCell, selectedCell.value)
+                selectedCell.value = '';
+            }
+
+            state.history.pop()
+
+            //then we add the history values
+
+            state.addHistoryRecordToCell();
+            state.setSelectedCell(selectedCell);
+        }
+
     });
 
     document.querySelector(`#${CONTROL_ID.eraseButton}`).addEventListener('click', () => {
@@ -183,11 +191,11 @@ function addButtonsListeners() {
     });
 
     document.querySelector(`#${CONTROL_ID.notesButton}`).addEventListener('click', () => {
-        if (state.notesButtonSelected) {
-            state.notesButtonSelected = false;
+        if (state.isNotesEnabled) {
+            state.isNotesEnabled = false;
         }
         else {
-            state.notesButtonSelected = true;
+            state.isNotesEnabled = true;
         }
     });
 }

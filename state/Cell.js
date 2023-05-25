@@ -55,10 +55,12 @@ export class Cell {
         this.#invalidCount = 0;
         this.#cellsNeighbors = null;
         this.#notesHtml = [];
+        // yagni
         this.#notesValuesToggle = {
         };
     }
 
+    // value din array
     notesValueUpdate(value) {
         if (this.#notesHtml.length == 0) { this.#createNotesHtml() }
 
@@ -78,9 +80,16 @@ export class Cell {
         }
     }
 
+    // merge imbunatatit cu if si value = null
     deleteNotes() {
-        this.#notesHtml.length = [];
+
+        this.#notesHtml.length = 0;
+
         this.#notesValuesToggle = {};
+    }
+
+    toJSON() {
+        return {value: this.#value};
     }
 
     get notesHtml() {

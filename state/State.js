@@ -5,9 +5,7 @@ class StateManager {
      * @type {Cell[]}
      */
     cells = [];
-    // isNotesEnabled
-    #notesButtonSelected = false;
-    #notesHtml;
+    #isNotesEnabled = false;
     #notesToggleHtml;
     #history = [];
 
@@ -19,14 +17,22 @@ class StateManager {
     }
 
     addToHistory(selectedCell) {
-        const index =  selectedCell.id;
-        const cellCopy = Object.assign(selectedCell)
-        console.log("cellCopy = ", cellCopy)
-        console.log("selectedCell = ", selectedCell)
         this.#history.push({
-            index: index,
-            cell: {value: selectedCell.value}
-        })   
+            cell: selectedCell,
+            value: selectedCell.value,
+            id: selectedCell.id,
+            // valorile lui notesHtml
+            notesHtml: selectedCell.notesHtml,
+            notesValuesToggle: selectedCell.notesValuesToggle
+        })
+    }
+
+    addHistoryRecordToCell() {
+        const INDEX = this.#history.length - 1;
+        const CELL = this.#history[INDEX]
+
+        this.cells[CELL.id].value = CELL.value
+        // this.cells[CELL.cell.id].notesHtml = CELL.cell.notesHtml
     }
 
     undo() {
@@ -36,7 +42,6 @@ class StateManager {
             const INDEX = ITEM[0];
             const CELL = ITEM[1];
             console.log("cells[index] = ", this.cells[INDEX])
-
         }
     }
 
@@ -48,14 +53,14 @@ class StateManager {
         return this.cells;
     }
 
-    get notesButtonSelected() {
-        return this.#notesButtonSelected;
+    get isNotesEnabled() {
+        return this.#isNotesEnabled;
     }
 
     /**
      * @param {boolean} value
      */
-    set notesButtonSelected(value) {
+    set isNotesEnabled(value) {
         if (value) {
             this.notesHtml.classList.add("round_buttons_selected")
             this.notesToggleHtml.innerHTML = "ON"
@@ -66,15 +71,7 @@ class StateManager {
             this.notesToggleHtml.innerHTML = "OFF"
             this.notesToggleHtml.classList.remove("notes_toggle_selected")
         }
-        this.#notesButtonSelected = value;
-    }
-
-    get notesHtml() {
-        return this.#notesHtml
-    }
-
-    set notesHtml(value) {
-        this.#notesHtml = value;
+        this.#isNotesEnabled = value;
     }
 
     get notesToggleHtml() {
@@ -88,7 +85,7 @@ class StateManager {
 
     startNewGame() {
         const sudokuPuzzle = sudoku.generate("insane");
-        //const sudokuPuzzleSolved = sudoku.solve(SUDOKU_UNSOLVED);
+        // const sudokuPuzzleSolved = sudoku.solve(SUDOKU_UNSOLVED);
 
         const gridSize = 81;
         this.#boardWipe();
@@ -104,7 +101,7 @@ class StateManager {
         }
 
         this.setSelectedCell(this.cells[0]);
-        this.addToHistory(0, this.cells[0])
+        this.addToHistory(this.cells[0]);
     }
 
     getSelectedCellIndex() {
@@ -146,7 +143,7 @@ class StateManager {
         this.cells.forEach(cell => {
             cell.wipe();
         })
-        this.notesButtonSelected = false;
+        this.isNotesEnabled = false;
     }
 }
 
