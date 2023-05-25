@@ -6,7 +6,7 @@ class StateManager {
      */
     cells = [];
     #isNotesEnabled = false;
-    #isNotesEnabled;
+    #notesToggleHtml;
     #history = [];
 
     constructor() {
@@ -16,8 +16,9 @@ class StateManager {
         }
     }
 
-
     addToHistory(selectedCell) {
+        // const cellCopy = Object.assign(selectedCell)
+        // const cellCopy = JSON.parse(JSON.stringify(selectedCell))
         this.#history.push({
             cell: selectedCell,
             value: selectedCell.value,
@@ -35,7 +36,7 @@ class StateManager {
         this.cells[CELL.id].value = CELL.value
         // this.cells[CELL.cell.id].notesHtml = CELL.cell.notesHtml
     }
-    
+
     undo() {
         if (this.#history.length > 1) {
             this.#history.pop();
@@ -76,11 +77,11 @@ class StateManager {
     }
 
     get notesToggleHtml() {
-        return this.#isNotesEnabled
+        return this.#notesToggleHtml
     }
 
     set notesToggleHtml(value) {
-        this.#isNotesEnabled = value;
+        this.#notesToggleHtml = value;
         this.notesToggleHtml.innerHTML = "OFF"
     }
 
