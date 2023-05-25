@@ -29,7 +29,7 @@ function handleValueChange(value, selectedCellIndex) {
 
     if (!state.isNotesEnabled) {
 
-        if (selectedCell.notesHtml.length > 0) { selectedCell.deleteNotes() }
+        selectedCell.deleteNotes()
 
         if (selectedCell.value == "") {
 
@@ -55,9 +55,8 @@ function handleValueChange(value, selectedCellIndex) {
             decrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
             selectedCell.value = "";
         }
-
-        // value in array
-        selectedCell.notesValueUpdate(value)
+00
+        selectedCell.updateNotesValues(value)
 
     }
     state.setSelectedCell(selectedCell);
@@ -70,10 +69,7 @@ function handleDelete(selectedCellIndex) {
 
     const selectedCell = state.cells[selectedCellIndex];
 
-    if (selectedCell.notesHtml.length > 0) {
-        selectedCell.deleteNotes();
-        selectedCell.value = null;
-    }
+    selectedCell.deleteNotes();
 
     if (!selectedCell.isEditable || selectedCell.value == "") { return; }
 
