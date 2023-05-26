@@ -24,16 +24,6 @@ class StateManager {
         })
     }
 
-    undo() {
-        if (this.#history.length > 1) {
-            this.#history.pop();
-            const ITEM = this.#history[this.#history.length - 1]
-            const INDEX = ITEM[0];
-            const CELL = ITEM[1];
-            console.log("cells[index] = ", this.cells[INDEX])
-        }
-    }
-
     get history() {
         return this.#history;
     }
@@ -90,7 +80,6 @@ class StateManager {
         }
 
         this.setSelectedCell(this.cells[0]);
-        this.addToHistory(this.cells[0]);
     }
 
     getSelectedCellIndex() {

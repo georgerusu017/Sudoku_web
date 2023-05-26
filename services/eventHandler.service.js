@@ -24,6 +24,7 @@ function decrementGroup(selectedCellIndex, selectedCell, value) {
 function handleValueChange(value, selectedCellIndex) {
 
     const selectedCell = state.cells[selectedCellIndex];
+    state.addToHistory(selectedCell);
 
     if (!selectedCell.isEditable) { return; }
 
@@ -62,14 +63,12 @@ function handleValueChange(value, selectedCellIndex) {
 
     }
     state.setSelectedCell(selectedCell);
-
-    state.addToHistory(selectedCell);
-    console.log("history = ", state.history)
 }
 
 function handleDelete(selectedCellIndex) {
 
     const selectedCell = state.cells[selectedCellIndex];
+    state.addToHistory(selectedCell);
 
     if (selectedCell.notesValues.length > 0){
         selectedCell.notesValues.length = 0;
@@ -82,8 +81,6 @@ function handleDelete(selectedCellIndex) {
     selectedCell.value = '';
 
     state.setSelectedCell(selectedCell);
-
-    state.addToHistory(selectedCell);
     console.log("history = ", state.history)
 }
 
@@ -160,41 +157,7 @@ function addButtonsListeners() {
         state.startNewGame();
     });
 
-    document.querySelector(`#${CONTROL_ID.undoButton}`).addEventListener('click', () => {
-        if (state.history.length > 1) {
-            let selectedCell = state.cells[state.history[state.history.length - 1].id];
-            // first we delete what's inside
-            console.log("SelectedCell = ", selectedCell)
-
-            if (!selectedCell.value == "") {
-                decrementGroup(selectedCell.id, selectedCell, selectedCell.value)
-                selectedCell.value = "";
-            }
-
-            if (selectedCell.notesValues.length != 0) {
-                selectedCell.notesValues.length = 0;
-                selectedCell.value = "";
-            }
-
-            state.history.pop()
-
-            selectedCell = state.cells[state.history[state.history.length - 1].id];
-            console.log(state.history)
-
-            //then we add the history values
-
-            if (state.history[state.history.length - 1].notesValues != null) {
-                state.history[state.history.length - 1].notesValues.forEach(value => {
-                    selectedCell.updateNotesValues(value)
-                })
-            }
-            // selectedCell.value = state.history[state.history.length - 1].value;
-
-
-            state.setSelectedCell(selectedCell);
-        }
-
-    });
+    document.querySelector(`#${CONTROL_ID.undoButton}`).addEventListener('click', undo);
 
     document.querySelector(`#${CONTROL_ID.eraseButton}`).addEventListener('click', () => {
         const selectedCellIndex = state.getSelectedCellIndex();
@@ -209,6 +172,42 @@ function addButtonsListeners() {
             state.isNotesEnabled = true;
         }
     });
+}
+
+function undo (){
+    if (state.history.length > 0) {
+        const lastValueChange = state.history.pop();
+        const selectedCell = state.cells[lastValueChange.id];
+        // first we delete what's inside
+        console.log("SelectedCell = ", selectedCell)
+
+        if (selectedCell.value) {
+            decrementGroup(selectedCell.id, selectedCell, selectedCell.value)
+            selectedCell.value = "";
+        }
+
+        if (selectedCell.notesValues.length != 0) {
+            selectedCell.notesValues.length = 0;
+            selectedCell.value = "";
+        }
+
+        console.log(state.history)
+
+        //then we add the history values
+
+        if (lastValueChange.notesValues.length != 0) {
+            lastValueChange.notesValues.forEach(value => {
+                selectedCell.updateNotesValues(value)
+            })
+        }
+        else{
+            selectedCell.value = lastValueChange.value;
+            if(selectedCell.value){
+                incrementGroup(selectedCell.id, selectedCell, selectedCell.value)
+            }
+        }
+        state.setSelectedCell(selectedCell);
+    }
 }
 
 export function addEventListeners() {

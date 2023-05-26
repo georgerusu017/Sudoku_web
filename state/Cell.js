@@ -58,19 +58,16 @@ export class Cell {
 
     updateNotesValues(value) {
         this.#createNotesHtml()
-        this.#notesValues.push(value)
+        const index = this.#notesValues.indexOf(value);
+        if (index != -1){
+            this.#notesValues.splice(index,1);
+        }else{
+            this.#notesValues.push(value)
+        }
         this.#notesValues.forEach(value => {
-            if (this.#html.children[value - 1].innerHTML == value) {
-                this.#html.children[value - 1].innerHTML = null
-            } else {
                 this.#html.children[value - 1].innerHTML = value
-            }
         })
     }
-
-    // deleteNotes() {
-    //         this.#notesValues.length = 0;
-    // }
 
     get idText() {
         return `cell-${this.id}`;
