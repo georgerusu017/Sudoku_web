@@ -56,31 +56,21 @@ export class Cell {
         this.#notesValues = [];
     }
 
-    // value din array
     updateNotesValues(value) {
         this.#createNotesHtml()
         this.#notesValues.push(value)
-
         this.#notesValues.forEach(value => {
             if (this.#html.children[value - 1].innerHTML == value) {
                 this.#html.children[value - 1].innerHTML = null
             } else {
                 this.#html.children[value - 1].innerHTML = value
             }
-
         })
     }
 
-    // ceva aici trebuie facut
-    deleteNotes() {
-            this.#notesValues.length = 0;
-            // ???
-            // this.#value = null;
-    }
-
-    toJSON() {
-        return { value: this.#value };
-    }
+    // deleteNotes() {
+    //         this.#notesValues.length = 0;
+    // }
 
     get idText() {
         return `cell-${this.id}`;
@@ -88,6 +78,10 @@ export class Cell {
 
     get id() {
         return this.#id;
+    }
+
+    get notesValues(){
+        return this.#notesValues;
     }
 
     get value() {

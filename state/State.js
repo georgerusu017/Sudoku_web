@@ -17,24 +17,11 @@ class StateManager {
     }
 
     addToHistory(selectedCell) {
-        // const cellCopy = Object.assign(selectedCell)
-        // const cellCopy = JSON.parse(JSON.stringify(selectedCell))
         this.#history.push({
-            cell: selectedCell,
             value: selectedCell.value,
             id: selectedCell.id,
-            // valorile lui notesHtml
-            notesHtml: selectedCell.notesHtml,
-            notesValuesToggle: selectedCell.notesValuesToggle
+            notesValues : [...selectedCell.notesValues]
         })
-    }
-
-    addHistoryRecordToCell() {
-        const INDEX = this.#history.length - 1;
-        const CELL = this.#history[INDEX]
-
-        this.cells[CELL.id].value = CELL.value
-        // this.cells[CELL.cell.id].notesHtml = CELL.cell.notesHtml
     }
 
     undo() {
@@ -112,9 +99,7 @@ class StateManager {
 
     setSelectedCell(cell) {
         this.#reset();
-
         cell.isSelected = true;
-
         this.#highlight(cell);
     }
 

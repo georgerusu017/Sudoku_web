@@ -29,39 +29,41 @@ function handleValueChange(value, selectedCellIndex) {
 
     if (!state.isNotesEnabled) {
 
-        selectedCell.deleteNotes()
+        selectedCell.notesValues.length = 0;
 
         if (selectedCell.value == "") {
 
             selectedCell.value = value;
-            incrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
+            incrementGroup(selectedCell.id, selectedCell, selectedCell.value)
         }
         else if (selectedCell.value == value) {
 
-            decrementGroup(selectedCellIndex, selectedCell, value)
+            decrementGroup(selectedCell.id, selectedCell, value)
             selectedCell.value = "";
         }
 
         else if (selectedCell.value != value) {
 
-            decrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
+            decrementGroup(selectedCell.id, selectedCell, selectedCell.value)
             selectedCell.value = value;
-            incrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
+            incrementGroup(selectedCell.id, selectedCell, selectedCell.value)
         }
     }
 
     else {
         if (selectedCell.value != "") {
-            decrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
+            decrementGroup(selectedCell.id, selectedCell, selectedCell.value)
             selectedCell.value = "";
         }
-00
+        // if (selectedCell.notesValues == ""){
+        //     state.addToHistory(selectedCell);
+        // }
         selectedCell.updateNotesValues(value)
 
     }
     state.setSelectedCell(selectedCell);
 
-    state.addToHistory(selectedCellIndex);
+    state.addToHistory(selectedCell);
     console.log("history = ", state.history)
 }
 
@@ -69,11 +71,14 @@ function handleDelete(selectedCellIndex) {
 
     const selectedCell = state.cells[selectedCellIndex];
 
-    selectedCell.deleteNotes();
+    if (selectedCell.notesValues.length > 0){
+        selectedCell.notesValues.length = 0;
+        selectedCell.value = ``;
+    }
 
     if (!selectedCell.isEditable || selectedCell.value == "") { return; }
 
-    decrementGroup(selectedCellIndex, selectedCell, selectedCell.value)
+    decrementGroup(selectedCell.id, selectedCell, selectedCell.value)
     selectedCell.value = '';
 
     state.setSelectedCell(selectedCell);
@@ -156,26 +161,36 @@ function addButtonsListeners() {
     });
 
     document.querySelector(`#${CONTROL_ID.undoButton}`).addEventListener('click', () => {
-
         if (state.history.length > 1) {
-            const selectedCell = state.cells[state.history[state.history.length - 1].id];
-
+            let selectedCell = state.cells[state.history[state.history.length - 1].id];
             // first we delete what's inside
-            if (selectedCell.notesHtml.length > 0) {
-                selectedCell.deleteNotes();
-                selectedCell.value = null;
-            }
+            console.log("SelectedCell = ", selectedCell)
 
             if (!selectedCell.value == "") {
-                decrementGroup(state.history[state.history.length - 1].id, selectedCell, selectedCell.value)
-                selectedCell.value = '';
+                decrementGroup(selectedCell.id, selectedCell, selectedCell.value)
+                selectedCell.value = "";
+            }
+
+            if (selectedCell.notesValues.length != 0) {
+                selectedCell.notesValues.length = 0;
+                selectedCell.value = "";
             }
 
             state.history.pop()
 
+            selectedCell = state.cells[state.history[state.history.length - 1].id];
+            console.log(state.history)
+
             //then we add the history values
 
-            state.addHistoryRecordToCell();
+            if (state.history[state.history.length - 1].notesValues != null) {
+                state.history[state.history.length - 1].notesValues.forEach(value => {
+                    selectedCell.updateNotesValues(value)
+                })
+            }
+            // selectedCell.value = state.history[state.history.length - 1].value;
+
+
             state.setSelectedCell(selectedCell);
         }
 
