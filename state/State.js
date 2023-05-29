@@ -12,8 +12,10 @@ class StateManager {
     #timer = {
         seconds: 0,
         minutes: 0,
-        html: document.getElementById(LAYOUT_ID.timer)
-    }
+        clockId: null,
+        timerDiv: null,
+    };
+
 
     constructor() {
         for (let i = 0; i < 81; i++) {
@@ -31,48 +33,52 @@ class StateManager {
     }
 
     startTimer() {
-        let clock = null
-        let minutes = null
-        let seconds = null
-        let timerDiv = document.getElementById(LAYOUT_ID.timer)
+        this.#timer.timerDiv.innerHTML = `Timer: 00:00`;
+        clearInterval(this.#timer.clockId)
+        this.#timer.minutes = 0;
+        this.#timer.seconds = 0;
+        this.#initTimer();
+    }
 
-        clock = setInterval(() => {
-            if(this.#timer.minutes < 10){
-                minutes = `0${this.#timer.minutes}`
-            } else{
-                minutes = this.#timer.minutes
-            }
-
-            if(this.#timer.seconds < 10){
-                seconds = `0${this.#timer.seconds}`
-            } else{
-                seconds = this.#timer.seconds
-            }
-
-            timerDiv.innerHTML = `Timer: ${minutes}`+`:`+`${seconds}`
-
+    #initTimer() {
+        this.#timer.clockId = setInterval(() => {
+            let minutes = null
+            let seconds = null
             this.#timer.seconds++;
+
             if (this.#timer.seconds == 60) {
                 this.#timer.minutes++
                 this.#timer.seconds = 0;
             }
             if (this.#timer.minutes == 60) {
-                clear()
+                clearInterval(this.#timer.clockId)
                 return window.alert("You Lost");
             }
 
+            if (this.#timer.minutes < 10) {
+                minutes = `0${this.#timer.minutes}`
+            } else {
+                minutes = this.#timer.minutes
+            }
+
+            if (this.#timer.seconds < 10) {
+                seconds = `0${this.#timer.seconds}`
+            } else {
+                seconds = this.#timer.seconds
+            }
+
+            this.#timer.timerDiv.innerHTML = `Timer: ${minutes}` + `:` + `${seconds}`
             console.log(`timer: `, this.#timer.minutes, this.#timer.seconds)
+
         }, 1000)
-
-        function clear() {
-            clearInterval(clock)
-        }
-
     }
 
-    resetTimer() {
-        this.#timer.minutes = 0;
-        this.#timer.seconds = 0;
+    toggleTimer() {
+        if (this.#timer.clockId) {
+            clearInterval(this.#timer.clockId)
+        } else {
+            this.#initTimer();
+        }
     }
 
     get timer() {
@@ -134,8 +140,8 @@ class StateManager {
             }
         }
 
+        this.timer.timerDiv = document.getElementById(LAYOUT_ID.timer);
         this.setSelectedCell(this.cells[0]);
-        // this.resetTimer();
         this.startTimer()
     }
 
