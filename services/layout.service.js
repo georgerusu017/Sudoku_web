@@ -69,7 +69,6 @@ export function createLayout() {
     createRoundButtons();
     createNumberButtons();
     addButton("newGame", "newGame", "numbpad", "New Game");
-    addText("timer", LAYOUT_ID.timer, "Timer: 12:34:56");
 
     createSudokuGrid();
 }

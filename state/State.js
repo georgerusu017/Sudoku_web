@@ -1,4 +1,5 @@
 import { Cell } from "./Cell.js";
+import { LAYOUT_ID } from "../constants.js";
 
 class StateManager {
     /**
@@ -8,6 +9,11 @@ class StateManager {
     #isNotesEnabled = false;
     #notesToggleHtml;
     #history = [];
+    #timer = {
+        seconds: 0,
+        minutes: 0,
+        html: document.getElementById(LAYOUT_ID.timer)
+    }
 
     constructor() {
         for (let i = 0; i < 81; i++) {
@@ -20,8 +26,57 @@ class StateManager {
         this.#history.push({
             value: selectedCell.value,
             id: selectedCell.id,
-            notesValues : [...selectedCell.notesValues]
+            notesValues: [...selectedCell.notesValues]
         })
+    }
+
+    startTimer() {
+        let clock = null
+        let minutes = null
+        let seconds = null
+        let timerDiv = document.getElementById(LAYOUT_ID.timer)
+
+        clock = setInterval(() => {
+            if(this.#timer.minutes < 10){
+                minutes = `0${this.#timer.minutes}`
+            } else{
+                minutes = this.#timer.minutes
+            }
+
+            if(this.#timer.seconds < 10){
+                seconds = `0${this.#timer.seconds}`
+            } else{
+                seconds = this.#timer.seconds
+            }
+
+            timerDiv.innerHTML = `Timer: ${minutes}`+`:`+`${seconds}`
+
+            this.#timer.seconds++;
+            if (this.#timer.seconds == 60) {
+                this.#timer.minutes++
+                this.#timer.seconds = 0;
+            }
+            if (this.#timer.minutes == 60) {
+                clear()
+                return window.alert("You Lost");
+            }
+
+            console.log(`timer: `, this.#timer.minutes, this.#timer.seconds)
+        }, 1000)
+
+        function clear() {
+            clearInterval(clock)
+        }
+
+    }
+
+    resetTimer() {
+        this.#timer.minutes = 0;
+        this.#timer.seconds = 0;
+    }
+
+    get timer() {
+        return this.#timer;
     }
 
     get history() {
@@ -80,6 +135,8 @@ class StateManager {
         }
 
         this.setSelectedCell(this.cells[0]);
+        // this.resetTimer();
+        this.startTimer()
     }
 
     getSelectedCellIndex() {
