@@ -56,9 +56,6 @@ function handleValueChange(value, selectedCellIndex) {
             decrementGroup(selectedCell.id, selectedCell, selectedCell.value)
             selectedCell.value = "";
         }
-        // if (selectedCell.notesValues == ""){
-        //     state.addToHistory(selectedCell);
-        // }
         selectedCell.updateNotesValues(value)
 
     }
