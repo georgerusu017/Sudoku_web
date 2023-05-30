@@ -12,7 +12,8 @@ const LAYOUT_ID = Object.freeze({
     table: "table",
     control: "control",
     controlButtons: "control-buttons",
-    numpad: "numbpad"
+    numpad: "numbpad",
+    pauseScreen: "pause-screen"
 })
 const CONTROL_ID = Object.freeze({
     undoButton: "undoButton",

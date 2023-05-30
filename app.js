@@ -6,4 +6,3 @@ createLayout();
 addEventListeners();
 
 state.startNewGame();
-// state.startTimer();

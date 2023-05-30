@@ -1,5 +1,5 @@
 
-import { CONTROL_ID, ARROW_KEY } from '../constants.js';
+import { CONTROL_ID, ARROW_KEY, LAYOUT_ID } from '../constants.js';
 import state from '../state/State.js';
 import { Cell } from "../state/Cell.js";
 
@@ -187,6 +187,10 @@ function addButtonsListeners() {
         else {
             state.isNotesEnabled = true;
         }
+    });
+
+    document.querySelector(`#${LAYOUT_ID.pauseScreen}`).addEventListener('click', () => {
+        if (state.resumeTimer()) return
     });
 }
 

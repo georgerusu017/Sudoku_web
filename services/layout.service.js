@@ -39,9 +39,9 @@ function createLayoutElements(parentElement, ...childElements) {
     });
 }
 
-function createNotesButton(){
+function createNotesButton() {
     createButtonWithLabelAndImg(CONTROL_ID.notesButton, "round_buttons", "notes-div", "./images/pencil.png", "control_text", "Notes")
-    createLayoutElements(CONTROL_ID.notesButton,"notesToggle");
+    createLayoutElements(CONTROL_ID.notesButton, "notesToggle");
     state.notesHtml = document.getElementById("notesButton");
     state.notesToggleHtml = document.getElementById("notesToggle");
 }
@@ -50,7 +50,7 @@ function createRoundButtons() {
 
     createButtonWithLabelAndImg(CONTROL_ID.undoButton, "round_buttons", "undo-div", "./images/undo.png", "control_text", "Undo")
     createButtonWithLabelAndImg(CONTROL_ID.eraseButton, "round_buttons", "erase-div", "./images/eraser.png", "control_text", "Erase")
-    createButtonWithLabelAndImg(CONTROL_ID.playOrPause, "play_pause", LAYOUT_ID.timerControl, "./images/pause.png")
+    addButton(CONTROL_ID.playOrPause, "play_pause", LAYOUT_ID.timerControl, '')
     createNotesButton();
 
 }
@@ -66,12 +66,12 @@ export function createLayout() {
     createLayoutElements(LAYOUT_ID.timerControl, LAYOUT_ID.timer)
     createLayoutElements("app", LAYOUT_ID.game);
     createLayoutElements("game", LAYOUT_ID.table, LAYOUT_ID.control);
+    addDiv(LAYOUT_ID.pauseScreen, LAYOUT_ID.table, "hidden");
     createLayoutElements("control", LAYOUT_ID.controlButtons, "numbpad");
     createLayoutElements(LAYOUT_ID.controlButtons, "undo-div", "erase-div", "notes-div");
     createRoundButtons();
     createNumberButtons();
     addButton("newGame", "newGame", "numbpad", "New Game");
-
     createSudokuGrid(`-empty`, ` hidden`);
     createSudokuGrid();
 }

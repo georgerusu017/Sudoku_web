@@ -82,12 +82,16 @@ class StateManager {
                 document.getElementById(`Square-${i}`).classList.add(`hidden`)
                 document.getElementById(`Square-${i}-empty`).classList.remove(`hidden`)
             }
+            document.getElementById("pause-screen").classList.remove(`hidden`)
+            document.getElementById("play-or-pause").classList.add(`transform-to-play`)
         } else {
             this.#initTimer();
             for (let i = 0; i < 9; i++) {
                 document.getElementById(`Square-${i}`).classList.remove(`hidden`)
                 document.getElementById(`Square-${i}-empty`).classList.add(`hidden`)
             }
+            document.getElementById("pause-screen").classList.add(`hidden`)
+            document.getElementById("play-or-pause").classList.remove(`transform-to-play`)
         }
     }
 
