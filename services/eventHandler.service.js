@@ -150,7 +150,15 @@ function addButtonsListeners() {
         });
     })
 
+    document.querySelector(`#${CONTROL_ID.playOrPause}`).addEventListener('click', () => {
+        state.toggleTimer();
+    });
+
     document.querySelector(`#${CONTROL_ID.newGameButton}`).addEventListener('click', () => {
+        if (state.timer.clockId == null) {
+            state.toggleTimer()
+            return
+        }
         state.startNewGame();
     });
 

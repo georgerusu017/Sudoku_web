@@ -32,7 +32,7 @@ class StateManager {
         })
     }
 
-    startTimer() {
+    #startTimer() {
         this.#timer.timerDiv.innerHTML = `Timer: 00:00`;
         clearInterval(this.#timer.clockId)
         this.#timer.minutes = 0;
@@ -76,8 +76,16 @@ class StateManager {
     toggleTimer() {
         if (this.#timer.clockId) {
             clearInterval(this.#timer.clockId)
+            this.#timer.clockId = null;
         } else {
             this.#initTimer();
+        }
+    }
+
+    resumeTimer() {
+        if (this.timer.clockId == null){
+            this.toggleTimer()
+            return
         }
     }
 
@@ -142,7 +150,7 @@ class StateManager {
 
         this.timer.timerDiv = document.getElementById(LAYOUT_ID.timer);
         this.setSelectedCell(this.cells[0]);
-        this.startTimer()
+        this.#startTimer()
     }
 
     getSelectedCellIndex() {
