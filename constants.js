@@ -7,6 +7,7 @@ const CELL_CSS = Object.freeze({
 
 const LAYOUT_ID = Object.freeze({
     game: "game",
+    timerControl: "timer-control",
     timer: "timer",
     table: "table",
     control: "control",
@@ -21,6 +22,7 @@ const CONTROL_ID = Object.freeze({
     eraseLabel: "eraseLabel",
     notesLabel: "notesLabel",
     newGameButton: 'newGame',
+    playOrPause: 'play-or-pause',
     numberButtons: [...Array(9).fill().map((_, i) => `number-button-${i+1}`)],
 
 })

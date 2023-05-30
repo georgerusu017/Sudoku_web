@@ -43,6 +43,14 @@ body {
   color: #0072e3;
 }
 
+#timer-control {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  margin-left: 10px;
+}
+
+
 .Square {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -64,6 +72,7 @@ body {
   justify-content: center;
   font-size: x-large;
 }
+
 .note-cells {
   font-size: small;
   flex-basis: 33.33%;

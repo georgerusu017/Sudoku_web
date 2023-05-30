@@ -50,6 +50,7 @@ function createRoundButtons() {
 
     createButtonWithLabelAndImg(CONTROL_ID.undoButton, "round_buttons", "undo-div", "./images/undo.png", "control_text", "Undo")
     createButtonWithLabelAndImg(CONTROL_ID.eraseButton, "round_buttons", "erase-div", "./images/eraser.png", "control_text", "Erase")
+    createButtonWithLabelAndImg(CONTROL_ID.playOrPause, "play_pause", LAYOUT_ID.timerControl, "./images/pause.png")
     createNotesButton();
 
 }
@@ -61,7 +62,8 @@ function createNumberButtons() {
 }
 
 export function createLayout() {
-    createLayoutElements("app", LAYOUT_ID.timer);
+    createLayoutElements("app", LAYOUT_ID.timerControl);
+    createLayoutElements(LAYOUT_ID.timerControl, LAYOUT_ID.timer)
     createLayoutElements("app", LAYOUT_ID.game);
     createLayoutElements("game", LAYOUT_ID.table, LAYOUT_ID.control);
     createLayoutElements("control", LAYOUT_ID.controlButtons, "numbpad");

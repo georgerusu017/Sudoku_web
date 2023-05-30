@@ -34,7 +34,7 @@ export function addImg(whereTo, source) {
     app.appendChild(newImg);
 }
 
-export function createButtonWithLabelAndImg(id, className, whereTo, imgFrom, labelClass, labelText) {
+export function createButtonWithLabelAndImg(id, className, whereTo, imgFrom, labelClass = null, labelText = '') {
     addButton(id, className, whereTo, '')
     addImg(id, imgFrom)
     addText(labelClass, whereTo, labelText)
