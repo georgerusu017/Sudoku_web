@@ -77,13 +77,17 @@ class StateManager {
         if (this.#timer.clockId) {
             clearInterval(this.#timer.clockId)
             this.#timer.clockId = null;
+            // console.log("celulele = ", this.cells)
+            for (let i = 0; i < 9; i++) {
+                getElementById(`Square-${i}`).classList.add(`hidden`)
+            }
         } else {
             this.#initTimer();
         }
     }
 
     resumeTimer() {
-        if (this.timer.clockId == null){
+        if (this.timer.clockId == null) {
             this.toggleTimer()
             return true
         }

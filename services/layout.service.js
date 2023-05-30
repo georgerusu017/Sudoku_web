@@ -72,7 +72,6 @@ export function createLayout() {
     createNumberButtons();
     addButton("newGame", "newGame", "numbpad", "New Game");
 
-    createSudokuGrid(` empty`, ` hidden`);
+    createSudokuGrid(`-empty`, ` hidden`);
     createSudokuGrid();
-    
 }
