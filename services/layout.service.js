@@ -2,19 +2,19 @@ import { LAYOUT_ID, CELL_CSS, CONTROL_ID } from "../constants.js";
 import { addDiv, addButton, createButtonWithLabelAndImg } from "./dom.service.js";
 import state from '../state/State.js';
 
-function createSudokuGrid() {
+function createSudokuGrid(empty = '', hidden = '') {
 
     function createSquareLine(squareId, i, k) {
         for (let j = 0; j < 3; j++) {
             const pointer = (9 * k) + (3 * i) + j;
-            const cell = addDiv(state.cells[pointer].idText, squareId, CELL_CSS.class);
+            const cell = addDiv(state.cells[pointer].idText + empty, squareId, CELL_CSS.class + hidden);
             state.cells[pointer].html = cell;
         }
     }
 
     for (let i = 0; i < 9; i++) {
-        const squareId = "Square-" + (i);
-        addDiv(squareId, LAYOUT_ID.table, "Square")
+        const squareId = "Square-" + (i) + empty;
+        addDiv(squareId, LAYOUT_ID.table, `Square` + hidden)
 
         if (i < 3) {
             for (let k = 0; k <= 2; k++) {
@@ -72,6 +72,7 @@ export function createLayout() {
     createNumberButtons();
     addButton("newGame", "newGame", "numbpad", "New Game");
 
+    createSudokuGrid(` empty`, ` hidden`);
     createSudokuGrid();
+    
 }
-
