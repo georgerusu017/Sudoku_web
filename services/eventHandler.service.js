@@ -162,11 +162,6 @@ function addButtonsListeners() {
     });
 
     document.querySelector(`#${CONTROL_ID.newGameButton}`).addEventListener('click', () => {
-        // if (state.timer.clockId == null) {
-        //     state.toggleTimer()
-        //     return
-        // }
-        // if (state.resumeTimer()) return
         state.startNewGame();
     });
 
