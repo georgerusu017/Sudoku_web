@@ -79,10 +79,15 @@ class StateManager {
             this.#timer.clockId = null;
             // console.log("celulele = ", this.cells)
             for (let i = 0; i < 9; i++) {
-                getElementById(`Square-${i}`).classList.add(`hidden`)
+                document.getElementById(`Square-${i}`).classList.add(`hidden`)
+                document.getElementById(`Square-${i}-empty`).classList.remove(`hidden`)
             }
         } else {
             this.#initTimer();
+            for (let i = 0; i < 9; i++) {
+                document.getElementById(`Square-${i}`).classList.remove(`hidden`)
+                document.getElementById(`Square-${i}-empty`).classList.add(`hidden`)
+            }
         }
     }
 

@@ -7,7 +7,7 @@ function createSudokuGrid(empty = '', hidden = '') {
     function createSquareLine(squareId, i, k) {
         for (let j = 0; j < 3; j++) {
             const pointer = (9 * k) + (3 * i) + j;
-            const cell = addDiv(state.cells[pointer].idText + empty, squareId, CELL_CSS.class + hidden);
+            const cell = addDiv(state.cells[pointer].idText + empty, squareId, CELL_CSS.class);
             state.cells[pointer].html = cell;
         }
     }
