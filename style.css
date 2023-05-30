@@ -73,6 +73,10 @@ body {
   font-size: x-large;
 }
 
+.hidden {
+  display: none;
+}
+
 .note-cells {
   font-size: small;
   flex-basis: 33.33%;

@@ -1,5 +1,5 @@
 import { LAYOUT_ID, CELL_CSS, CONTROL_ID } from "../constants.js";
-import { addDiv, addText, addButton, createButtonWithLabelAndImg } from "./dom.service.js";
+import { addDiv, addButton, createButtonWithLabelAndImg } from "./dom.service.js";
 import state from '../state/State.js';
 
 function createSudokuGrid() {
