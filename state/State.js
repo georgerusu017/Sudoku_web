@@ -85,7 +85,7 @@ class StateManager {
     resumeTimer() {
         if (this.timer.clockId == null){
             this.toggleTimer()
-            return
+            return true
         }
     }
 

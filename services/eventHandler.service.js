@@ -23,6 +23,8 @@ function decrementGroup(selectedCellIndex, selectedCell, value) {
  */
 function handleValueChange(value, selectedCellIndex) {
 
+    if (state.resumeTimer()) return
+
     const selectedCell = state.cells[selectedCellIndex];
     state.addToHistory(selectedCell);
 
@@ -64,6 +66,8 @@ function handleValueChange(value, selectedCellIndex) {
 
 function handleDelete(selectedCellIndex) {
 
+    if (state.resumeTimer()) return
+
     const selectedCell = state.cells[selectedCellIndex];
     state.addToHistory(selectedCell);
 
@@ -82,6 +86,9 @@ function handleDelete(selectedCellIndex) {
 }
 
 function handleArrowNavigation(event, selectedCellIndex) {
+
+    if (state.resumeTimer()) return
+
     let cellToSelectIndex = selectedCellIndex;
 
     const neighbors = Cell.findLineNeighbors(cellToSelectIndex);
@@ -155,10 +162,11 @@ function addButtonsListeners() {
     });
 
     document.querySelector(`#${CONTROL_ID.newGameButton}`).addEventListener('click', () => {
-        if (state.timer.clockId == null) {
-            state.toggleTimer()
-            return
-        }
+        // if (state.timer.clockId == null) {
+        //     state.toggleTimer()
+        //     return
+        // }
+        // if (state.resumeTimer()) return
         state.startNewGame();
     });
 
@@ -170,6 +178,9 @@ function addButtonsListeners() {
     });
 
     document.querySelector(`#${CONTROL_ID.notesButton}`).addEventListener('click', () => {
+
+        if (state.resumeTimer()) return
+
         if (state.isNotesEnabled) {
             state.isNotesEnabled = false;
         }
@@ -180,6 +191,9 @@ function addButtonsListeners() {
 }
 
 function undo (){
+
+    if (state.resumeTimer()) return
+
     if (state.history.length > 0) {
         const lastValueChange = state.history.pop();
         const selectedCell = state.cells[lastValueChange.id];
