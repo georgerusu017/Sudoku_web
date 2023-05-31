@@ -62,8 +62,7 @@ function createNumberButtons() {
 }
 
 export function createLayout() {
-    createLayoutElements("app", LAYOUT_ID.game);
-    createLayoutElements("game", LAYOUT_ID.tableAndTimer, LAYOUT_ID.control);
+    createLayoutElements("app", LAYOUT_ID.tableAndTimer, LAYOUT_ID.control);
     createLayoutElements(LAYOUT_ID.tableAndTimer, LAYOUT_ID.timerControl);
     createLayoutElements(LAYOUT_ID.timerControl, LAYOUT_ID.timer)
     addDiv(LAYOUT_ID.table, LAYOUT_ID.tableAndTimer)
