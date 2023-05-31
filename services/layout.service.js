@@ -62,10 +62,11 @@ function createNumberButtons() {
 }
 
 export function createLayout() {
-    createLayoutElements("app", LAYOUT_ID.timerControl);
-    createLayoutElements(LAYOUT_ID.timerControl, LAYOUT_ID.timer)
     createLayoutElements("app", LAYOUT_ID.game);
-    createLayoutElements("game", LAYOUT_ID.table, LAYOUT_ID.control);
+    createLayoutElements("game", LAYOUT_ID.tableAndTimer, LAYOUT_ID.control);
+    createLayoutElements(LAYOUT_ID.tableAndTimer, LAYOUT_ID.timerControl);
+    createLayoutElements(LAYOUT_ID.timerControl, LAYOUT_ID.timer)
+    addDiv(LAYOUT_ID.table, LAYOUT_ID.tableAndTimer)
     addDiv(LAYOUT_ID.pauseScreen, LAYOUT_ID.table, "hidden");
     createLayoutElements("control", LAYOUT_ID.controlButtons, "numbpad");
     createLayoutElements(LAYOUT_ID.controlButtons, "undo-div", "erase-div", "notes-div");

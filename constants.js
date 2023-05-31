@@ -10,6 +10,7 @@ const LAYOUT_ID = Object.freeze({
     timerControl: "timer-control",
     timer: "timer",
     table: "table",
+    tableAndTimer: "table-timer",
     control: "control",
     controlButtons: "control-buttons",
     numpad: "numbpad",
