@@ -13,7 +13,7 @@ body {
 
 #table {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr 1fr; */
   background-color: aliceblue;
   border-style: solid;
   border-width: 0.5px;
