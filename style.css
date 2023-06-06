@@ -1,3 +1,9 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
 body {
   font-family: Source Sans Pro, sans-serif;
   text-align: center;
@@ -5,10 +11,11 @@ body {
 
 #app {
   height: auto;
-  padding: 5%;
+  padding: 10px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   /* margin: 0 auto; */
 }
 
@@ -23,8 +30,8 @@ body {
 }
 
 #table-timer {
-  width: 400px;
-  margin: 5px;
+  max-width: 400px;
+  width: 100%;
 }
 
 #pause-screen {
@@ -53,7 +60,8 @@ body {
 }
 
 #control {
-  width: 390px;
+  max-width: 390px;
+  width: 100%;
   background-color: white;
   display: flex;
   flex-wrap: wrap;
@@ -88,7 +96,7 @@ body {
 
 .cell {
   aspect-ratio: 1/1;
-  height: auto;
+  height: 100%;
   background-color: white;
   border-style: solid;
   border-color: lightgrey;
@@ -97,7 +105,7 @@ body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  font-size: x-large;
+  font-size: 25px;
 }
 
 .hidden {
@@ -136,7 +144,8 @@ body {
 }
 
 #newGame {
-  width: 380px;
+  max-width: 380px;
+  width: 90%;
   height: 70px;
   margin-top: 10px;
   font-size: x-large;
@@ -152,8 +161,8 @@ body {
 }
 
 .number_buttons {
-  width: 120px;
-  height: 80px;
+  width: 110px;
+  height: 70px;
   border-radius: 5px;
   border-width: 0px;
   margin: 1%;
@@ -169,12 +178,12 @@ body {
 }
 
 .round_buttons {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border-radius: 100%;
   border-width: 3px;
   border-color: #ffffff00;
-  margin: 20px 25px 10px 25px;
+  margin: 20px 10px 10px 10px;
   background-color: rgb(240, 242, 248);
   color: #0072e3;
 }
@@ -242,14 +251,14 @@ body {
 #numbpad {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .active {
   background-color: red;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 900px) {
   #game {
     flex-direction: column;
   }
@@ -257,6 +266,11 @@ body {
   #app {
     flex-direction: column;
   }
+
+  /* #table-timer{
+    width: 100%;
+    aspect-ratio: 1/1;
+  } */
 
   #timer {
     align-content: normal;
@@ -269,16 +283,26 @@ body {
   }
 
   .number_buttons {
-    max-width: 30px;
+    max-width: 25px;
     max-height: 30px;
     aspect-ratio: 1/1;
     border-width: 0px;
-    font-size: xx-large;
+    font-size: 30px;
     color: #0072e3;
     background-color: transparent;
+    margin-top: 20px;
   }
-  .number_buttons:hover{
+
+  .number_buttons:hover {
     background-color: transparent;
   }
 }
- 
+
+@media only screen and (max-width: 400px){
+  .number_buttons {
+    font-size: 20px;
+  }
+  .cell {
+    font-size: 20px;
+  }
+}
