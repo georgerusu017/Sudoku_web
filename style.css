@@ -8,16 +8,23 @@ body {
   padding: 5%;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   /* margin: 0 auto; */
 }
 
 #table {
   display: grid;
   /* grid-template-columns: 1fr 1fr 1fr; */
+  grid-template-columns: 1fr 1fr 1fr;
   background-color: aliceblue;
   border-style: solid;
   border-width: 0.5px;
   position: relative;
+}
+
+#table-timer {
+  width: 400px;
+  margin: 5px;
 }
 
 #pause-screen {
