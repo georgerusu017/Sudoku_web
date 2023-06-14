@@ -56,17 +56,46 @@ export class Cell {
         this.#notesValues = [];
     }
 
-    updateNotesValues(value) {
-        this.#createNotesHtml()
-        const index = this.#notesValues.indexOf(value);
-        if (index != -1){
-            this.#notesValues.splice(index,1);
-        }else{
-            this.#notesValues.push(value)
+    #createNotesHtml() {
+        this.#html.innerHTML = null;
+        for (let i = 1; i <= 9; i++) {
+            const NOTE_BOX = document.createElement('div');
+            NOTE_BOX.setAttribute("id", `${this.idText}-note${i}`)
+            NOTE_BOX.setAttribute("class", `note-cells`);
+            this.#html.appendChild(NOTE_BOX);
         }
-        this.#notesValues.forEach(value => {
-                this.#html.children[value - 1].innerHTML = value
-        })
+    }
+
+    #findSquareNeighbors() {
+        const div = document.getElementById(this.idText);
+
+        return [...div.parentNode.childNodes]
+            .filter(cellHtml => cellHtml.id != this.idText)
+            .map((cellHtml) => parseInt(cellHtml.id.split("-").pop()))
+    }
+
+    #findColumnNeighbors() {
+        let smallerNum = this.#id;
+        let largerNum = this.#id;
+        let output = [];
+
+        while (smallerNum - 9 >= 0) {
+            smallerNum -= 9;
+        }
+
+        while (largerNum + 9 <= 80) {
+            largerNum += 9;
+        }
+
+        const neighbors = [];
+
+        for (let i = smallerNum; i <= largerNum; i += 9) {
+            neighbors.push(i);
+        }
+
+        output = neighbors.filter(item => item != this.#id)
+
+        return output;
     }
 
     get idText() {
@@ -196,46 +225,17 @@ export class Cell {
         return [...div.parentNode.childNodes];
     }
 
-    #createNotesHtml() {
-        this.#html.innerHTML = null;
-        for (let i = 1; i <= 9; i++) {
-            const NOTE_BOX = document.createElement('div');
-            NOTE_BOX.setAttribute("id", `${this.idText}-note${i}`)
-            NOTE_BOX.setAttribute("class", `note-cells`);
-            this.#html.appendChild(NOTE_BOX);
+    updateNotesValues(value) {
+        this.#createNotesHtml()
+        const index = this.#notesValues.indexOf(value);
+        if (index != -1){
+            this.#notesValues.splice(index,1);
+        }else{
+            this.#notesValues.push(value)
         }
-    }
-
-    #findSquareNeighbors() {
-        const div = document.getElementById(this.idText);
-
-        return [...div.parentNode.childNodes]
-            .filter(cellHtml => cellHtml.id != this.idText)
-            .map((cellHtml) => parseInt(cellHtml.id.split("-").pop()))
-    }
-
-    #findColumnNeighbors() {
-        let smallerNum = this.#id;
-        let largerNum = this.#id;
-        let output = [];
-
-        while (smallerNum - 9 >= 0) {
-            smallerNum -= 9;
-        }
-
-        while (largerNum + 9 <= 80) {
-            largerNum += 9;
-        }
-
-        const neighbors = [];
-
-        for (let i = smallerNum; i <= largerNum; i += 9) {
-            neighbors.push(i);
-        }
-
-        output = neighbors.filter(item => item != this.#id)
-
-        return output;
+        this.#notesValues.forEach(value => {
+                this.#html.children[value - 1].innerHTML = value
+        })
     }
 
     reset() {

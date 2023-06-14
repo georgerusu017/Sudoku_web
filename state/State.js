@@ -65,6 +65,36 @@ class StateManager {
         }, 1000)
     }
 
+    #highlight(cell) {
+        cell.cellsNeighbors
+            .forEach(index => {
+                this.cells[index].isHighlighted = true;
+            })
+
+        if (cell.value != "") {
+            this.cells.forEach(element => {
+                if (element.value == cell.value) {
+                    element.isHighlightedSibling = true;
+                }
+            })
+        }
+
+        cell.isHighlighted = true;
+    }
+
+    #reset() {
+        this.cells.forEach(cell => {
+            cell.reset()
+        })
+    }
+
+    #boardWipe() {
+        this.cells.forEach(cell => {
+            cell.wipe();
+        })
+        this.isNotesEnabled = false;
+    }
+
     get timer() {
         return this.#timer;
     }
@@ -119,7 +149,6 @@ class StateManager {
         if (this.#timer.clockId) {
             clearInterval(this.#timer.clockId)
             this.#timer.clockId = null;
-            // console.log("celulele = ", this.cells)
             for (let i = 0; i < 9; i++) {
                 document.getElementById(`Square-${i}`).classList.add(`hidden`)
                 document.getElementById(`Square-${i}-empty`).classList.remove(`hidden`)
@@ -146,7 +175,6 @@ class StateManager {
 
     startNewGame() {
         const sudokuPuzzle = sudoku.generate("insane");
-        // const sudokuPuzzleSolved = sudoku.solve(SUDOKU_UNSOLVED);
 
         const gridSize = 81;
         this.#boardWipe();
@@ -174,36 +202,6 @@ class StateManager {
         this.#reset();
         cell.isSelected = true;
         this.#highlight(cell);
-    }
-
-    #highlight(cell) {
-        cell.cellsNeighbors
-            .forEach(index => {
-                this.cells[index].isHighlighted = true;
-            })
-
-        if (cell.value != "") {
-            this.cells.forEach(element => {
-                if (element.value == cell.value) {
-                    element.isHighlightedSibling = true;
-                }
-            })
-        }
-
-        cell.isHighlighted = true;
-    }
-
-    #reset() {
-        this.cells.forEach(cell => {
-            cell.reset()
-        })
-    }
-
-    #boardWipe() {
-        this.cells.forEach(cell => {
-            cell.wipe();
-        })
-        this.isNotesEnabled = false;
     }
 }
 
