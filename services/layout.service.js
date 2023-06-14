@@ -15,7 +15,7 @@ function createSudokuGrid(empty = '', hidden = '') {
     for (let i = 0; i < 9; i++) {
         const squareId = "Square-" + (i) + empty;
         addDiv(squareId, LAYOUT_ID.table, `Square` + hidden)
-
+        
         if (i < 3) {
             for (let k = 0; k <= 2; k++) {
                 createSquareLine(squareId, i, k);

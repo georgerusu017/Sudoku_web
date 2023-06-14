@@ -24,14 +24,6 @@ class StateManager {
         }
     }
 
-    addToHistory(selectedCell) {
-        this.#history.push({
-            value: selectedCell.value,
-            id: selectedCell.id,
-            notesValues: [...selectedCell.notesValues]
-        })
-    }
-
     #startTimer() {
         this.#timer.timerDiv.innerHTML = `Timer: 00:00`;
         clearInterval(this.#timer.clockId)
@@ -71,35 +63,6 @@ class StateManager {
             console.log(`timer: `, this.#timer.minutes, this.#timer.seconds)
 
         }, 1000)
-    }
-
-    toggleTimer() {
-        if (this.#timer.clockId) {
-            clearInterval(this.#timer.clockId)
-            this.#timer.clockId = null;
-            // console.log("celulele = ", this.cells)
-            for (let i = 0; i < 9; i++) {
-                document.getElementById(`Square-${i}`).classList.add(`hidden`)
-                document.getElementById(`Square-${i}-empty`).classList.remove(`hidden`)
-            }
-            document.getElementById("pause-screen").classList.remove(`hidden`)
-            document.getElementById("play-or-pause").classList.add(`transform-to-play`)
-        } else {
-            this.#initTimer();
-            for (let i = 0; i < 9; i++) {
-                document.getElementById(`Square-${i}`).classList.remove(`hidden`)
-                document.getElementById(`Square-${i}-empty`).classList.add(`hidden`)
-            }
-            document.getElementById("pause-screen").classList.add(`hidden`)
-            document.getElementById("play-or-pause").classList.remove(`transform-to-play`)
-        }
-    }
-
-    resumeTimer() {
-        if (this.timer.clockId == null) {
-            this.toggleTimer()
-            return true
-        }
     }
 
     get timer() {
@@ -142,6 +105,43 @@ class StateManager {
     set notesToggleHtml(value) {
         this.#notesToggleHtml = value;
         this.notesToggleHtml.innerHTML = "OFF"
+    }
+
+    addToHistory(selectedCell) {
+        this.#history.push({
+            value: selectedCell.value,
+            id: selectedCell.id,
+            notesValues: [...selectedCell.notesValues]
+        })
+    }
+
+    toggleTimer() {
+        if (this.#timer.clockId) {
+            clearInterval(this.#timer.clockId)
+            this.#timer.clockId = null;
+            // console.log("celulele = ", this.cells)
+            for (let i = 0; i < 9; i++) {
+                document.getElementById(`Square-${i}`).classList.add(`hidden`)
+                document.getElementById(`Square-${i}-empty`).classList.remove(`hidden`)
+            }
+            document.getElementById("pause-screen").classList.remove(`hidden`)
+            document.getElementById("play-or-pause").classList.add(`transform-to-play`)
+        } else {
+            this.#initTimer();
+            for (let i = 0; i < 9; i++) {
+                document.getElementById(`Square-${i}`).classList.remove(`hidden`)
+                document.getElementById(`Square-${i}-empty`).classList.add(`hidden`)
+            }
+            document.getElementById("pause-screen").classList.add(`hidden`)
+            document.getElementById("play-or-pause").classList.remove(`transform-to-play`)
+        }
+    }
+
+    resumeTimer() {
+        if (this.timer.clockId == null) {
+            this.toggleTimer()
+            return true
+        }
     }
 
     startNewGame() {
