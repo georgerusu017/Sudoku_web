@@ -60,7 +60,6 @@ class StateManager {
             }
 
             this.#timer.timerDiv.innerHTML = `Timer: ${minutes}` + `:` + `${seconds}`
-            console.log(`timer: `, this.#timer.minutes, this.#timer.seconds)
 
         }, 1000)
     }

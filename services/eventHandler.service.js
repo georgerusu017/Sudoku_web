@@ -71,7 +71,7 @@ function handleDelete(selectedCellIndex) {
     const selectedCell = state.cells[selectedCellIndex];
     state.addToHistory(selectedCell);
 
-    if (selectedCell.notesValues.length > 0){
+    if (selectedCell.notesValues.length > 0) {
         selectedCell.notesValues.length = 0;
         selectedCell.value = ``;
     }
@@ -82,7 +82,6 @@ function handleDelete(selectedCellIndex) {
     selectedCell.value = '';
 
     state.setSelectedCell(selectedCell);
-    console.log("history = ", state.history)
 }
 
 function handleArrowNavigation(event, selectedCellIndex) {
@@ -189,15 +188,13 @@ function addButtonsListeners() {
     });
 }
 
-function undo (){
+function undo() {
 
     if (state.resumeTimer()) return
 
     if (state.history.length > 0) {
         const lastValueChange = state.history.pop();
         const selectedCell = state.cells[lastValueChange.id];
-        // first we delete what's inside
-        console.log("SelectedCell = ", selectedCell)
 
         if (selectedCell.value) {
             decrementGroup(selectedCell.id, selectedCell, selectedCell.value)
@@ -209,18 +206,14 @@ function undo (){
             selectedCell.value = "";
         }
 
-        console.log(state.history)
-
-        //then we add the history values
-
         if (lastValueChange.notesValues.length != 0) {
             lastValueChange.notesValues.forEach(value => {
                 selectedCell.updateNotesValues(value)
             })
         }
-        else{
+        else {
             selectedCell.value = lastValueChange.value;
-            if(selectedCell.value){
+            if (selectedCell.value) {
                 incrementGroup(selectedCell.id, selectedCell, selectedCell.value)
             }
         }
